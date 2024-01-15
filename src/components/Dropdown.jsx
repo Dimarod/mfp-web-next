@@ -55,7 +55,7 @@ const Dropdown = () => {
               Tratamientos
             </Link>
             <Link
-              href="/equipo"
+              href="/team"
               className="block px-4 py-2 text-sm text-cancan hover:bg-gray-100"
               role="menuitem"
             >

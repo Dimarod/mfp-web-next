@@ -3,6 +3,7 @@ import Image from "next/image";
 import Dropdown from "./Dropdown";
 import mfp from '../../public/logomfp.png';
 import aomakeup from '../../public/logoangieospino.png'
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -15,35 +16,35 @@ const Header = () => {
             <Image src={aomakeup} alt="logo maquillajes Angie Ospino" title="logo maquillajes Angie Ospino" className="w-24" />
           </div>
           <nav className="p-2 flex justify-around w-2/3 items-center mt-2">
-            <a
-              href="#"
+            <Link
+              href="/"
               className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
             >
               Inicio
-            </a>
+            </Link>
             <a
-              href="#"
+              href="treatments"
               className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
             >
               Tratamientos
             </a>
             <a
-              href="#"
+              href="team"
               className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
             >
               Equipo
             </a>
             <a
-              href="#"
-              className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
-            >
-              Agendate
-            </a>
-            <a
-              href="#"
+              href="about"
               className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
             >
               Sobre Nosotros
+            </a>
+            <a
+              href="typeAppoinment"
+              className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
+            >
+              ¡Agéndate!
             </a>
           </nav>
         </div>

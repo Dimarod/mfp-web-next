@@ -1,17 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Image from "next/image";
-import baq from "/public/Baq.jpg";
 import sol from "/public/Sol.jpg";
+import baq from "/public/Baq.jpg";
 
-const sede = () => {
+const sedeFacial = () => {
   return (
     <>
       <h1 className="text-center text-ferra text-4xl font-bold my-20">
         Elige la sede donde te gustaría ser atendida/o
       </h1>
       <div className="flex flex-col md:flex-row justify-around w-full items-center">
-        <a href="agendaCorpSol">
+        <a href="agendaFacSol">
           <div className="w-64 h-80 rounded-md flex-col p-2 flex justify-center border-4 border-ferra opacity-50 cursor-pointer">
             <Image
               className="object-cover rounded-md"
@@ -22,7 +21,7 @@ const sede = () => {
             <p className="text-center text-lg font-bold">Soledad</p>
           </div>
         </a>
-        <a href="agendaCorpBaq">
+        <a href="agendaFacBaq">
           <div className="w-64 h-80 rounded-md flex flex-col p-6 justify-center border-4 border-ferra opacity-50 cursor-pointer">
             <Image
               className="object-cover rounded-md"
@@ -38,4 +37,4 @@ const sede = () => {
   );
 };
 
-export default sede;
+export default sedeFacial;
