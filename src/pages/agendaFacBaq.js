@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "@/components/Layout";
-import Pdf from "@/components/Pdf";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -9,8 +8,8 @@ const agendaCorpSol = () => {
   const [appoinment, setAppoinment] = useState({
     nombre: "",
     fecha: "",
-    horac: "",
-    tipoCorp: "",
+    horafb: "",
+    tipoDermoBaq: "",
     telefono: "",
   });
 
@@ -23,7 +22,7 @@ const agendaCorpSol = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await axios.post("/api/citassol/", appoinment);
+    const result = await axios.post("/api/citasfacbaq/", appoinment);
     console.log(result);
   };
   return (
@@ -52,47 +51,21 @@ const agendaCorpSol = () => {
             />
             <label className="font-bold">Tipo de cita:</label>
             <select
-              name="tipoCorp"
+              name="tipoDermoBaq"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
             >
               <option value="default"></option>
               <option value="Valoracion">Valoración</option>
-              <option value="Antiguo">Tratamiento ya iniciado</option>
-              <option value="Post">Postoperatorio</option>
-              <option value="Suero">Sueroterapia</option>
-              {/* <option value="Gym">Gym</option> */}
-              {/* <option value="Love">Plan Love</option> */}
-              <option value="Reina">Reina</option>
-              <option value="Publicidad">Publicidad</option>
-              <option value="Nutricion">Nutrición</option>
             </select>
             <label className="font-bold">Hora de la cita:</label>
             <select
-              name="horac"
+              name="horafb"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
             >
               <option value="default"></option>
-              <option value="720800">7:20 AM - 8:00 AM</option>
-              <option value="800840">8:00 AM - 8:40 AM</option>
-              <option value="840920">8:40 AM - 9:20 AM</option>
               <option value="9201000">9:20 AM - 10:00 AM</option>
-              <option value="10001040">10:00 AM - 10:40 AM</option>
-              <option value="10401120">10:40 AM - 11:20 AM</option>
-              <option value="11201200">11:20 AM - 12:00 PM</option>
-              <option value="12001240">12:00 PM - 12:40 PM</option>
-              <option value="12401320">12:40 PM - 1:20 PM</option>
-              <option value="13201400">1:20 PM - 2:00 PM</option>
-              <option value="14001440">2:00 PM - 2:40 PM</option>
-              <option value="14401520">2:40 PM - 3:20 PM</option>
-              <option value="15201600">3:20 PM - 4:00 PM</option>
-              <option value="16001640">4:00 PM - 4:40 PM</option>
-              <option value="16401720">4:40 PM - 5:20 PM</option>
-              <option value="17201800">5:20 PM - 6:00 PM</option>
-              <option value="18001840">6:00 PM - 6:40 PM</option>
-              <option value="18401920">6:40 PM - 7:20 PM</option>
-              <option value="19202000">7:20 PM - 8:00 PM</option>
             </select>
             <label className="font-bold">Teléfono:</label>
             <input

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "@/components/Layout";
-import Pdf from "@/components/Pdf";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -9,8 +8,8 @@ const agendaCorpSol = () => {
   const [appoinment, setAppoinment] = useState({
     nombre: "",
     fecha: "",
-    horac: "",
-    tipoCorp: "",
+    horab: "",
+    tipoBaq: "",
     telefono: "",
   });
 
@@ -23,7 +22,7 @@ const agendaCorpSol = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await axios.post("/api/citassol/", appoinment);
+    const result = await axios.post("/api/citasbaq/", appoinment);
     console.log(result);
   };
   return (
@@ -52,7 +51,7 @@ const agendaCorpSol = () => {
             />
             <label className="font-bold">Tipo de cita:</label>
             <select
-              name="tipoCorp"
+              name="tipoBaq"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
             >
@@ -69,7 +68,7 @@ const agendaCorpSol = () => {
             </select>
             <label className="font-bold">Hora de la cita:</label>
             <select
-              name="horac"
+              name="horab"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
             >

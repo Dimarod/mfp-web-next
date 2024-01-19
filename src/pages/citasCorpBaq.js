@@ -8,15 +8,15 @@ const citasCorpSol = ({ citas }) => {
   const router = useRouter();
 
   const handleDelete = async (id) => {
-    await axios.delete("/api/citassol/" + id);
-    router.push("citasCorpSol");
+    await axios.delete("/api/citasbaq/" + id);
+    router.push("citasCorpBaq");
   };
 
   return (
     <>
-      <Layout>
+      
         <table className=" md:w-full border-collapse text-ferra">
-          <thead className="border-y-2 bg-slate-50/30 border-ferra">
+          <thead className="border-y-2 bg-slate-50/30 text-xs md:text-base border-ferra">
             <tr>
               <th className="">Nombre</th>
               <th>Fecha</th>
@@ -71,10 +71,10 @@ const citasCorpSol = ({ citas }) => {
               }
               return (
                 <Fragment key={cita._id}>
-                  <tr className="border-y text-sm md:text-base   border-ferra">
+                  <tr className="border-y text-xs md:text-base   border-ferra">
                     <td className="p-3 m-3">{cita.nombre}</td>
                     <td>{cita.fecha}</td>
-                    <td>{cita.tipoCorp}</td>
+                    <td>{cita.tipoBaq}</td>
                     <td>{hora}</td>
                     <td>{cita.telefono}</td>
                     <td>
@@ -91,7 +91,6 @@ const citasCorpSol = ({ citas }) => {
             })}
           </tbody>
         </table>
-      </Layout>
     </>
   );
 };
@@ -99,9 +98,7 @@ const citasCorpSol = ({ citas }) => {
 export default citasCorpSol;
 
 export const getServerSideProps = async (context) => {
-  const { data: citas } = await axios.get(
-    "http://192.168.1.11:3000/api/citassol"
-  );
+  const { data: citas } = await axios.get("http://192.168.1.11:3000/api/citasbaq/");
 
   return {
     props: {
