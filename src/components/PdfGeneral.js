@@ -105,8 +105,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%",
+    textAlign: "center"
   },
   enfermedades: {
     width: "50%",
@@ -124,17 +125,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
+    alignItems: "center"
   },
   implantesContainer: {
-    width: "90px",
+    width: "35%",
     backgroundColor: "white",
     borderRadius: "10px",
     marginVertical: "4px",
     borderBottom: "#000000",
+    display: "flex",
+    alignItems: "center"
   },
 });
 
-const PdfGeneral = () => {
+const PdfGeneral = ({formData}) => {
   return (
     <>
       <PDFViewer style={{ width: "100%", height: "100vh" }}>
@@ -167,23 +171,23 @@ const PdfGeneral = () => {
               </View>
               <View style={styles.dataContainer}>
                 <Text style={styles.label}>Nombre:</Text>
-                <Text style={styles.input}>Diego</Text>
+                <Text style={styles.input}>{formData.nombre}</Text>
                 <Text style={styles.label}>Dirección:</Text>
-                <Text style={styles.input}>Esta ve</Text>
+                <Text style={styles.input}>{formData.direccion}</Text>
                 <Text style={styles.label}>Ciudad:</Text>
-                <Text style={styles.input}>Salsipuedes</Text>
+                <Text style={styles.input}>{formData.ciudad}</Text>
                 <Text style={styles.label}>CC:</Text>
-                <Text style={styles.input}>1143166903</Text>
+                <Text style={styles.input}>{formData.documento}</Text>
                 <Text style={styles.label}>Edad:</Text>
-                <Text style={styles.input}>todos</Text>
+                <Text style={styles.input}>{formData.edad}</Text>
                 <Text style={styles.label}>Estado civil:</Text>
-                <Text style={styles.input}>Solo solin solito</Text>
+                <Text style={styles.input}> {formData.estCivil} </Text>
                 <Text style={styles.label}> Correo:</Text>
-                <Text style={styles.input}>dmcr...</Text>
+                <Text style={styles.input}>{formData.correo}</Text>
                 <Text style={styles.label}>Teléfono:</Text>
-                <Text style={styles.input}>viejito</Text>
+                <Text style={styles.input}>{formData.telefono}</Text>
                 <Text style={styles.label}>Fecha:</Text>
-                <Text style={styles.input}>Hoy</Text>
+                <Text style={styles.input}>{formData.fecha}</Text>
               </View>
             </View>
             <View style={styles.container}>
@@ -207,53 +211,53 @@ const PdfGeneral = () => {
                 <View style={styles.enfermedades}>
                   <View>
                     <Text style={styles.label}>Cardiovasculares</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfCar}</Text>
                     <Text style={styles.label}>Renales</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfRen}</Text>
                     <Text style={styles.label}>Gastrointestinales</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfGas}</Text>
                     <Text style={styles.label}>Metabólicas</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfMeta}</Text>
                     <Text style={styles.label}>Pulmonares</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfPulm}</Text>
                   </View>
                   <View>
                     <Text style={styles.label}>Hematológicas</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfHema}</Text>
                     <Text style={styles.label}>Neurológicas</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfNeu}</Text>
                     <Text style={styles.label}>Endocrinas</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfEndo}</Text>
                     <Text style={styles.label}>Mentales</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.enfMent}</Text>
                     <Text style={styles.label}>Dermatológicas:</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.piel}</Text>
                   </View>
                 </View>
                 <View style={styles.implantes}>
                   <View style={styles.implantesContainer}>
                     <Text style={styles.label}>Marcapasos</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.marcapasos}</Text>
                   </View>
                   <View style={styles.implantesContainer}>
                     <Text style={styles.label}>Cáncer</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.cancer}</Text>
                   </View>
                   <View style={styles.implantesContainer}>
                     <Text style={styles.label}>Implantes de metal</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.implantes}</Text>
                   </View>
                   <View style={styles.implantesContainer}>
                     <Text style={styles.label}>Tiroides</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.tiroides}</Text>
                   </View>
                   <View style={styles.implantesContainer}>
                     <Text style={styles.label}>Cardiopatías</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.cardiopatias}</Text>
                   </View>
                   <View style={styles.implantesContainer}>
                     <Text style={styles.label}>Otros</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.otros}</Text>
                   </View>
                 </View>
               </View>
@@ -270,19 +274,15 @@ const PdfGeneral = () => {
                   src="/Embarazo.png"
                   alt="Embarazo"
                 />
-                <View>
+                <View style={{width: "50%"}}>
                   <Text style={styles.yesOrNo}>Embarazo</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.embarazo}</Text>
                   <Text style={styles.yesOrNo}>Anticonceptivos</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.anticonceptivos}</Text>
                   <Text style={styles.yesOrNo}>Climaterio</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.climaterio}</Text>
                   <Text style={styles.yesOrNo}>Reemplazo hormonal</Text>
-                  <Text style={styles.input}></Text>
-                </View>
-                <View>
-                  <Text style={styles.yesOrNo}>Observaciones:</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.hormonas}</Text>
                 </View>
               </View>
             </View>
@@ -295,23 +295,23 @@ const PdfGeneral = () => {
               <View style={styles.dataContainer}>
                 <View>
                   <Text style={styles.yesOrNo}>Dolor en columna</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.columna}</Text>
                   <Text style={styles.yesOrNo}>Fracturas</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.fracturas}</Text>
                   <Text style={styles.yesOrNo}>Luxaciones</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.luxaciones}</Text>
                   <Text style={styles.yesOrNo}>Esguinces</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.esguinces}</Text>
                 </View>
                 <View>
                   <Text style={styles.yesOrNo}>Contracturas</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.contracturas}</Text>
                   <Text style={styles.yesOrNo}>Espasmo muscular</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.espasmo}</Text>
                   <Text style={styles.yesOrNo}>Tiron</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.tiron}</Text>
                   <Text style={styles.yesOrNo}>Desgarres</Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.desgarres}</Text>
                 </View>
               </View>
             </View>
@@ -321,6 +321,7 @@ const PdfGeneral = () => {
                   <Text style={styles.subtitle}>ACTIVIDAD FÍSICA</Text>
                 </View>
               </View>
+              <Text style={styles.input}>{formData.actividadF}</Text>
               <View style={styles.dataContainer}>
                 <View
                   style={{
@@ -328,7 +329,6 @@ const PdfGeneral = () => {
                     paddingHorizontal: "3px",
                   }}
                 >
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/caminar.png"
@@ -342,7 +342,6 @@ const PdfGeneral = () => {
                     paddingHorizontal: "8px",
                   }}
                 >
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/yoga.png"
@@ -356,7 +355,6 @@ const PdfGeneral = () => {
                     paddingHorizontal: "3px",
                   }}
                 >
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/correr.png"
@@ -370,7 +368,6 @@ const PdfGeneral = () => {
                     paddingHorizontal: "5px",
                   }}
                 >
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/abdominales.png"
@@ -384,7 +381,6 @@ const PdfGeneral = () => {
                     paddingHorizontal: "3px",
                   }}
                 >
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/ejercicio.png"
@@ -398,7 +394,6 @@ const PdfGeneral = () => {
                     paddingHorizontal: "3px",
                   }}
                 >
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/capacitacion.png"
@@ -407,7 +402,6 @@ const PdfGeneral = () => {
                   <Text style={styles.label}>Disciplinada</Text>
                 </View>
                 <View style={{ paddingHorizontal: "5px" }}>
-                  <Text style={styles.input}></Text>
                   <Image
                     style={{ width: "40px", margin: "0 auto" }}
                     src="/nogimnasio.png"
@@ -450,7 +444,7 @@ const PdfGeneral = () => {
                       src="/fumar.png"
                       alt="¿fuma?"
                     />
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.tabaq}</Text>
                   </View>
                   <Text style={styles.yesOrNo}>Tabaquismo</Text>
                 </View>
@@ -480,7 +474,7 @@ const PdfGeneral = () => {
                       src="/drogas.png"
                       alt="¿Consume Drogas?"
                     />
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.drugs}</Text>
                   </View>
                   <Text style={styles.yesOrNo}>Consume drogas</Text>
                 </View>
@@ -510,7 +504,7 @@ const PdfGeneral = () => {
                       src="/medicamentos.png"
                       alt="¿Se automedica?"
                     />
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.med}</Text>
                   </View>
                   <Text style={styles.yesOrNo}>Se automedica</Text>
                 </View>
@@ -540,7 +534,7 @@ const PdfGeneral = () => {
                       src="/alcohol.png"
                       alt="¿Alcoholismo?"
                     />
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.alcohol}</Text>
                   </View>
                   <Text style={styles.yesOrNo}>Sufre alcoholismo</Text>
                 </View>
@@ -570,7 +564,7 @@ const PdfGeneral = () => {
                       src="/hobbies.png"
                       alt="¿Pasatiempos?"
                     />
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.hobbies}</Text>
                   </View>
                   <Text style={styles.yesOrNo}>Pasatiempos</Text>
                 </View>
@@ -605,7 +599,7 @@ const PdfGeneral = () => {
                     }}
                   >
                     <Text style={styles.yesOrNo}>Su dia comienza</Text>
-                    <Text style={styles.input}>7:00 AM</Text>
+                    <Text style={styles.input}>{formData.wake}</Text>
                   </View>
                   <Image
                     style={{ width: "30px", margin: "0 auto" }}
@@ -635,7 +629,7 @@ const PdfGeneral = () => {
                     }}
                   >
                     <Text style={styles.yesOrNo}>Hora de desayuno</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.breakfast}</Text>
                   </View>
                   <Image
                     style={{ width: "30px", margin: "0 auto" }}
@@ -665,7 +659,7 @@ const PdfGeneral = () => {
                     }}
                   >
                     <Text style={styles.yesOrNo}>Hora de almuerzo</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.lunch}</Text>
                   </View>
                   <Image
                     style={{ width: "30px", margin: "0 auto" }}
@@ -695,7 +689,7 @@ const PdfGeneral = () => {
                     }}
                   >
                     <Text style={styles.yesOrNo}>Hora de la cena</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.dinner}</Text>
                   </View>
                   <Image
                     style={{ width: "30px", margin: "0 auto" }}
@@ -725,7 +719,7 @@ const PdfGeneral = () => {
                     }}
                   >
                     <Text style={styles.yesOrNo}>Hora de dormir</Text>
-                    <Text style={styles.input}></Text>
+                    <Text style={styles.input}>{formData.sleep}</Text>
                   </View>
                   <Image
                     style={{ width: "30px", margin: "0 auto" }}
@@ -771,7 +765,7 @@ const PdfGeneral = () => {
                     />
                     <Text style={styles.yesOrNo}>Peso</Text>
                   </View>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.peso}</Text>
                 </View>
                 <View
                   style={{
@@ -801,7 +795,7 @@ const PdfGeneral = () => {
                     />
                     <Text style={styles.yesOrNo}>Talla</Text>
                   </View>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.talla}</Text>
                 </View>
                 <View
                   style={{
@@ -831,7 +825,7 @@ const PdfGeneral = () => {
                     />
                     <Text style={styles.yesOrNo}>Estatura</Text>
                   </View>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.altura}</Text>
                 </View>
                 <View
                   style={{
@@ -861,7 +855,7 @@ const PdfGeneral = () => {
                     />
                     <Text style={styles.yesOrNo}>IMC</Text>
                   </View>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.imc}</Text>
                 </View>
                 <View
                   style={{
@@ -886,7 +880,7 @@ const PdfGeneral = () => {
                   >
                     <Text style={styles.yesOrNo}>Observaciones</Text>
                   </View>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.obsFisica}</Text>
                 </View>
               </View>
             </View>
@@ -915,11 +909,11 @@ const PdfGeneral = () => {
                   }}
                 >
                   <Text style={styles.label}>Agua</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.agua}</Text>
                   <Text style={styles.label}>Azúcares</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.azucar}</Text>
                   <Text style={styles.label}>Lácteos</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.lacteos}</Text>
                 </View>
                 <View
                   style={{
@@ -931,11 +925,11 @@ const PdfGeneral = () => {
                   }}
                 >
                   <Text style={styles.label}>Fruta</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.frutas}</Text>
                   <Text style={styles.label}>Verduras</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.verduras}</Text>
                   <Text style={styles.label}>C. Rojas</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.crojas}</Text>
                 </View>
                 <View
                   style={{
@@ -947,11 +941,11 @@ const PdfGeneral = () => {
                   }}
                 >
                   <Text style={styles.label}>C. Blancas</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.cblancas}</Text>
                   <Text style={styles.label}>Harinas</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.harinas}</Text>
                   <Text style={styles.label}>Grasas</Text>
-                  <Text style={styles.input}>10</Text>
+                  <Text style={styles.input}>{formData.grasas}</Text>
                 </View>
                 <View
                   style={{
@@ -976,7 +970,7 @@ const PdfGeneral = () => {
                   >
                     ¿Como considera su dieta?
                   </Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.dieta}</Text>
                 </View>
                 <View
                   style={{
@@ -1001,7 +995,7 @@ const PdfGeneral = () => {
                   >
                     Observaciones
                   </Text>
-                  <Text style={styles.input}></Text>
+                  <Text style={styles.input}>{formData.obsAlimentos}</Text>
                 </View>
               </View>
             </View>

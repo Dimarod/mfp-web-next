@@ -17,6 +17,10 @@ import desayuno from "/public/desayuno.png";
 import almuerzo from "/public/almuerzo.png";
 import cena from "/public/cena.png";
 import dormir from "/public/dormir.png";
+import peso from "/public/peso.png";
+import estatura from "/public/altura.png";
+import imc from "/public/imc.png";
+import talla from "/public/talla.png";
 
 const FormGeneral = ({ onSubmit }) => {
   const [formGeneral, setFormGeneral] = useState({
@@ -30,23 +34,60 @@ const FormGeneral = ({ onSubmit }) => {
     correo: "",
     fecha: "",
     enfCar: "",
-    enfRen: "",
-    enfCirc: "",
-    enfPulm: "",
-    enfDige: "",
     enfHema: "",
+    enfRen: "",
     enfEndo: "",
+    enfGas: "",
+    enfPulm: "",
     enfNeu: "",
-    presion: "",
-    alergia: "",
+    enfMent: "",
     piel: "",
-    convulsiones: "",
-    tabaco: "",
+    enfMeta: "",
+    embarazo: "",
+    climaterio: "",
+    anticonceptivos: "",
+    hormonas: "",
+    actividadF: "",
+    tabaq: "",
+    drugs: "",
+    med: "",
     alcohol: "",
-    drogas: "",
+    hobbies: "",
+    desgarres: "",
+    espasmos: "",
+    tiron: "",
+    contracturas: "",
+    columna: "",
+    fracturas: "",
+    luxaciones: "",
+    esguince: "",
+    cancer: "",
     marcapasos: "",
+    tiroides: "",
+    implantes: "",
+    cardiopatias: "",
+    otros: "",
+    wake: "",
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    sleep: "",
     peso: "",
-    estatura: "",
+    talla: "",
+    altura: "",
+    imc: "",
+    obsFisica: "",
+    agua: "",
+    azucar: "",
+    lacteos: "",
+    frutas: "",
+    verduras: "",
+    crojas: "",
+    cblancas: "",
+    grasas: "",
+    harinas: "",
+    dieta: "",
+    obsAlimentos: ""
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -165,14 +206,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfHema"
+                    name="enfCar"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfHema"
+                    name="enfCar"
                     value="No"
                   />
                 </div>
@@ -182,14 +223,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="convulsiones"
+                    name="enfPulm"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="convulsiones"
+                    name="enfPulm"
                     value="No"
                   />
                 </div>
@@ -199,14 +240,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfNeu"
+                    name="enfRen"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfNeu"
+                    name="enfRen"
                     value="No"
                   />
                 </div>
@@ -216,14 +257,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfCirc"
+                    name="enfGas"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfCirc"
+                    name="enfGas"
                     value="No"
                   />
                 </div>
@@ -233,14 +274,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfPulm"
+                    name="enfHema"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfPulm"
+                    name="enfHema"
                     value="No"
                   />
                 </div>
@@ -252,14 +293,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="presion"
+                    name="enfEndo"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="presion"
+                    name="enfEndo"
                     value="No"
                   />
                 </div>
@@ -269,14 +310,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfEndo"
+                    name="enfNeu"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfEndo"
+                    name="enfNeu"
                     value="No"
                   />
                 </div>
@@ -286,14 +327,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfDige"
+                    name="enfMent"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfDige"
+                    name="enfMent"
                     value="No"
                   />
                 </div>
@@ -320,14 +361,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfCar"
+                    name="enfMeta"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfCar"
+                    name="enfMeta"
                     value="No"
                   />
                 </div>
@@ -341,14 +382,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="marcapasos"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="marcapasos"
                     value="No"
                   />
                 </div>
@@ -360,14 +401,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="marcapasos"
+                    name="cardiopatias"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="marcapasos"
+                    name="cardiopatias"
                     value="No"
                   />
                 </div>
@@ -379,14 +420,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="alergia"
+                    name="cancer"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="alergia"
+                    name="cancer"
                     value="No"
                   />
                 </div>
@@ -398,14 +439,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="alcohol"
+                    name="implantes"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="alcohol"
+                    name="implantes"
                     value="No"
                   />
                 </div>
@@ -417,36 +458,21 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="drogas"
+                    name="tiroides"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="drogas"
+                    name="tiroides"
                     value="No"
                   />
                 </div>
               </div>
               <div className="bg-white flex flex-col items-center rounded-lg shadow-2xl shadow-black mb-3">
                 <label className="w-36 text-center">Otros</label>
-                <div>
-                  <span className="px-2">Sí</span>
-                  <input
-                    onChange={handleChange}
-                    type="radio"
-                    name="tabaco"
-                    value="Si"
-                  />
-                  <span className="px-2">No</span>
-                  <input
-                    onChange={handleChange}
-                    type="radio"
-                    name="tabaco"
-                    value="No"
-                  />
-                </div>
+                <input onChange={handleChange} type="text" className="border-b-2 border-black" name="otros"/>
               </div>
             </div>
           </div>
@@ -459,14 +485,14 @@ const FormGeneral = ({ onSubmit }) => {
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="embarazo"
                   value="Si"
                 />
                 <span className="px-2">No</span>
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="embarazo"
                   value="No"
                 />
               </div>
@@ -476,14 +502,14 @@ const FormGeneral = ({ onSubmit }) => {
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="anticonceptivos"
                   value="Si"
                 />
                 <span className="px-2">No</span>
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="anticonceptivos"
                   value="No"
                 />
               </div>
@@ -493,14 +519,14 @@ const FormGeneral = ({ onSubmit }) => {
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="climaterio"
                   value="Si"
                 />
                 <span className="px-2">No</span>
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="climaterio"
                   value="No"
                 />
               </div>
@@ -510,14 +536,14 @@ const FormGeneral = ({ onSubmit }) => {
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="hormonas"
                   value="Si"
                 />
                 <span className="px-2">No</span>
                 <input
                   onChange={handleChange}
                   type="radio"
-                  name="tabaco"
+                  name="hormonas"
                   value="No"
                 />
               </div>
@@ -533,14 +559,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="columna"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="columna"
                         value="No"
                       />
                     </div>
@@ -550,14 +576,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="fracturas"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="fracturas"
                         value="No"
                       />
                     </div>
@@ -567,14 +593,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="luxaciones"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="luxaciones"
                         value="No"
                       />
                     </div>
@@ -584,14 +610,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="esguince"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="esguince"
                         value="No"
                       />
                     </div>
@@ -603,14 +629,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="contracturas"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="contracturas"
                         value="No"
                       />
                     </div>
@@ -620,14 +646,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="espasmos"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="espasmos"
                         value="No"
                       />
                     </div>
@@ -637,14 +663,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="tiron"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="tiron"
                         value="No"
                       />
                     </div>
@@ -654,14 +680,14 @@ const FormGeneral = ({ onSubmit }) => {
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="desgarres"
                         value="Si"
                       />
                       <span className="px-2">No</span>
                       <input
                         onChange={handleChange}
                         type="radio"
-                        name="tabaco"
+                        name="desgarres"
                         value="No"
                       />
                     </div>
@@ -675,37 +701,37 @@ const FormGeneral = ({ onSubmit }) => {
           </span>
           <div className="flex flex-row flex-wrap w-full justify-around">
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Muy Ligera" />
               <Image src={caminar} width={80} height={80} alt="caminar" />
               <label>Muy ligera</label>
             </div>
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Ligera" />
               <Image src={yoga} width={80} height={80} alt="caminar" />
               <label>Ligera</label>
             </div>
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Moderada" />
               <Image src={correr} width={80} height={80} alt="caminar" />
               <label>Moderada</label>
             </div>
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Pesada" />
               <Image src={abs} width={80} height={80} alt="caminar" />
               <label>Pesada</label>
             </div>
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Excepcional" />
               <Image src={pesas} width={80} height={80} alt="caminar" />
               <label>Excepcional</label>
             </div>
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Disciplina" />
               <Image src={disciplina} width={80} height={80} alt="caminar" />
               <label>Disciplinada</label>
             </div>
             <div className="flex flex-col items-center md:px-5">
-              <input type="radio" name="actividadF" value="X" />
+              <input onChange={handleChange} type="radio" name="actividadF" value="Ninguna" />
               <Image src={nonexc} width={80} height={80} alt="caminar" />
               <label>Ninguna</label>
             </div>
@@ -730,14 +756,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="tabaq"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="tabaq"
                     value="No"
                   />
                 </div>
@@ -759,14 +785,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="drugs"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="drugs"
                     value="No"
                   />
                 </div>
@@ -788,14 +814,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="med"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="med"
                     value="No"
                   />
                 </div>
@@ -817,14 +843,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="alcohol"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="alcohol"
                     value="No"
                   />
                 </div>
@@ -846,14 +872,14 @@ const FormGeneral = ({ onSubmit }) => {
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="hobbies"
                     value="Si"
                   />
                   <span className="px-2">No</span>
                   <input
                     onChange={handleChange}
                     type="radio"
-                    name="enfRen"
+                    name="hobbies"
                     value="No"
                   />
                 </div>
@@ -875,7 +901,11 @@ const FormGeneral = ({ onSubmit }) => {
                   />
                   <label className="w-36 text-center">Su día comienza</label>
                 </div>
-                <input type="text" className="w-28 mx-auto border-b-2" />
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="wake"
+                />
               </div>
               <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
                 <div>
@@ -889,7 +919,11 @@ const FormGeneral = ({ onSubmit }) => {
                   />
                   <label className="w-36 text-center">Desayuna a las:</label>
                 </div>
-                <input type="text" className="w-28 mx-auto border-b-2" />
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="breakfast"
+                />
               </div>
               <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
                 <div>
@@ -903,7 +937,11 @@ const FormGeneral = ({ onSubmit }) => {
                   />
                   <label className="w-36 text-center">Almuerza a las:</label>
                 </div>
-                <input type="text" className="w-28 mx-auto border-b-2" />
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="lunch"
+                />
               </div>
               <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
                 <div>
@@ -917,7 +955,11 @@ const FormGeneral = ({ onSubmit }) => {
                   />
                   <label className="w-36 text-center">Cena a las:</label>
                 </div>
-                <input type="text" className="w-28 mx-auto border-b-2" />
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="dinner"
+                />
               </div>
               <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
                 <div>
@@ -931,10 +973,222 @@ const FormGeneral = ({ onSubmit }) => {
                   />
                   <label className="w-36 text-center">Duerme a las:</label>
                 </div>
-                <input type="text" className="w-28 mx-auto border-b-2" />
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="sleep"
+                />
               </div>
             </div>
           </div>
+          <div className="w-full mt-6 flex flex-col items-center justify-center">
+            <span className="text-center font-thin">Exploración Física</span>
+            <div className="flex flex-row w-full items-center flex-wrap justify-around mt-5">
+              <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
+                <div>
+                  <Image
+                    src={peso}
+                    alt="cigarrillo"
+                    title="cigarrillo"
+                    width={50}
+                    height={50}
+                    className="mx-auto"
+                  />
+                  <label className="w-36 text-center">Su peso es de:</label>
+                </div>
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="peso"
+                />
+              </div>
+              <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
+                <div>
+                  <Image
+                    src={talla}
+                    alt="cigarrillo"
+                    title="cigarrillo"
+                    width={50}
+                    height={50}
+                    className="mx-auto"
+                  />
+                  <label className="w-36 text-center">Su talla es:</label>
+                </div>
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="talla"
+                />
+              </div>
+              <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
+                <div>
+                  <Image
+                    src={estatura}
+                    alt="cigarrillo"
+                    title="cigarrillo"
+                    width={50}
+                    height={50}
+                    className="mx-auto"
+                  />
+                  <label className="w-36 text-center">Su estatura es:</label>
+                </div>
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="altura"
+                />
+              </div>
+              <div className="bg-white flex flex-row items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
+                <div>
+                  <Image
+                    src={imc}
+                    alt="cigarrillo"
+                    title="cigarrillo"
+                    width={50}
+                    height={50}
+                    className="mx-auto"
+                  />
+                  <label className="w-36 text-center">Su IMC es:</label>
+                </div>
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="imc"
+                />
+              </div>
+              <div className="bg-white flex flex-col items-center rounded-lg mb-3 shadow-2xl shadow-black p-3 w-64">
+                <label className="w-36 text-center">Observaciones:</label>
+                <input onChange={handleChange}
+                  type="text"
+                  className="w-28 mx-auto border-b-2 border-black"
+                  name="obsFisica"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="w-full mt-6 flex flex-col items-center justify-center">
+            <span className="text-center font-thin">Hábitos Alimenticios</span>
+            <span className="font-thin text-sm">Del 1 al 10 indique la frecuencia con la que consume los siguientes alimentos</span>
+            <div className="flex flex-col flex-wrap md:flex-row w-full items-center justify-around py-2">
+              <div className="flex flex-col w-1/4 bg-white shadow-xl shadow-black rounded-md py-4 items-center justify-around">
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Agua</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className=" border-b-2 border-black"
+                    name="agua"
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Azúcares</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className="border-b-2 border-black"
+                    name="azucar"
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Lácteos</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className="border-b-2 border-black"
+                    name="lacteos"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-1/4 bg-white shadow-xl shadow-black rounded-md py-4 items-center justify-around">
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Fruta</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className=" border-b-2 border-black"
+                    name="fruta"
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Verduras</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className="border-b-2 border-black"
+                    name="verduras"
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">C. Rojas</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className="border-b-2 border-black"
+                    name="crojas"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-1/4 bg-white shadow-xl shadow-black rounded-md py-4 items-center justify-around">
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">C. Blancas</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className=" border-b-2 border-black"
+                    name="cblancas"
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Grasas</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className="border-b-2 border-black"
+                    name="grasas"
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center justify-around">
+                  <label className="w-20">Harinas</label>
+                  <input onChange={handleChange}
+                    type="number"
+                    min="1"
+                    max="10"
+                    className="border-b-2 border-black"
+                    name="harinas"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-1/3 bg-white shadow-xl shadow-black rounded-md py-4 items-center justify-around mt-4">
+                <label>¿Como considera su dieta?</label>
+                <div>
+                  <input onChange={handleChange} type="radio" name="dieta" value="Equilibrada"/>
+                  <span className="pl-2">Equilibrada</span>
+                </div>
+                <div>
+                  <input onChange={handleChange} type="radio" name="dieta" value="Desequilibrada" />
+                  <span className="pl-2">Desequilibrada</span>
+                </div>
+              </div>
+              <div className="flex flex-col w-3/5 bg-white shadow-xl shadow-black rounded-md py-4 items-center justify-around">
+                <label>Observaciones</label>
+                <input onChange={handleChange} type="text" className="w-3/4 border-b-2 border-black" name="obsAlimentos" />
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full text-white mt-5 py-1 bg-ferra rounded-md"
+          >
+            Enviar
+          </button>
         </form>
       </div>
     </>
