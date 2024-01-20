@@ -2,9 +2,9 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
-const citasCorpSol = ({ citas }) => {
+const citasCorpSol = ({citas}) => {
   const router = useRouter();
 
   const handleDelete = async (id) => {

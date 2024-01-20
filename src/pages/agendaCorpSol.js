@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "@/components/Layout";
-import Pdf from "@/components/Pdf";
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 const agendaCorpSol = () => {
   const [appoinment, setAppoinment] = useState({
@@ -13,23 +11,46 @@ const agendaCorpSol = () => {
     tipoCorp: "",
     telefono: "",
   });
+  const [alerta, setAlerta] = useState("");
 
-  const handleChange = ({target: {name, value}}) =>{
-    console.log(name, value)
-    setAppoinment({...appoinment, [name]: value})
-  }
-
-  const router = useRouter();
+  const handleChange = ({ target: { name, value } }) => {
+    console.log(name, value);
+    setAppoinment({ ...appoinment, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await axios.post("/api/citassol/", appoinment);
-    console.log(result);
+    try {
+      const resVerificar = await axios.post("/api/citassol/verificar", appoinment);
+
+      if (resVerificar.data.existente) {
+        setAlerta("Usted ya tiene una cita agendada para este día");
+        return;
+      }
+      // const resSobrecupo = await axios.post("/api/citassol/sobrecupo", [
+      //   appoinment.fecha,
+      //   appoinment.horac,
+      // ]);
+
+      // if (resSobrecupo.data.sobrecupo) {
+      //   setAlerta(
+      //     "Ya existen demasiadas citas para este horario, por favor seleccione uno diferente"
+      //   );
+      //   return;
+      // }
+      // const resAgendar = await axios.post("/api/citassol/", appoinment);
+      // if (resAgendar.data.agendado) {
+      //   setAlerta("Usted ha sido agendado exitosamente");
+      //   return;
+      // }
+    } catch (error) {}
   };
   return (
     <>
       <Layout>
-        <h1 className="text-center text-ferra font-bold text-4xl">Asignación de citas</h1>
+        <h1 className="text-center text-ferra font-bold text-4xl">
+          Asignación de citas
+        </h1>
         <p className="text-ferra text-center">
           Complete los campos para apartar su cita corporal en la sede de
           Soledad
@@ -104,6 +125,7 @@ const agendaCorpSol = () => {
             <button className="border-2 border-ferra bg-ferra text-white p-1 rounded-md w-full hover:bg-mulberry">
               Agendar Cita
             </button>
+            {alerta && <div className="w-full bg-gray-400">{alerta}</div>}
           </form>
         </div>
       </Layout>
