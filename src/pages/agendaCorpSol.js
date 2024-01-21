@@ -2,6 +2,7 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useState } from "react";
+import Modal from "@/components/Modal";
 
 const agendaCorpSol = () => {
   const [appoinment, setAppoinment] = useState({
@@ -21,28 +22,28 @@ const agendaCorpSol = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const resVerificar = await axios.post("/api/citassol/verificar", appoinment);
+      const resVerificar = await axios.post(
+        "/api/citassol/verificar",
+        appoinment
+      );
 
       if (resVerificar.data.existente) {
         setAlerta("Usted ya tiene una cita agendada para este día");
         return;
       }
-      // const resSobrecupo = await axios.post("/api/citassol/sobrecupo", [
-      //   appoinment.fecha,
-      //   appoinment.horac,
-      // ]);
+      const resSobrecupo = await axios.post("/api/citassol/sobrecupo", appoinment);
 
-      // if (resSobrecupo.data.sobrecupo) {
-      //   setAlerta(
-      //     "Ya existen demasiadas citas para este horario, por favor seleccione uno diferente"
-      //   );
-      //   return;
-      // }
-      // const resAgendar = await axios.post("/api/citassol/", appoinment);
-      // if (resAgendar.data.agendado) {
-      //   setAlerta("Usted ha sido agendado exitosamente");
-      //   return;
-      // }
+      if (resSobrecupo.data.sobrecupo) {
+        setAlerta(
+          "Este horario presenta sobrecupo, por favor seleccione uno diferente"
+        );
+        return;
+      }
+      const resAgendar = await axios.post("/api/citassol/", appoinment);
+      if (resAgendar.data.agendado) {
+        setAlerta("Usted ha sido agendado exitosamente");
+        return;
+      }
     } catch (error) {}
   };
   return (
@@ -63,6 +64,7 @@ const agendaCorpSol = () => {
               className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
               type="text"
               onChange={handleChange}
+              required
             />
             <label className="font-bold">Fecha:</label>
             <input
@@ -70,12 +72,14 @@ const agendaCorpSol = () => {
               className="backdrop-blur-sm my-3 w-full border-x-2 border-b-2 rounded-md border-ferra"
               type="date"
               onChange={handleChange}
+              required
             />
             <label className="font-bold">Tipo de cita:</label>
             <select
               name="tipoCorp"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
+              required
             >
               <option value="default"></option>
               <option value="Valoracion">Valoración</option>
@@ -93,6 +97,7 @@ const agendaCorpSol = () => {
               name="horac"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
+              required
             >
               <option value="default"></option>
               <option value="720800">7:20 AM - 8:00 AM</option>
@@ -121,11 +126,12 @@ const agendaCorpSol = () => {
               className="backdrop-blur-sm my-3 w-full border-x-2 border-b-2 rounded-md border-ferra"
               type="number"
               onChange={handleChange}
+              required
             />
             <button className="border-2 border-ferra bg-ferra text-white p-1 rounded-md w-full hover:bg-mulberry">
               Agendar Cita
             </button>
-            {alerta && <div className="w-full bg-gray-400">{alerta}</div>}
+            {alerta && <Modal alerta={alerta} />}
           </form>
         </div>
       </Layout>

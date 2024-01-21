@@ -4,12 +4,12 @@ import { pool } from "../../../../config/db";
 export default (req, res) => {
   if (req.method === "POST") {
     try {
-      const { fecha, horac } = req.body;
+      const { fecha, horab } = req.body;
       pool.query(
-        "SELECT * FROM citas WHERE fecha = '" +
+        "SELECT * FROM citasBaq WHERE fecha = '" +
           fecha +
-          "' AND horac = '" +
-          horac +
+          "' AND horab = '" +
+          horab +
           "'",
         (err, rows, fields) => {
           if (rows.length >= 3) {

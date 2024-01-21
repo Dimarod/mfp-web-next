@@ -5,7 +5,7 @@ export default function handler(req, res) {
     case "GET":
       return listarCitas(req, res);
     case "POST":
-      return evitarCitaDuplicada(req, res);
+      return agendarCita(req, res);
   }
 }
 const listarCitas = (req, res) => {
@@ -19,18 +19,20 @@ const listarCitas = (req, res) => {
 };
 
 const agendarCita = (req, res) => {
-  const { fecha, tipoBaq, horab, telefono } = req.body;
-  const tempNombre = req.body.nombre;
-  const nombre = tempNombre.trim();
-  console.log(nombre);
-  pool.query("INSERT INTO citasBaq SET ?", {
-    nombre,
-    fecha,
-    horab,
-    tipoBaq,
-    telefono,
-  });
-  return res.send("Creating");
+  try {
+    const {fecha, horab, tipoBaq, telefono} = req.body;
+    const tempNombre = req.body.nombre;
+    const nombre = tempNombre.trim()
+    pool.query("INSERT INTO citasBaq SET ?", {nombre, fecha, horab, tipoBaq, telefono}, (err, rows, fields)=>{
+      if(err){
+        console.log("Hubo un error al tratar de agendar la cita", err);
+      }else{
+        res.status(200).json({agendado: true, message: "Su cita ha sido agendada exitosamente"})
+      }
+    })
+  } catch (error) {
+    console.log("Hubo un error", error);
+  }
 };
 
 const citasNutricion = (req, res) => {
@@ -61,54 +63,6 @@ const citasNutricion = (req, res) => {
         } else {
           let nutricion = true;
           return nutricion;
-        }
-      }
-    }
-  );
-};
-const evitarSobrecupo = (req, res) => {
-  pool.query(
-    "SELECT * FROM citasBaq WHERE fecha = '" +
-      req.body.fecha +
-      "' AND horab = '" +
-      req.body.horab +
-      "'",
-    (err, rows, fields) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (req.body.tipoBaq === "Nutricion") {
-          citasNutricion(req, res);
-        } else {
-          if (rows.length >= 3) {
-            let sobrecupo = true;
-            return sobrecupo;
-          } else {
-            agendarCita(req, res);
-          }
-        }
-      }
-    }
-  );
-};
-const evitarCitaDuplicada = (req, res) => {
-  const tempNombre = req.body.nombre;
-  const newName = tempNombre.trim();
-  pool.query(
-    "SELECT * FROM citasBaq WHERE nombre = '" +
-      newName +
-      "' AND fecha = '" +
-      req.body.fecha +
-      "'",
-    (err, rows, fields) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (rows.length >= 1) {
-          let duplicada = true;
-          return duplicada;
-        } else {
-          evitarSobrecupo(req, res);
         }
       }
     }

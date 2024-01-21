@@ -18,19 +18,19 @@ const listarCitas = (req, res) => {
   });
 };
 
-const agendarCita = async (req, res) => {
+const agendarCita = (req, res) => {
   try {
-    const { fecha, tipoCorp, horac, telefono } = req.body;
+    const {fecha, horac, tipoCorp, telefono} = req.body;
     const tempNombre = req.body.nombre;
-    const nombre = tempNombre.trim();
-
-    pool.execute(
-      "INSERT INTO citas (nombre, fecha, horac, tipoCorp, telefono) VALUES (?, ?, ?, ?, ?)",
-      [nombre, fecha, horac, tipoCorp, telefono]
-    );
-    return res.status(200).json({agendado: true, message: "Usted ha sido agendado exitosamente"})
+    const nombre = tempNombre.trim()
+    pool.query("INSERT INTO citas SET ?", {nombre, fecha, horac, tipoCorp, telefono}, (err, rows, fields)=>{
+      if(err){
+        console.log("Hubo un error al tratar de agendar la cita", err);
+      }else{
+        res.status(200).json({agendado: true, message: "Su cita ha sido agendada exitosamente"})
+      }
+    })
   } catch (error) {
-    console.log("Error al agendar la cita", error);
-    return res.status(500).json({agendado: false, message: "Ocurrió un error interno al tratar de hacer esto"})
+    console.log("Hubo un error", error);
   }
 };

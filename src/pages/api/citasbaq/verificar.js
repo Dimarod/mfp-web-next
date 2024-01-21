@@ -4,25 +4,25 @@ import { pool } from "../../../../config/db";
 export default (req, res) => {
   if (req.method === "POST") {
     try {
-      const { fecha, horac } = req.body;
+      const { nombre, fecha } = req.body;
       pool.query(
-        "SELECT * FROM citas WHERE fecha = '" +
+        "SELECT * FROM citasBaq WHERE nombre = '" +
+          nombre +
+          "' AND fecha = '" +
           fecha +
-          "' AND horac = '" +
-          horac +
           "'",
         (err, rows, fields) => {
-          if (rows.length >= 3) {
-            return res.status(200).json({ sobrecupo: true });
+          if (rows.length > 0) {
+            return res.status(200).json({ existente: true });
           }
-          return res.status(200).json({ sobrecupo: false });
+          return res.status(200).json({ existente: false });
         }
       );
     } catch (error) {
-      console.log("Error al verificar sobrecupo", error);
+      console.log("Error al verificar cita", error);
       return res
         .status(500)
-        .json({ error: "Error interno al verificar sobrecupo de horarios" });
+        .json({ error: "Error interno al verificar cita duplicada" });
     }
   } else {
     return res.status(405).json({ error: "Metodo no permitido" });

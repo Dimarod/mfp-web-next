@@ -15,7 +15,7 @@ export default (req, res) => {
           if (rows.length > 0) {
             return res.status(200).json({ existente: true });
           }
-          return res.status(200).json({ tieneCita: false });
+          return res.status(200).json({ existente: false });
         }
       );
     } catch (error) {
