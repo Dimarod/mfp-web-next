@@ -31,7 +31,10 @@ const agendaCorpSol = () => {
         setAlerta("Usted ya tiene una cita agendada para este día");
         return;
       }
-      const resSobrecupo = await axios.post("/api/citassol/sobrecupo", appoinment);
+      const resSobrecupo = await axios.post(
+        "/api/citassol/sobrecupo",
+        appoinment
+      );
 
       if (resSobrecupo.data.sobrecupo) {
         setAlerta(
@@ -39,6 +42,21 @@ const agendaCorpSol = () => {
         );
         return;
       }
+      const resNutricion = await axios.post(
+        "/api/citassol/validarNutricion",
+        appoinment
+      );
+
+      if (resNutricion.data.notNutrition) {
+        setAlerta(resNutricion.data.message);
+        return;
+      } else if (resNutricion.data.nutricion) {
+        setAlerta(resNutricion.data.message);
+        return;
+      }else{
+        return
+      }
+
       const resAgendar = await axios.post("/api/citassol/", appoinment);
       if (resAgendar.data.agendado) {
         setAlerta("Usted ha sido agendado exitosamente");

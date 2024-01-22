@@ -12,10 +12,15 @@ export default (req, res) => {
           fecha +
           "'",
         (err, rows, fields) => {
-          if (rows.length > 0) {
-            return res.status(200).json({ existente: true });
+          if (err) {
+            console.log("Hubo un error", err);
+          } else {
+            if (rows.length > 0) {
+              return res.status(200).json({ existente: true });
+            }
+
+            return res.status(200).json({ existente: false });
           }
-          return res.status(200).json({ existente: false });
         }
       );
     } catch (error) {
