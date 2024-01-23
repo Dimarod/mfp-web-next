@@ -56,11 +56,22 @@ const agendaCorpSol = () => {
       }
 
       const resAgendar = await axios.post("/api/citassol/", appoinment);
-      if (resAgendar.data.agendado) {
-        setAlerta("Usted ha sido agendado exitosamente");
+      if (resAgendar.data.noActual) {
+        setAlerta(resAgendar.data.message);
+        return;
+      }else if(resAgendar.data.weekday){
+        setAlerta(resAgendar.data.message);
+        return;
+      }else if(resAgendar.data.unavailable){
+        setAlerta(resAgendar.data.message);
+        return;
+      }else if(resAgendar.data.agendado){
+        setAlerta(resAgendar.data.message);
         return;
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("Hubo un error", err);
+    }
   };
   return (
     <>
