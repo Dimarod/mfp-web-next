@@ -47,13 +47,11 @@ const agendaCorpSol = () => {
         appoinment
       );
 
-      if (resNutricion.data.notNutrition) {
+      if(resNutricion.data.nutricion){
         setAlerta(resNutricion.data.message);
-        return;
-      } else if (resNutricion.data.nutricion) {
+        return
+      }else if(resNutricion.data.notNutrition){
         setAlerta(resNutricion.data.message);
-        return;
-      }else{
         return
       }
 

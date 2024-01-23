@@ -6,9 +6,9 @@ export default (req, res) => {
     try {
       const { fecha, horac, tipoCorp } = req.body;
       const weekday = new Date(fecha).getDay() + 1;
-      if (weekday === 6) {
-        if (horac >= 14001440 && horac <= 18001840) {
-          if (tipoCorp === "Nutricion") {
+      if (tipoCorp === "Nutricion") {
+        if (weekday === 6) {
+          if (horac >= 14001440 && horac <= 18001840) {
             pool.query(
               "SELECT * FROM citas WHERE fecha = '" +
                 fecha +
@@ -17,47 +17,39 @@ export default (req, res) => {
                 "' AND tipoCorp = 'Nutricion'",
               (err, rows, fields) => {
                 if (err) {
-                  console.log("Hubo un error", err);
+                  console.log("Hubo un error inesperado", err);
+                  return;
                 } else {
-                  if (rows.length > 0) {
-                    return res
-                      .status(200)
-                      .json({
-                        nutricion: true,
-                        message:
-                          "Este horario ya está lleno, por favor seleccione uno diferente",
-                      });
+                  if (rows > 0) {
+                    return res.status(200).json({
+                      nutricion: true,
+                      message:
+                        "Este horario está saturado, por favor selecciona uno diferente",
+                    });
                   }
+                  return res.status(200).json({ nutricion: false });
                 }
-                return res.status(200).json({
-                  nutricion: false,
-                  message:
-                    "Los horarios de nutricion estan llenos, por favor seleccione un horario diferente",
-                });
               }
             );
           } else {
-            return;
+            return res.status(200).json({
+              notNutrition: true,
+              message:
+                "El horario para las citas de nutrición es: Sábados de 2:00 PM - 6:00 PM",
+            });
           }
         } else {
           return res.status(200).json({
             notNutrition: true,
             message:
-              "Los horarios para nutricion son de 2:00 Pm - 6:40 Pm los días sábado",
+              "El horario para las citas de nutrición es: Sábados de 2:00 PM - 6:00 PM",
           });
         }
-      } else {
-        return res.status(200).json({
-          notNutrition: true,
-          message:
-            "Los horarios para nutricion son de 2:00 Pm - 6:40 Pm los días sábado",
-        });
       }
+      return res.status(200).json({ notNutricion: false });
     } catch (error) {
-      console.log("Error al verificar cita", error);
-      return res
-        .status(500)
-        .json({ error: "Error interno al verificar cita duplicada" });
+      console.log("Hubo un error", error);
+      return res.status(500).json({ error, message: "Hubo un error" });
     }
   } else {
     return res.status(405).json({ error: "Metodo no permitido" });
