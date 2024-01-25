@@ -8,7 +8,7 @@ const citasCorpSol = ({ citas }) => {
   const router = useRouter();
 
   const handleDelete = async (id) => {
-    await axios.delete("/api/citasbaq/" + id);
+    await axios.delete("/api/citasBaq/" + id);
     router.push("citasCorpBaq");
   };
 
@@ -98,7 +98,7 @@ const citasCorpSol = ({ citas }) => {
 export default citasCorpSol;
 
 export const getServerSideProps = async (context) => {
-  const { data: citas } = await axios.get("http://192.168.1.11:3000/api/citasbaq/");
+  const { data: citas } = await axios.get("http://192.168.1.11:3000/api/citasBaq/");
 
   return {
     props: {

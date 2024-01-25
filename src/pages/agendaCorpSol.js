@@ -23,7 +23,7 @@ const agendaCorpSol = () => {
     e.preventDefault();
     try {
       const resVerificar = await axios.post(
-        "/api/citassol/verificar",
+        "/api/citas/verificar",
         appoinment
       );
 
@@ -32,7 +32,7 @@ const agendaCorpSol = () => {
         return;
       }
       const resSobrecupo = await axios.post(
-        "/api/citassol/sobrecupo",
+        "/api/citas/sobrecupo",
         appoinment
       );
 
@@ -43,7 +43,7 @@ const agendaCorpSol = () => {
         return;
       }
       const resNutricion = await axios.post(
-        "/api/citassol/validarNutricion",
+        "/api/citas/validarNutricion",
         appoinment
       );
 
@@ -55,7 +55,7 @@ const agendaCorpSol = () => {
         return
       }
 
-      const resAgendar = await axios.post("/api/citassol/", appoinment);
+      const resAgendar = await axios.post("/api/citas/", appoinment);
       if (resAgendar.data.noActual) {
         setAlerta(resAgendar.data.message);
         return;

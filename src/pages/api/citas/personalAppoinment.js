@@ -13,11 +13,14 @@ export default function handler(req, res) {
 }
 
 const getOneAppointment = (req, res) => {
+  const {name, sede} = req.query;
+  console.log(name, sede);
   pool.query(
-    `SELECT * FROM citasBaq WHERE nombre = "${req.query.id}"`,
+    `SELECT * FROM ${sede} WHERE nombre = '${name}' ORDER BY fecha DESC LIMIT 1`,
     (err, rows, fields) => {
-      console.log(err);
-      console.log(rows);
+      if(err){
+        console.log("Hubo un error", err);
+      }
       return res.status(200).json(rows);
     }
   );
@@ -25,7 +28,7 @@ const getOneAppointment = (req, res) => {
 
 const deleteOneAppoinment = (req, res) => {
   pool.query(
-    `DELETE FROM citasBaq WHERE _id = "${req.query.id}"`,
+    `DELETE FROM citas WHERE _id = "${req.query.id}"`,
     (err, rows, fields) => {
       if (err) {
         console.log(err);

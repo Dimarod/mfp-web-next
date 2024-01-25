@@ -27,7 +27,7 @@ const agendaCorpSol = () => {
     e.preventDefault();
     try {
       const resVerificar = await axios.post(
-        "/api/citasbaq/verificar",
+        "/api/citasBaq/verificar",
         appoinment
       );
 
@@ -35,7 +35,7 @@ const agendaCorpSol = () => {
         setAlerta("Usted ya tiene una cita agendada para este día");
         return;
       }
-      const resSobrecupo = await axios.post("/api/citasbaq/sobrecupo", appoinment);
+      const resSobrecupo = await axios.post("/api/citasBaq/sobrecupo", appoinment);
 
       if (resSobrecupo.data.sobrecupo) {
         setAlerta(
@@ -43,7 +43,7 @@ const agendaCorpSol = () => {
         );
         return;
       }
-      const resAgendar = await axios.post("/api/citasbaq/", appoinment);
+      const resAgendar = await axios.post("/api/citasBaq/", appoinment);
       if (resAgendar.data.agendado) {
         setAlerta("Usted ha sido agendado exitosamente");
         return;

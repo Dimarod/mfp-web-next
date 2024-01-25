@@ -9,7 +9,7 @@ export default function handler(req, res) {
   }
 }
 const listarCitas = (req, res) => {
-  pool.query("SELECT * FROM citas", function (err, rows, fields) {
+  pool.query("SELECT * FROM citas ORDER BY horac", function (err, rows, fields) {
     if (err) {
       console.log(err);
     } else {

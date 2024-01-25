@@ -14,7 +14,7 @@ export default function handler(req, res) {
 
 const getOneAppointment = (req, res) => {
   pool.query(
-    `SELECT * FROM citas WHERE nombre = "${req.query.id}"`,
+    `SELECT * FROM ${req.query.sede} WHERE nombre = "${req.query.name}"`,
     (err, rows, fields) => {
       console.log(err);
       console.log(rows);
@@ -25,7 +25,7 @@ const getOneAppointment = (req, res) => {
 
 const deleteOneAppoinment = (req, res) => {
   pool.query(
-    `DELETE FROM citas WHERE _id = "${req.query.id}"`,
+    `DELETE FROM citasBaq WHERE _id = "${req.query.id}"`,
     (err, rows, fields) => {
       if (err) {
         console.log(err);
