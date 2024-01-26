@@ -2,10 +2,9 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import Modal from "@/components/Modal";
 
-const agendaCorpSol = () => {
+const agendaCorpBaq = () => {
   const [appoinment, setAppoinment] = useState({
     nombre: "",
     fecha: "",
@@ -13,15 +12,12 @@ const agendaCorpSol = () => {
     tipoBaq: "",
     telefono: "",
   });
-
   const [alerta, setAlerta] = useState("");
 
-  const handleChange = ({target: {name, value}}) =>{
-    console.log(name, value)
-    setAppoinment({...appoinment, [name]: value})
-  }
-
-  const router = useRouter();
+  const handleChange = ({ target: { name, value } }) => {
+    console.log(name, value);
+    setAppoinment({ ...appoinment, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +31,10 @@ const agendaCorpSol = () => {
         setAlerta("Usted ya tiene una cita agendada para este día");
         return;
       }
-      const resSobrecupo = await axios.post("/api/citasBaq/sobrecupo", appoinment);
+      const resSobrecupo = await axios.post(
+        "/api/citasBaq/sobrecupo",
+        appoinment
+      );
 
       if (resSobrecupo.data.sobrecupo) {
         setAlerta(
@@ -43,17 +42,43 @@ const agendaCorpSol = () => {
         );
         return;
       }
+      const resNutricion = await axios.post(
+        "/api/citasBaq/validarNutricion",
+        appoinment
+      );
+
+      if(resNutricion.data.nutricion){
+        setAlerta(resNutricion.data.message);
+        return
+      }else if(resNutricion.data.notNutrition){
+        setAlerta(resNutricion.data.message);
+        return
+      }
+
       const resAgendar = await axios.post("/api/citasBaq/", appoinment);
-      if (resAgendar.data.agendado) {
-        setAlerta("Usted ha sido agendado exitosamente");
+      if (resAgendar.data.noActual) {
+        setAlerta(resAgendar.data.message);
+        return;
+      }else if(resAgendar.data.weekday){
+        setAlerta(resAgendar.data.message);
+        return;
+      }else if(resAgendar.data.unavailable){
+        setAlerta(resAgendar.data.message);
+        return;
+      }else if(resAgendar.data.agendado){
+        setAlerta(resAgendar.data.message);
         return;
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("Hubo un error", err);
+    }
   };
   return (
     <>
       <Layout>
-        <h1 className="text-center text-ferra font-bold text-4xl">Asignación de citas</h1>
+        <h1 className="text-center text-ferra font-bold text-4xl">
+          Asignación de citas
+        </h1>
         <p className="text-ferra text-center">
           Complete los campos para apartar su cita corporal en la sede de
           Barranquilla
@@ -141,4 +166,4 @@ const agendaCorpSol = () => {
   );
 };
 
-export default agendaCorpSol;
+export default agendaCorpBaq;

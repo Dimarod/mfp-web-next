@@ -6,7 +6,7 @@ export default (req, res) => {
     try {
       const { nombre, fecha } = req.body;
       pool.query(
-        "SELECT * FROM citasBaq WHERE nombre = '" +
+        "SELECT * FROM citasDermoBaq WHERE nombre = '" +
           nombre +
           "' AND fecha = '" +
           fecha +

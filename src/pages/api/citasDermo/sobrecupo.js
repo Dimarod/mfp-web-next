@@ -4,13 +4,13 @@ import { pool } from "../../../../config/db";
 export default (req, res) => {
   if (req.method === "POST") {
     try {
-      const { fecha, horab } = req.body;
+      const { fecha, horaf } = req.body;
       pool.query(
-        "SELECT * FROM citasBaq WHERE fecha = '" +
+        "SELECT * FROM citasDermo WHERE fecha = '" +
           fecha +
-          "' AND horab = '" +
-          horab +
-          "' AND tipoBaq != 'Nutricion'",
+          "' AND horaf = '" +
+          horaf +
+          "' AND tipoDermo != 'Nutricion'",
         (err, rows, fields) => {
           if (rows.length >= 3) {
             return res.status(200).json({ sobrecupo: true });

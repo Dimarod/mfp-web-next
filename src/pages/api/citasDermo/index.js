@@ -1,15 +1,15 @@
-import { pool } from "/config/db";
+import { pool } from "../../../../config/db";
 
 export default function handler(req, res) {
   switch (req.method) {
     case "GET":
       return listarCitas(req, res);
     case "POST":
-      return evitarCitaDuplicada(req, res);
+      return agendarCita(req, res);
   }
 }
 const listarCitas = (req, res) => {
-  pool.query("SELECT * FROM citasDermo", function (err, rows, fields) {
+  pool.query("SELECT * FROM citasDermo ORDER BY horaf", function (err, rows, fields) {
     if (err) {
       console.log(err);
     } else {
@@ -19,98 +19,42 @@ const listarCitas = (req, res) => {
 };
 
 const agendarCita = (req, res) => {
-  const { fecha, tipoDermo, horaf, telefono } = req.body;
-  const tempNombre = req.body.nombre;
-  const nombre = tempNombre.trim();
-  console.log(nombre);
-  pool.query("INSERT INTO citasDermo SET ?", {
-    nombre,
-    fecha,
-    horaf,
-    tipoDermo,
-    telefono,
-  });
-  return res.send("Creating");
-};
+  try {
+    const { fecha, horaf, tipoDermo, telefono } = req.body;
+    const tempNombre = req.body.nombre;
+    const nombre = tempNombre.trim();
+    const dayDate = new Date(fecha).getUTCDate();
+    const dayAct = new Date().getUTCDate();
+    const monthAct = new Date().getUTCMonth();
+    const monthDate = new Date(req.body.fecha).getUTCMonth();
+    const yearAct = new Date().getFullYear();
+    const yearDate = new Date(req.body.fecha).getFullYear();
+    const weekday = new Date(fecha).getDay() + 1;
 
-const citasNutricion = (req, res) => {
-  let weekday = new Date(req.body.fecha).getDay() + 1;
-  console.log(weekday);
-  pool.query(
-    "SELECT * FROM citasDermo WHERE fecha = '" +
-      req.body.fecha +
-      "' AND tipoDermo = 'Nutricion' AND horaf = '" +
-      req.body.horaf +
-      "'",
-    function (err, rows, fields) {
-      if (err) {
-        console.log(err);
-      } else {
-        if (rows.length < 1) {
-          if (weekday === 6) {
-            if (req.body.horaf >= 14001440 && req.body.horaf <= 18001840) {
-              agendarCita(req, res);
-            } else {
-              let nutricion = true;
-              return nutricion;
-            }
-          } else {
-            let nutricion = true;
-            return nutricion;
-          }
+    if(dayDate <= dayAct && monthDate <= monthAct && yearDate <= yearAct){
+      return res.status(200).json({noActual: true, message: "No puede agendarse para días anteriores o el día en curso"})
+    }else if(weekday === 7){
+      return res.status(200).json({weekday: true, message: "No se permiten agendas los domingos"})
+    }else if(weekday === 6 && horaf >= 16001640){
+      return res.status(200).json({unavailable: true, message: "No tenemos agenda para el horario seleccionado"})
+    }else if(weekday === 4 && horaf > 18401920){
+      return res.status(200).json({unavailable: true, message: "No tenemos agenda para el horario seleccionado"})
+    }
+    pool.query(
+      "INSERT INTO citasDermo SET ?",
+      { nombre, fecha, horaf, tipoDermo, telefono },
+      (err, rows, fields) => {
+        if (err) {
+          console.log("Hubo un error al tratar de agendar la cita", err);
         } else {
-          let nutricion = true;
-          return nutricion;
+          res.status(200).json({
+            agendado: true,
+            message: "Su cita ha sido agendada exitosamente",
+          });
         }
       }
-    }
-  );
-};
-const evitarSobrecupo = (req, res) => {
-  pool.query(
-    "SELECT * FROM citasDermo WHERE fecha = '" +
-      req.body.fecha +
-      "' AND horaf = '" +
-      req.body.horaf +
-      "'",
-    (err, rows, fields) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (req.body.tipoDermo === "Nutricion") {
-          citasNutricion(req, res);
-        } else {
-          if (rows.length >= 3) {
-            let sobrecupo = true;
-            return sobrecupo;
-          } else {
-            agendarCita(req, res);
-          }
-        }
-      }
-    }
-  );
-};
-const evitarCitaDuplicada = (req, res) => {
-  const tempNombre = req.body.nombre;
-  const newName = tempNombre.trim();
-  pool.query(
-    "SELECT * FROM citasDermo WHERE nombre = '" +
-      newName +
-      "' AND fecha = '" +
-      req.body.fecha +
-      "'",
-    (err, rows, fields) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (rows.length >= 1) {
-          let duplicada = true;
-          return duplicada;
-        } else {
-          evitarSobrecupo(req, res);
-        }
-      }
-    }
-  );
+    );
+  } catch (error) {
+    console.log("Hubo un error", error);
+  }
 };

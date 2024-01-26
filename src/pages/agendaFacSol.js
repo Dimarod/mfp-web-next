@@ -8,8 +8,8 @@ const agendaFacSol = () => {
   const [appoinment, setAppoinment] = useState({
     nombre: "",
     fecha: "",
-    horac: "",
-    tipoCorp: "",
+    horaf: "",
+    tipoDermo: "",
     telefono: "",
   });
   const [alerta, setAlerta] = useState("");
@@ -23,7 +23,7 @@ const agendaFacSol = () => {
     e.preventDefault();
     try {
       const resVerificar = await axios.post(
-        "/api/citas/verificar",
+        "/api/citasDermo/verificar",
         appoinment
       );
 
@@ -32,7 +32,7 @@ const agendaFacSol = () => {
         return;
       }
       const resSobrecupo = await axios.post(
-        "/api/citas/sobrecupo",
+        "/api/citasDermo/sobrecupo",
         appoinment
       );
 
@@ -43,19 +43,11 @@ const agendaFacSol = () => {
         return;
       }
       const resNutricion = await axios.post(
-        "/api/citas/validarNutricion",
+        "/api/citasDermo/validarNutricion",
         appoinment
       );
 
-      if(resNutricion.data.nutricion){
-        setAlerta(resNutricion.data.message);
-        return
-      }else if(resNutricion.data.notNutrition){
-        setAlerta(resNutricion.data.message);
-        return
-      }
-
-      const resAgendar = await axios.post("/api/citas/", appoinment);
+      const resAgendar = await axios.post("/api/citasDermo/", appoinment);
       if (resAgendar.data.noActual) {
         setAlerta(resAgendar.data.message);
         return;
@@ -80,7 +72,7 @@ const agendaFacSol = () => {
           Asignación de citas
         </h1>
         <p className="text-ferra text-center">
-          Complete los campos para apartar su cita corporal en la sede de
+          Complete los campos para apartar su cita facial en la sede de
           Soledad
         </p>
         <div className="w-full h-full flex flex-col">
@@ -103,7 +95,7 @@ const agendaFacSol = () => {
             />
             <label className="font-bold">Tipo de cita:</label>
             <select
-              name="tipoCorp"
+              name="tipoDermo"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
               required
@@ -121,7 +113,7 @@ const agendaFacSol = () => {
             </select>
             <label className="font-bold">Hora de la cita:</label>
             <select
-              name="horac"
+              name="horaf"
               className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
               onChange={handleChange}
               required

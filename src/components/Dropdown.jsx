@@ -62,7 +62,7 @@ const Dropdown = () => {
               Equipo
             </Link>
             <Link
-              href="/sede"
+              href="/typeAppoinment"
               className="block px-4 py-2 text-sm text-cancan hover:bg-gray-100"
               role="menuitem"
             >
