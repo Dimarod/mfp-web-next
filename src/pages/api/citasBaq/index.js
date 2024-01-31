@@ -64,7 +64,7 @@ const agendarCita = (req, res) => {
           message: "No tenemos agenda para el horario seleccionado",
         });
     } else if (dayDate === 2) {
-      if (req.body.horac > 12001240) {
+      if (req.body.horab > 12001240) {
         return res.status(200).json({
           unavailable: true,
           message: "No tenemos agenda para el horario seleccionado",
