@@ -1,7 +1,7 @@
 /* eslint-disable react/no-deprecated */
 import React, { useState } from "react";
-import FormCorporal from "@/components/formCorporal";
-import Pdf from "@/components/Pdf";
+import FormFacial from "@/components/FormFacial";
+import PdfFacial from "@/components/PdfFacial";
 import Layout from "@/components/Layout";
 
 // const PdfCorp = dynamic(() =>
@@ -11,7 +11,7 @@ import Layout from "@/components/Layout";
 //   })
 // );
 
-const PdfCorporal = () => {
+const FichaFacial = () => {
   // const [client, setClient] = useState(false);
 
   // useEffect(() => {
@@ -30,12 +30,12 @@ const PdfCorporal = () => {
     <>
       <Layout>
         <div>
-          <FormCorporal onSubmit={handlePdfGeneration} />
-          {pdfVisible && <Pdf formData={formData} />}
+          <FormFacial onSubmit={handlePdfGeneration} />
+          {pdfVisible && <PdfFacial formData={formData} />}
         </div>
       </Layout>
     </>
   );
 };
 
-export default PdfCorporal;
+export default FichaFacial;

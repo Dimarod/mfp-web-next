@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     border: "1px solid black",
     width: "33%",
     textAlign: "center",
-  }
+  },
 });
 
 const Pdf = ({ formData }) => {
