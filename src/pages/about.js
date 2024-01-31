@@ -60,13 +60,13 @@ const About = () => {
             </p>
           </div>
         </div>
-        <h1 className="text-center text-ferra text-5xl font-bold my-28">
+        {/* <h1 className="text-center text-ferra text-5xl font-bold my-28">
           Nuestra historia
         </h1>
         <p className="text-2xl mb-8 text-ferra">Este ha sido nuestro camino hasta ahora</p>
         <div className="w-full h-72 flex justify-center mt-12">
           <Timeline events={timelineEvents} />
-        </div>
+        </div> */}
       </Layout>
     </>
   );

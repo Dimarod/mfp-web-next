@@ -10,13 +10,13 @@ export default function Home() {
   });
   const router = useRouter();
 
-  const handleChange = ({target: {name, value}}) => {
+  const handleChange = ({ target: { name, value } }) => {
     console.log(name, value);
-    setSearch({...search, [name]: value})
+    setSearch({ ...search, [name]: value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push({ pathname: `/personalResult`, query: search});
+    router.push({ pathname: `/personalResult`, query: search });
   };
 
   return (
@@ -44,26 +44,28 @@ export default function Home() {
               onChange={handleChange}
             />
           </div>
-          <div className="flex w-full justify-around items-center text-ferra">
-            <label className="text-sm">Sede en la que agendó su cita</label>
-            <input
-              type="radio"
-              value="citasBaq"
-              onChange={handleChange}
-              name="sede"
-            />
-            <span>Barranquilla</span>
-            <input
-              type="radio"
-              value="citas"
-              onChange={handleChange}
-              name="sede"
-            />
-            <span>Soledad</span>
+          <div className="flex flex-col w-full justify-around mb-3 items-center text-ferra">
+            <label className="md:text-lg mt-3">Sede en la que agendó su cita</label>
+            <div className="w-full flex justify-around">
+              <span>Barranquilla</span>
+              <input
+                type="radio"
+                value="citasBaq"
+                onChange={handleChange}
+                name="sede"
+              />
+              <span>Soledad</span>
+              <input
+                type="radio"
+                value="citas"
+                onChange={handleChange}
+                name="sede"
+              />
+            </div>
           </div>
           <button
             type="submit"
-            className="rounded-lg m-auto text-white mt-2 block bg-ferra p-3 "
+            className="mb-3 rounded-lg m-auto text-white mt-2 block bg-ferra p-3 "
           >
             Buscar
           </button>

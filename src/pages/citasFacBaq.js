@@ -32,7 +32,7 @@ const citasFacBaq = ({ citas }) => {
   return (
     <>
       <h2 className="text-center font-extralight text-2xl mt-2">
-        Listado de citas para la sede de Soledad
+        Listado de citas para la sede de Barranquilla
       </h2>
       <div className="w-full my-6">
         <form
