@@ -21,17 +21,17 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="">
+      <div className="-mt-48 md:mt-0">
         <h1 className="text-center text-ferra font-bold text-3xl md:text-5xl">
           Consulta tu próxima cita
         </h1>
         {/* Agregar a rutas el action del form */}
         <form
-          className="p-10 flex flex-col"
+          className="p-10 flex flex-col items-center"
           method="POST"
           onSubmit={handleSubmit}
         >
-          <div>
+          <div className="flex flex-col">
             <label className="text-ferra font-bold" id="name">
               Nombre del paciente:
             </label>

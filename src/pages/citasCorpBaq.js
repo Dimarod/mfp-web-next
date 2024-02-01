@@ -6,11 +6,18 @@ import React, { Fragment, useState } from "react";
 const citasCorpBaq = ({ citas }) => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState(false);
-  const router = useRouter();
+  const router = useRouter()
 
   const handleDelete = async (id) => {
     await axios.delete("/api/citasBaq/personalAppoinment?id=" + id);
-    router.reload("citasCorpBaq");
+    const result = await axios.post("/api/citasBaq/search", search);
+    console.log(result.data.rows.length);
+    if (result.data.rows.length > 0) {
+      setResult(result.data.rows);
+    }else{
+      router.reload("citasCorpBaq")
+    }
+    return;
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -36,7 +43,7 @@ const citasCorpBaq = ({ citas }) => {
       </h2>
       <div className="w-full my-6">
         <form
-          className="w-full flex md:flex-col justify-center items-center"
+          className="w-full flex flex-col justify-center items-center"
           onSubmit={handleSubmit}
         >
           <input
@@ -57,34 +64,61 @@ const citasCorpBaq = ({ citas }) => {
             <thead className="border-y-2 bg-slate-50/30 border-ferra">
               <tr>
                 <th className="">Nombre</th>
-                <th>Fecha</th>
+                <th className="px-4">Fecha</th>
                 <th className="px-6">Tipo de cita</th>
                 <th>Hora</th>
-                <th className="px-4">Teléfono</th>
+                <th className="px-10">Teléfono</th>
                 <th></th>
               </tr>
             </thead>
             <tbody className="text-center border-y-2 border-ferra">
               {result.map((res) => {
-                if (res.horab) {
-                  let sHour = res.horab.toString();
-                  if (sHour.length === 6) {
-                    var tempHour = sHour.substr(0, 3);
-                    var hour = tempHour.substr(0, 1);
-                    var minutes = tempHour.substr(1, 2);
-                  } else {
-                    var tempHour = sHour.substr(0, 4);
-                    var hour = tempHour.substr(0, 2);
-                    var minutes = tempHour.substr(2, 2);
-                  }
+                if(res.horab === 720800){
+                  var hora = "7:20 AM"
+                }else if(res.horab === 800840){
+                  var hora = "8:00 AM"
+                }else if(res.horab === 840920){
+                  var hora = "8:40 AM"
+                }else if(res.horab === 9201000){
+                  var hora = "9:20 AM"
+                }else if(res.horab === 10001040){
+                  var hora = "10:00 AM"
+                }else if(res.horab === 10401120){
+                  var hora = "10:40 AM"
+                }else if(res.horab === 11201200){
+                  var hora = "11:20 AM"
+                }else if(res.horab === 12001240){
+                  var hora = "12:00 PM"
+                }else if(res.horab === 12401320){
+                  var hora = "12:40 PM"
+                }else if(res.horab === 13201400){
+                  var hora = "1:20 PM"
+                }else if(res.horab === 14001440){
+                  var hora = "2:00 PM"
+                }else if(res.horab === 14401520){
+                  var hora = "2:40 PM"
+                }else if(res.horab === 15201600){
+                  var hora = "3:20 PM"
+                }else if(res.horab === 16001640){
+                  var hora = "4:00 PM"
+                }else if(res.horab === 16401720){
+                  var hora = "4:40 PM"
+                }else if(res.horab === 17201800){
+                  var hora = "5:20 PM"
+                }else if(res.horab === 18001840){
+                  var hora = "6:00 PM"
+                }else if(res.horab === 18401920){
+                  var hora = "6:40 PM"
+                }else{
+                  var hora = 0
                 }
                 return (
                   <Fragment key={res._id}>
                     <tr className="border-y text-sm md:text-base   border-ferra">
                       <td className="p-3 m-3">{res.nombre}</td>
                       <td>{res.fecha}</td>
-                      <td>{res.tipoCorp}</td>
-                      <td>{`${hour}:${minutes}`}</td>
+                      <td>{res.tipoBaq}</td>
+                      <td>{hora}</td>
                       <td>{res.telefono}</td>
                       <td>
                         <button
@@ -105,34 +139,61 @@ const citasCorpBaq = ({ citas }) => {
             <thead className="border-y-2 bg-slate-50/30 border-ferra">
               <tr>
                 <th className="">Nombre</th>
-                <th>Fecha</th>
-                <th className="px-6">Tipo de cita</th>
+                <th className="px-4">Fecha</th>
+                <th className="px-6">Cita</th>
                 <th>Hora</th>
-                <th className="px-4">Teléfono</th>
+                <th className="px-10">Teléfono</th>
                 <th></th>
               </tr>
             </thead>
             <tbody className="text-center border-y-2 border-ferra">
               {citas.map((cita) => {
-                if (cita.horab) {
-                  let sHour = cita.horab.toString();
-                  if (sHour.length === 6) {
-                    var tempHour = sHour.substr(0, 3);
-                    var hour = tempHour.substr(0, 1);
-                    var minutes = tempHour.substr(1, 2);
-                  } else {
-                    var tempHour = sHour.substr(0, 4);
-                    var hour = tempHour.substr(0, 2);
-                    var minutes = tempHour.substr(2, 2);
-                  }
+                if(cita.horab === 720800){
+                  var hora = "7:20 AM"
+                }else if(cita.horab === 800840){
+                  var hora = "8:00 AM"
+                }else if(cita.horab === 840920){
+                  var hora = "8:40 AM"
+                }else if(cita.horab === 9201000){
+                  var hora = "9:20 AM"
+                }else if(cita.horab === 10001040){
+                  var hora = "10:00 AM"
+                }else if(cita.horab === 10401120){
+                  var hora = "10:40 AM"
+                }else if(cita.horab === 11201200){
+                  var hora = "11:20 AM"
+                }else if(cita.horab === 12001240){
+                  var hora = "12:00 PM"
+                }else if(cita.horab === 12401320){
+                  var hora = "12:40 PM"
+                }else if(cita.horab === 13201400){
+                  var hora = "1:20 PM"
+                }else if(cita.horab === 14001440){
+                  var hora = "2:00 PM"
+                }else if(cita.horab === 14401520){
+                  var hora = "2:40 PM"
+                }else if(cita.horab === 15201600){
+                  var hora = "3:20 PM"
+                }else if(cita.horab === 16001640){
+                  var hora = "4:00 PM"
+                }else if(cita.horab === 16401720){
+                  var hora = "4:40 PM"
+                }else if(cita.horab === 17201800){
+                  var hora = "5:20 PM"
+                }else if(cita.horab === 18001840){
+                  var hora = "6:00 PM"
+                }else if(cita.horab === 18401920){
+                  var hora = "6:40 PM"
+                }else{
+                  var hora = 0
                 }
                 return (
                   <Fragment key={cita._id}>
                     <tr className="border-y text-sm md:text-base   border-ferra">
                       <td className="p-3 m-3">{cita.nombre}</td>
                       <td>{cita.fecha}</td>
-                      <td>{cita.tipoCorp}</td>
-                      <td>{`${hour}:${minutes}`}</td>
+                      <td>{cita.tipoBaq}</td>
+                      <td>{hora}</td>
                       <td>{cita.telefono}</td>
                       <td>
                         <button

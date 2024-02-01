@@ -13,7 +13,7 @@ const Team = () => {
   return (
     <>
       <Layout>
-        <h1 className="text-center text-ferra text-5xl md:text-5xl font-bold">
+        <h1 className="text-center text-ferra text-3xl md:text-5xl font-bold">
           Te presentamos a nuestro más que capacitado equipo de trabajo
         </h1>
         <div className="flex flex-wrap gap-5 mt-12 rounded-lg md:flex-row justify-around items-center w-full border-2 border-ferra">
