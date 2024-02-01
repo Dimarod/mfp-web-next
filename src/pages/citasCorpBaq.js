@@ -157,7 +157,7 @@ const citasCorpBaq = ({ citas }) => {
 export default citasCorpBaq;
 
 export const getServerSideProps = async (context) => {
-  const { data: citas } = await axios.get("http://192.168.1.11:3000/api/citasBaq");
+  const { data: citas } = await axios.get("http://localhost:3000/api/citasBaq");
 
   return {
     props: {

@@ -157,7 +157,7 @@ const citasFacSol = ({ citas }) => {
 export default citasFacSol;
 
 export const getServerSideProps = async (context) => {
-  const { data: citas } = await axios.get("http://192.168.1.11:3000/api/citasDermo");
+  const { data: citas } = await axios.get("http://localhost:3000/api/citasDermo");
 
   return {
     props: {
