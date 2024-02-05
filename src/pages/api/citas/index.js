@@ -24,8 +24,12 @@ const listarCitas = (req, res) => {
 const agendarCita = (req, res) => {
   try {
     const { fecha, horac, tipoCorp, telefono } = req.body;
-    const tempNombre = req.body.nombre;
-    const nombre = tempNombre.trim();
+    const nombreOri = req.body.nombre;
+    const divName = nombreOri.trim().split(" ");
+    const longName = divName.length;
+    const firstName = divName[0];
+    const lastName = divName[longName - 1];
+    const nombre = firstName + " " + lastName;
     const dayDate = new Date(fecha).getUTCDate();
     const dayAct = new Date().getUTCDate();
     const monthAct = new Date().getUTCMonth();
@@ -35,49 +39,37 @@ const agendarCita = (req, res) => {
     const weekday = new Date(fecha).getDay() + 1;
 
     if (dayDate <= dayAct && monthDate <= monthAct && yearDate <= yearAct) {
-      return res
-        .status(200)
-        .json({
-          noActual: true,
-          message: "No puede agendarse para días anteriores o el día en curso",
-        });
+      return res.status(200).json({
+        noActual: true,
+        message: "No puede agendarse para días anteriores o el día en curso",
+      });
     } else if (weekday === 7) {
-      return res
-        .status(200)
-        .json({
-          weekday: true,
-          message: "No se permiten agendas los domingos",
-        });
+      return res.status(200).json({
+        weekday: true,
+        message: "No se permiten agendas los domingos",
+      });
     } else if (weekday === 6 && horac >= 16001640) {
-      return res
-        .status(200)
-        .json({
-          unavailable: true,
-          message: "No tenemos agenda para el horario seleccionado",
-        });
+      return res.status(200).json({
+        unavailable: true,
+        message: "No tenemos agenda para el horario seleccionado",
+      });
     } else if (weekday === 4 && horac > 18401920) {
-      return res
-        .status(200)
-        .json({
-          unavailable: true,
-          message: "No tenemos agenda para el horario seleccionado",
-        });
+      return res.status(200).json({
+        unavailable: true,
+        message: "No tenemos agenda para el horario seleccionado",
+      });
     } else if (dayDate === 2) {
       if (req.body.horac > 12001240) {
-        return res
-          .status(200)
-          .json({
-            unavailable: true,
-            message: "No tenemos agenda para el horario seleccionado",
-          });
-      }
-    } else if (dayDate === 3) {
-      return res
-        .status(200)
-        .json({
+        return res.status(200).json({
           unavailable: true,
           message: "No tenemos agenda para el horario seleccionado",
         });
+      }
+    } else if (dayDate === 3) {
+      return res.status(200).json({
+        unavailable: true,
+        message: "No tenemos agenda para el horario seleccionado",
+      });
     }
     pool.query(
       "INSERT INTO citas SET ?",

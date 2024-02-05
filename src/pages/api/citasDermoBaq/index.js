@@ -9,20 +9,27 @@ export default function handler(req, res) {
   }
 }
 const listarCitas = (req, res) => {
-  pool.query("SELECT * FROM citasDermoBaq ORDER BY horafb", function (err, rows, fields) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.status(200).json(rows);
+  pool.query(
+    "SELECT * FROM citasDermoBaq ORDER BY horafb",
+    function (err, rows, fields) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).json(rows);
+      }
     }
-  });
+  );
 };
 
 const agendarCita = (req, res) => {
   try {
     const { fecha, horafb, tipoDermoBaq, telefono } = req.body;
-    const tempNombre = req.body.nombre;
-    const nombre = tempNombre.trim();
+    const nombreOri = req.body.nombre;
+    const divName = nombreOri.trim().split(" ");
+    const longName = divName.length;
+    const firstName = divName[0];
+    const lastName = divName[longName - 1];
+    const nombre = firstName + " " + lastName;
     const dayDate = new Date(fecha).getUTCDate();
     const dayAct = new Date().getUTCDate();
     const monthAct = new Date().getUTCMonth();
@@ -31,14 +38,27 @@ const agendarCita = (req, res) => {
     const yearDate = new Date(req.body.fecha).getFullYear();
     const weekday = new Date(fecha).getDay() + 1;
 
-    if(dayDate <= dayAct && monthDate <= monthAct && yearDate <= yearAct){
-      return res.status(200).json({noActual: true, message: "No puede agendarse para días anteriores o el día en curso"})
-    }else if(weekday === 7){
-      return res.status(200).json({weekday: true, message: "No se permiten agendas los domingos"})
-    }else if(weekday === 6 && horafb >= 16001640){
-      return res.status(200).json({unavailable: true, message: "No tenemos agenda para el horario seleccionado"})
-    }else if(weekday === 4 && horafb > 18401920){
-      return res.status(200).json({unavailable: true, message: "No tenemos agenda para el horario seleccionado"})
+    if (dayDate <= dayAct && monthDate <= monthAct && yearDate <= yearAct) {
+      return res
+        .status(200)
+        .json({
+          noActual: true,
+          message: "No puede agendarse para días anteriores o el día en curso",
+        });
+    } else if (weekday === 7) {
+      return res
+        .status(200)
+        .json({
+          weekday: true,
+          message: "No se permiten agendas los domingos",
+        });
+    } else if (req.body.tipoDermoBaq) {
+      return res
+        .status(200)
+        .json({
+          unavailable: true,
+          message: "No tenemos agenda para el horario seleccionado",
+        });
     }
     pool.query(
       "INSERT INTO citasDermoBaq SET ?",

@@ -4,7 +4,13 @@ import { pool } from "../../../../config/db";
 export default (req, res) => {
   if (req.method === "POST") {
     try {
-      const { nombre, fecha } = req.body;
+      const { fecha } = req.body;
+      const nombreOri = req.body.nombre;
+      const divName = nombreOri.trim().split(" ");
+      const longName = divName.length;
+      const firstName = divName[0];
+      const lastName = divName[longName - 1];
+      const nombre = firstName + " " + lastName;
       pool.query(
         "SELECT * FROM citasBaq WHERE nombre = '" +
           nombre +
