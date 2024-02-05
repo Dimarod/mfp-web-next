@@ -9,8 +9,8 @@ const citasCorpSol = ({ citas }) => {
   const router = useRouter();
 
   const handleDelete = async (id) => {
-    await axios.delete("/api/citasBaq/personalAppoinment?id=" + id);
-    const result = await axios.post("/api/citasBaq/search", search);
+    await axios.delete("/api/citas/personalAppoinment?id=" + id);
+    const result = await axios.post("/api/citas/search", search);
     console.log(result.data.rows.length);
     if (result.data.rows.length > 0) {
       setResult(result.data.rows);
