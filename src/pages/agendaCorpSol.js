@@ -134,9 +134,6 @@ const agendaCorpSol = () => {
               <option value="10001040">10:00 AM - 10:40 AM</option>
               <option value="10401120">10:40 AM - 11:20 AM</option>
               <option value="11201200">11:20 AM - 12:00 PM</option>
-              <option value="12001240">12:00 PM - 12:40 PM</option>
-              <option value="12401320">12:40 PM - 1:20 PM</option>
-              <option value="13201400">1:20 PM - 2:00 PM</option>
               <option value="14001440">2:00 PM - 2:40 PM</option>
               <option value="14401520">2:40 PM - 3:20 PM</option>
               <option value="15201600">3:20 PM - 4:00 PM</option>
@@ -145,7 +142,6 @@ const agendaCorpSol = () => {
               <option value="17201800">5:20 PM - 6:00 PM</option>
               <option value="18001840">6:00 PM - 6:40 PM</option>
               <option value="18401920">6:40 PM - 7:20 PM</option>
-              <option value="19202000">7:20 PM - 8:00 PM</option>
             </select>
             <label className="font-bold">Teléfono:</label>
             <input
