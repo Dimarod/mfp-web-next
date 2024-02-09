@@ -25,11 +25,7 @@ const agendarCita = (req, res) => {
   try {
     const { fecha, horafb, tipoDermoBaq, telefono } = req.body;
     const nombreOri = req.body.nombre;
-    const divName = nombreOri.trim().split(" ");
-    const longName = divName.length;
-    const firstName = divName[0];
-    const lastName = divName[longName - 1];
-    const nombre = firstName + " " + lastName;
+    const nombre = nombreOri.trim();
     const dayDate = new Date(fecha).getUTCDate();
     const dayAct = new Date().getUTCDate();
     const monthAct = new Date().getUTCMonth();
