@@ -30,8 +30,8 @@ const agendarCita = (req, res) => {
     const dayAct = new Date().getUTCDate();
     const monthAct = new Date().getUTCMonth();
     const monthDate = new Date(req.body.fecha).getUTCMonth();
-    const yearAct = new Date().getFullYear();
-    const yearDate = new Date(req.body.fecha).getFullYear();
+    const yearAct = new Date().getUTCFullYear();
+    const yearDate = new Date(req.body.fecha).getUTCFullYear();
     const weekday = new Date(fecha).getUTCDay() + 1;
 
     console.log(weekday);
@@ -46,6 +46,11 @@ const agendarCita = (req, res) => {
       return res.status(200).json({
         weekday: true,
         message: "No se permiten agendas los domingos",
+      });
+    }else if(weekday === 7 && horac >= 16401720){
+      return res.status(200).json({
+        unavailable: true,
+        message: "No tenemos agenda para el horario seleccionado",
       });
     } else if (dayDate === 10 || dayDate === 11 || dayDate === 12 || dayDate === 13) {
       return res.status(200).json({
