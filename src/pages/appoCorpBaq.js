@@ -3,19 +3,19 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 
-const citasFacBaq = ({ citas }) => {
+const citasCorpBaq = ({ citas }) => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState(false);
-  const router = useRouter();
+  const router = useRouter()
 
   const handleDelete = async (id) => {
-    await axios.delete("/api/citasDermoBaq/personalAppoinment?id=" + id);
-    const result = await axios.post("/api/citasDermoBaq/search", search);
+    await axios.delete("/api/citasBaq/personalAppoinment?id=" + id);
+    const result = await axios.post("/api/citasBaq/search", search);
     console.log(result.data.rows.length);
     if (result.data.rows.length > 0) {
       setResult(result.data.rows);
     }else{
-      router.reload("citasCorpBaq")
+      router.reload("appoCorpBaq")
     }
     return;
   };
@@ -28,7 +28,7 @@ const citasFacBaq = ({ citas }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await axios.post("/api/citasDermoBaq/search", search);
+    const result = await axios.post("/api/citasBaq/search", search);
     console.log(result.data.rows);
     if (result.data.rows) {
       setResult(result.data.rows);
@@ -64,7 +64,7 @@ const citasFacBaq = ({ citas }) => {
             <thead className="border-y-2 bg-slate-50/30 border-ferra">
               <tr>
                 <th className="">Nombre</th>
-                <th>Fecha</th>
+                <th className="px-4">Fecha</th>
                 <th className="px-6">Tipo de cita</th>
                 <th>Hora</th>
                 <th className="px-10">Teléfono</th>
@@ -73,41 +73,41 @@ const citasFacBaq = ({ citas }) => {
             </thead>
             <tbody className="text-center border-y-2 border-ferra">
               {result.map((res) => {
-                if(res.horafb === 720800){
+                if(res.horab === 720800){
                   var hora = "7:20 AM"
-                }else if(res.horafb === 800840){
+                }else if(res.horab === 800840){
                   var hora = "8:00 AM"
-                }else if(res.horafb === 840920){
+                }else if(res.horab === 840920){
                   var hora = "8:40 AM"
-                }else if(res.horafb === 9201000){
+                }else if(res.horab === 9201000){
                   var hora = "9:20 AM"
-                }else if(res.horafb === 10001040){
+                }else if(res.horab === 10001040){
                   var hora = "10:00 AM"
-                }else if(res.horafb === 10401120){
+                }else if(res.horab === 10401120){
                   var hora = "10:40 AM"
-                }else if(res.horafb === 11201200){
+                }else if(res.horab === 11201200){
                   var hora = "11:20 AM"
-                }else if(res.horafb === 12001240){
+                }else if(res.horab === 12001240){
                   var hora = "12:00 PM"
-                }else if(res.horafb === 12401320){
+                }else if(res.horab === 12401320){
                   var hora = "12:40 PM"
-                }else if(res.horafb === 13201400){
+                }else if(res.horab === 13201400){
                   var hora = "1:20 PM"
-                }else if(res.horafb === 14001440){
+                }else if(res.horab === 14001440){
                   var hora = "2:00 PM"
-                }else if(res.horafb === 14401520){
+                }else if(res.horab === 14401520){
                   var hora = "2:40 PM"
-                }else if(res.horafb === 15201600){
+                }else if(res.horab === 15201600){
                   var hora = "3:20 PM"
-                }else if(res.horafb === 16001640){
+                }else if(res.horab === 16001640){
                   var hora = "4:00 PM"
-                }else if(res.horafb === 16401720){
+                }else if(res.horab === 16401720){
                   var hora = "4:40 PM"
-                }else if(res.horafb === 17201800){
+                }else if(res.horab === 17201800){
                   var hora = "5:20 PM"
-                }else if(res.horafb === 18001840){
+                }else if(res.horab === 18001840){
                   var hora = "6:00 PM"
-                }else if(res.horafb === 18401920){
+                }else if(res.horab === 18401920){
                   var hora = "6:40 PM"
                 }else{
                   var hora = 0
@@ -117,7 +117,7 @@ const citasFacBaq = ({ citas }) => {
                     <tr className="border-y text-sm md:text-base   border-ferra">
                       <td className="p-3 m-3">{res.nombre}</td>
                       <td>{res.fecha}</td>
-                      <td>{res.tipoDermoBaq}</td>
+                      <td>{res.tipoBaq}</td>
                       <td>{hora}</td>
                       <td>{res.telefono}</td>
                       <td>
@@ -139,8 +139,8 @@ const citasFacBaq = ({ citas }) => {
             <thead className="border-y-2 bg-slate-50/30 border-ferra">
               <tr>
                 <th className="">Nombre</th>
-                <th>Fecha</th>
-                <th className="px-6">Tipo de cita</th>
+                <th className="px-4">Fecha</th>
+                <th className="px-6">Cita</th>
                 <th>Hora</th>
                 <th className="px-10">Teléfono</th>
                 <th></th>
@@ -148,41 +148,41 @@ const citasFacBaq = ({ citas }) => {
             </thead>
             <tbody className="text-center border-y-2 border-ferra">
               {citas.map((cita) => {
-                if(cita.horafb === 720800){
+                if(cita.horab === 720800){
                   var hora = "7:20 AM"
-                }else if(cita.horafb === 800840){
+                }else if(cita.horab === 800840){
                   var hora = "8:00 AM"
-                }else if(cita.horafb === 840920){
+                }else if(cita.horab === 840920){
                   var hora = "8:40 AM"
-                }else if(cita.horafb === 9201000){
+                }else if(cita.horab === 9201000){
                   var hora = "9:20 AM"
-                }else if(cita.horafb === 10001040){
+                }else if(cita.horab === 10001040){
                   var hora = "10:00 AM"
-                }else if(cita.horafb === 10401120){
+                }else if(cita.horab === 10401120){
                   var hora = "10:40 AM"
-                }else if(cita.horafb === 11201200){
+                }else if(cita.horab === 11201200){
                   var hora = "11:20 AM"
-                }else if(cita.horafb === 12001240){
+                }else if(cita.horab === 12001240){
                   var hora = "12:00 PM"
-                }else if(cita.horafb === 12401320){
+                }else if(cita.horab === 12401320){
                   var hora = "12:40 PM"
-                }else if(cita.horafb === 13201400){
+                }else if(cita.horab === 13201400){
                   var hora = "1:20 PM"
-                }else if(cita.horafb === 14001440){
+                }else if(cita.horab === 14001440){
                   var hora = "2:00 PM"
-                }else if(cita.horafb === 14401520){
+                }else if(cita.horab === 14401520){
                   var hora = "2:40 PM"
-                }else if(cita.horafb === 15201600){
+                }else if(cita.horab === 15201600){
                   var hora = "3:20 PM"
-                }else if(cita.horafb === 16001640){
+                }else if(cita.horab === 16001640){
                   var hora = "4:00 PM"
-                }else if(cita.horafb === 16401720){
+                }else if(cita.horab === 16401720){
                   var hora = "4:40 PM"
-                }else if(cita.horafb === 17201800){
+                }else if(cita.horab === 17201800){
                   var hora = "5:20 PM"
-                }else if(cita.horafb === 18001840){
+                }else if(cita.horab === 18001840){
                   var hora = "6:00 PM"
-                }else if(cita.horafb === 18401920){
+                }else if(cita.horab === 18401920){
                   var hora = "6:40 PM"
                 }else{
                   var hora = 0
@@ -192,7 +192,7 @@ const citasFacBaq = ({ citas }) => {
                     <tr className="border-y text-sm md:text-base   border-ferra">
                       <td className="p-3 m-3">{cita.nombre}</td>
                       <td>{cita.fecha}</td>
-                      <td>{cita.tipoDermoBaq}</td>
+                      <td>{cita.tipoBaq}</td>
                       <td>{hora}</td>
                       <td>{cita.telefono}</td>
                       <td>
@@ -215,10 +215,10 @@ const citasFacBaq = ({ citas }) => {
   );
 };
 
-export default citasFacBaq;
+export default citasCorpBaq;
 
 export const getServerSideProps = async (context) => {
-  const { data: citas } = await axios.get("http://localhost:3000/api/citasDermoBaq");
+  const { data: citas } = await axios.get("http://localhost:3000/api/citasBaq");
 
   return {
     props: {

@@ -44,11 +44,21 @@ const agendarCita = (req, res) => {
         weekday: true,
         message: "No se permiten agendas los domingos",
       });
-    }else if(weekday === 7 && req.body.horab >= 16401720){
+    }else if(weekday === 7 && req.body.horab > 11201200){
       return res.status(200).json({
         unavailable: true,
         message: "No tenemos agenda para el horario seleccionado",
       });
+    }else if(weekday === 7){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el horario seleccionado"
+     })
+    }else if(dayDate === 15){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el horario seleccionado"
+     })
     }
     pool.query(
       "INSERT INTO citasBaq SET ?",

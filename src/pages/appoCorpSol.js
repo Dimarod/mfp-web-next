@@ -15,7 +15,7 @@ const citasCorpSol = ({ citas }) => {
     if (result.data.rows.length > 0) {
       setResult(result.data.rows);
     }else{
-      router.reload("citasCorpBaq")
+      router.reload("appoCorpBaq")
     }
     return;
   };
