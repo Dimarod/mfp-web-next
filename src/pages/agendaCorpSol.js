@@ -7,6 +7,7 @@ import Modal from "@/components/Modal";
 const agendaCorpSol = () => {
   const [appoinment, setAppoinment] = useState({
     nombre: "",
+    apellido: "",
     fecha: "",
     horac: "",
     tipoCorp: "",
@@ -85,9 +86,19 @@ const agendaCorpSol = () => {
         </p>
         <div className="w-full h-full flex flex-col">
           <form className="text-ferra" onSubmit={handleSubmit}>
-            <label className="font-bold">Nombre y apellidos:</label>
+            <label className="font-bold">Nombre:</label>
             <input
               name="nombre"
+              minLength={3}
+              className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
+              type="text"
+              onChange={handleChange}
+              required
+            />
+            <label className="font-bold">Apellido:</label>
+            <input
+              name="apellido"
+              minLength={3}
               className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
               type="text"
               onChange={handleChange}
@@ -96,7 +107,7 @@ const agendaCorpSol = () => {
             <label className="font-bold">Fecha:</label>
             <input
               name="fecha"
-              className="backdrop-blur-sm my-3 w-full border-x-2 border-b-2 rounded-md border-ferra"
+              className="backdrop-blur-sm my-3 w-full border-x-2 border-b-2 rounded-md border-ferra h-7"
               type="date"
               onChange={handleChange}
               required

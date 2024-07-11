@@ -50,7 +50,7 @@ const citasCorpSol = ({ citas }) => {
             name="search"
             onChange={handleChange}
             type="date"
-            className="w-1/3 border-2 rounded-md border-ferra text-center"
+            className="w-1/3 border-2 h-7 rounded-md border-ferra text-center"
           />
           <button
             type="submit"
@@ -65,7 +65,7 @@ const citasCorpSol = ({ citas }) => {
               <tr>
                 <th className="">Nombre</th>
                 <th>Fecha</th>
-                <th className="px-6">Tipo de cita</th>
+                <th className="px-6">Cita</th>
                 <th>Hora</th>
                 <th className="px-10">Teléfono</th>
                 <th></th>
@@ -140,7 +140,7 @@ const citasCorpSol = ({ citas }) => {
               <tr>
                 <th className="">Nombre</th>
                 <th>Fecha</th>
-                <th className="px-6">Tipo de cita</th>
+                <th className="px-6">Cita</th>
                 <th>Hora</th>
                 <th className="px-10">Teléfono</th>
                 <th></th>

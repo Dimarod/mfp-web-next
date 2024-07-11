@@ -50,7 +50,7 @@ const citasCorpBaq = ({ citas }) => {
             name="search"
             onChange={handleChange}
             type="date"
-            className="w-1/3 border-2 rounded-md border-ferra text-center"
+            className="w-1/3 border-2 rounded-md border-ferra text-center h-7"
           />
           <button
             type="submit"

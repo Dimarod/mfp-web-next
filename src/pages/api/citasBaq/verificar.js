@@ -5,12 +5,7 @@ export default (req, res) => {
   if (req.method === "POST") {
     try {
       const { fecha } = req.body;
-      const nombreOri = req.body.nombre;
-      const divName = nombreOri.trim().split(" ");
-      const longName = divName.length;
-      const firstName = divName[0];
-      const lastName = divName[longName - 1];
-      const nombre = firstName + " " + lastName;
+      const nombre = req.body.nombre + " " + req.body.apellido;
       pool.query(
         "SELECT * FROM citasBaq WHERE nombre = '" +
           nombre +

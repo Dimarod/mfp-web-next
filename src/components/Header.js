@@ -35,10 +35,10 @@ const Header = () => {
               Equipo
             </a>
             <a
-              href="about"
+              href="consultar"
               className="mr-4 text-ferra hover:text-mulberry font-bold text-xl"
             >
-              Sobre Nosotros
+              Consulta tu cita
             </a>
             <a
               href="typeAppoinment"

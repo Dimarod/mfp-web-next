@@ -25,7 +25,10 @@ const agendarCita = (req, res) => {
   try {
     const { fecha, horac, tipoCorp, telefono } = req.body;
     const nombreOri = req.body.nombre;
-    const nombre = nombreOri.trim();
+    const nombreTmp = nombreOri.trim();
+    const apellidoOri = req.body.apellido
+    const apellidoTmp = apellidoOri.trim()
+    const nombre = nombreTmp + " " + apellidoTmp
     const dayDate = new Date(fecha).getUTCDate();
     const dayAct = new Date().getUTCDate();
     const monthAct = new Date().getUTCMonth();
