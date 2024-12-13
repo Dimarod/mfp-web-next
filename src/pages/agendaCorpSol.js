@@ -89,7 +89,7 @@ const agendaCorpSol = () => {
             <label className="font-bold">Nombre:</label>
             <input
               name="nombre"
-              minLength={3}
+              minLength="3"
               className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
               type="text"
               onChange={handleChange}
@@ -98,7 +98,7 @@ const agendaCorpSol = () => {
             <label className="font-bold">Apellido:</label>
             <input
               name="apellido"
-              minLength={3}
+              minLength="3"
               className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
               type="text"
               onChange={handleChange}
@@ -138,19 +138,15 @@ const agendaCorpSol = () => {
               required
             >
               <option value="default"></option>
-              <option value="800840">8:00 AM - 8:40 AM</option>
-              <option value="840920">8:40 AM - 9:20 AM</option>
-              <option value="9201000">9:20 AM - 10:00 AM</option>
-              <option value="10001040">10:00 AM - 10:40 AM</option>
-              <option value="10401120">10:40 AM - 11:20 AM</option>
-              <option value="11201200">11:20 AM - 12:00 PM</option>
-              <option value="14001440">2:00 PM - 2:40 PM</option>
-              <option value="14401520">2:40 PM - 3:20 PM</option>
-              <option value="15201600">3:20 PM - 4:00 PM</option>
-              <option value="16001640">4:00 PM - 4:40 PM</option>
-              <option value="16401720">4:40 PM - 5:20 PM</option>
-              <option value="17201800">5:20 PM - 6:00 PM</option>
-              <option value="18001840">6:00 PM - 6:40 PM</option>
+              <option value="800900">8:00 AM - 9:00 AM</option>
+              <option value="9001000">9:00 AM - 10:00 AM</option>
+              <option value="10001100">10:00 AM - 11:00 AM</option>
+              <option value="11001200">11:00 AM - 12:00 AM</option>
+              <option value="14001500">2:00 PM - 3:00 PM</option>
+              <option value="15001600">3:00 PM - 4:00 PM</option>
+              <option value="16001700">4:00 PM - 5:00 PM</option>
+              <option value="17001800">5:00 PM - 6:00 PM</option>
+              <option value="18001900">6:00 PM - 7:00 PM</option>
             </select>
             <label className="font-bold">Teléfono:</label>
             <input

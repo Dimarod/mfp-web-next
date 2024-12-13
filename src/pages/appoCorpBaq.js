@@ -73,8 +73,8 @@ const citasCorpBaq = ({ citas }) => {
             </thead>
             <tbody className="text-center border-y-2 border-ferra">
               {result.map((res) => {
-                if(res.horab === 720800){
-                  var hora = "7:20 AM"
+                if(res.horab === 700800){
+                  var hora = "7:00 AM"
                 }else if(res.horab === 800840){
                   var hora = "8:00 AM"
                 }else if(res.horab === 840920){
@@ -148,8 +148,8 @@ const citasCorpBaq = ({ citas }) => {
             </thead>
             <tbody className="text-center border-y-2 border-ferra">
               {citas.map((cita) => {
-                if(cita.horab === 720800){
-                  var hora = "7:20 AM"
+                if(cita.horab === 700800){
+                  var hora = "7:00 AM"
                 }else if(cita.horab === 800840){
                   var hora = "8:00 AM"
                 }else if(cita.horab === 840920){

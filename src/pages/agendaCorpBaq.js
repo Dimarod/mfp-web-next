@@ -92,7 +92,7 @@ const agendaCorpBaq = () => {
               className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
               type="text"
               onChange={handleChange}
-              minLength={3}
+              minLength="3"
               required
             />
             <label className="font-bold">Apellido:</label>
@@ -101,7 +101,7 @@ const agendaCorpBaq = () => {
               className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
               type="text"
               onChange={handleChange}
-              minLength={3}
+              minLength="3"
               required
             />
             <label className="font-bold">Fecha:</label>
@@ -138,6 +138,7 @@ const agendaCorpBaq = () => {
               required
             >
               <option value="default"></option>
+              <option value="700800">7:00 AM - 8:00 AM</option>
               <option value="800840">8:00 AM - 8:40 AM</option>
               <option value="840920">8:40 AM - 9:20 AM</option>
               <option value="9201000">9:20 AM - 10:00 AM</option>

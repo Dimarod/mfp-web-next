@@ -42,26 +42,45 @@ const agendarCita = (req, res) => {
         noActual: true,
         message: "No puede agendarse para días anteriores o el día en curso",
       });
-    } else if (weekday === 1) {
+    } else if (weekday === 1 && req.body.horab < 15201600) {
+       if(req.body.tipoBaq != "Post"){
+        return res.status(200).json({
+          weekday: true,
+          message: "No se permiten agendas los domingos",
+        });
+       }
+    }else if(weekday === 1 && req.body.horab > 15201600){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el día seleccionado"
+     })
+    }else if(dayDate === 19 && req.body.horab > 16001640){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el horario seleccionado"
+     })
+    }else if(dayDate === 8 && req.body.horab < 15201600){
+     if(req.body.tipoBaq != "Post"){
       return res.status(200).json({
-        weekday: true,
-        message: "No se permiten agendas los domingos",
-      });
-    }else if(weekday === 7 && req.body.horab > 11201200){
+       unavailable: true,
+       message: "No tenemos agenda para el día seleccionado"
+      })
+     }
+    }else if(dayDate === 8 && req.body.horab > 15201600){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el día seleccionado"
+     })
+    }else if(weekday === 7 && req.body.horab > 15201600){
       return res.status(200).json({
         unavailable: true,
         message: "No tenemos agenda para el horario seleccionado",
       });
-    }else if(weekday === 7){
-     return res.status(200).json({
-      unavailable: true,
-      message: "No tenemos agenda para el horario seleccionado"
-     })
-    }else if(dayDate === 15){
-     return res.status(200).json({
-      unavailable: true,
-      message: "No tenemos agenda para el horario seleccionado"
-     })
+    }else if(dayDate === 11){
+      return res.status(200).json({
+        unavailable: true,
+        message: "No tenemos agenda para el día seleccionado"
+      });
     }
     pool.query(
       "INSERT INTO citasBaq SET ?",

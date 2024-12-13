@@ -44,26 +44,50 @@ const agendarCita = (req, res) => {
         noActual: true,
         message: "No puede agendarse para días anteriores o el día en curso",
       });
-    } else if (weekday === 1) {
-      console.log(weekday);
-      return res.status(200).json({
-        weekday: true,
-        message: "No se permiten agendas los domingos",
-      });
-    }else if(weekday === 2 || weekday === 4 || weekday === 6){
+    } else if (weekday === 1 && req.body.horac < 15001600) {
+       if(req.body.tipoCorp != "Post"){
+        console.log(weekday);
+        return res.status(200).json({
+          weekday: true,
+          message: "No se permiten agendas los domingos",
+        });
+       }
+    }else if(weekday === 1 && req.body.horac > 15001600){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda disponible para el día seleccionado"
+     })
+    }else if(dayDate === 8 && req.body.horac < 15201600){
+     if(req.body.tipoCorp != "Post"){
+      res.status(200).json({
+       unavailable: true,
+       message: "No tenemos agenda para el día seleccionado"
+      })
+     }
+    }else if(dayDate === 19 && req.body.horac > 16001700){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda disponible en este horario"
+     })
+    }else if(dayDate === 8 && req.body.horac > 15001600){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el día seleccionado"
+     })
+    }else if(weekday === 4){
      return res.status(200).json({
        weekday : true,
        message: "No tenemos agenda para el día seleccionado"
      })
-    }else if(weekday === 7 && horac > 14001440){
-      return res.status(200).json({
-        unavailable: true,
-        message: "No tenemos agenda para el horario seleccionado",
-      });
-    }else if(dayDate === 15){
+    }else if(weekday === 7){
      return res.status(200).json({
       unavailable: true,
-      message: "No tenemos agenda para el horario seleccionado"
+      message: "No tenemos agenda para el día seleccionado"
+     })
+    }else if(dayDate >= 16){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el día seleccionado"
      })
     }
     pool.query(

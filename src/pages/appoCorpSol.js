@@ -75,6 +75,8 @@ const citasCorpSol = ({ citas }) => {
               {result.map((res) => {
                 if(res.horac === 720800){
                   var hora = "7:20 AM"
+                }else if(res.horac === 800900){
+                  var hora = "8:00 AM"
                 }else if(res.horac === 800840){
                   var hora = "8:00 AM"
                 }else if(res.horac === 840920){
@@ -109,6 +111,24 @@ const citasCorpSol = ({ citas }) => {
                   var hora = "6:00 PM"
                 }else if(res.horac === 18401920){
                   var hora = "6:40 PM"
+                }else if(res.horac === 9001000){
+                  var hora = "9:00 AM"
+                }else if(res.horac === 10001100){
+                  var hora = "10:00 AM"
+                }else if(res.horac === 11001200){
+                  var hora = "11:00 AM"
+                }else if(res.horac === 12001240){
+                  var hora = "12:00 PM"
+                }else if(res.horac === 14001500){
+                  var hora = "2:00 PM"
+                }else if(res.horac === 15001600){
+                  var hora = "3:00 PM"
+                }else if(res.horac === 16001700){
+                  var hora = "4:00 PM"
+                }else if(res.horac === 17001800){
+                  var hora = "5:00 PM"
+                }else if(res.horac === 18001900){
+                  var hora = "6:00 PM"
                 }else{
                   var hora = 0
                 }
@@ -184,6 +204,22 @@ const citasCorpSol = ({ citas }) => {
                   var hora = "6:00 PM"
                 }else if(cita.horac === 18401920){
                   var hora = "6:40 PM"
+                }else if(cita.horac === 9001000){
+                  var hora = "9:00 AM"
+                }else if(cita.horac === 10001100){
+                  var hora = "10:00 AM"
+                }else if(cita.horac === 11001200){
+                  var hora = "11:00 AM"
+                }else if(cita.horac === 14001500){
+                  var hora = "2:00 PM"
+                }else if(cita.horac === 15001600){
+                  var hora = "3:00 PM"
+                }else if(cita.horac === 16001700){
+                  var hora = "4:00 PM"
+                }else if(cita.horac === 17001800){
+                  var hora = "5:00 PM"
+                }else if(cita.horac === 18001900){
+                  var hora = "6:00 PM"
                 }else{
                   var hora = 0
                 }

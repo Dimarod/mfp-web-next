@@ -12,7 +12,7 @@ export default (req, res) => {
           horac +
           "' AND tipoCorp != 'Nutricion'",
         (err, rows, fields) => {
-          if (rows.length >= 3) {
+          if (rows.length >= 2) {
             return res.status(200).json({ sobrecupo: true });
           }
           return res.status(200).json({ sobrecupo: false });
