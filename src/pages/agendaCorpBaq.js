@@ -2,13 +2,25 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useState } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { isSameDay } from "date-fns";
+import { format, parseISO } from "date-fns";
+import { es } from "date-fns/locale/es";
+registerLocale("es", es);
 import Modal from "@/components/Modal";
+import { merriweather } from "@/ui/fonts";
 
 const agendaCorpBaq = () => {
+  const disabledDate = null
+
+  const isDisabledDate = (date) => {
+    return isSameDay(date, disabledDate)
+  }
+
   const [appoinment, setAppoinment] = useState({
     nombre: "",
     apellido: "",
-    fecha: "",
+    fecha: null,
     horab: "",
     tipoBaq: "",
     telefono: "",
@@ -18,6 +30,13 @@ const agendaCorpBaq = () => {
   const handleChange = ({ target: { name, value } }) => {
     console.log(name, value);
     setAppoinment({ ...appoinment, [name]: value });
+  };
+
+  const handleDateChange = (date) => {
+    if (date){
+      const formattedDate = format(date, "yyyy-MM-dd");
+      setAppoinment({ ...appoinment, fecha: formattedDate });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -48,25 +67,25 @@ const agendaCorpBaq = () => {
         appoinment
       );
 
-      if(resNutricion.data.nutricion){
+      if (resNutricion.data.nutricion) {
         setAlerta(resNutricion.data.message);
-        return
-      }else if(resNutricion.data.notNutrition){
+        return;
+      } else if (resNutricion.data.notNutrition) {
         setAlerta(resNutricion.data.message);
-        return
+        return;
       }
 
       const resAgendar = await axios.post("/api/citasBaq/", appoinment);
       if (resAgendar.data.noActual) {
         setAlerta(resAgendar.data.message);
         return;
-      }else if(resAgendar.data.weekday){
+      } else if (resAgendar.data.weekday) {
         setAlerta(resAgendar.data.message);
         return;
-      }else if(resAgendar.data.unavailable){
+      } else if (resAgendar.data.unavailable) {
         setAlerta(resAgendar.data.message);
         return;
-      }else if(resAgendar.data.agendado){
+      } else if (resAgendar.data.agendado) {
         setAlerta(resAgendar.data.message);
         return;
       }
@@ -77,45 +96,62 @@ const agendaCorpBaq = () => {
   return (
     <>
       <Layout>
-        <h1 className="text-center text-ferra font-bold text-4xl">
+        <h1
+          className={`${merriweather.className} antialiased text-center text-2xl`}
+        >
           Asignación de citas
         </h1>
-        <p className="text-ferra text-center">
+        <p className="text-xs text-center">
           Complete los campos para apartar su cita corporal en la sede de
           Barranquilla
         </p>
         <div className="w-full h-full flex flex-col">
-          <form className="text-ferra" onSubmit={handleSubmit}>
-            <label className="font-bold">Nombre:</label>
+          <form className="flex flex-col" onSubmit={handleSubmit}>
+            <label className={`${merriweather.className} antialiased`}>
+              Nombre:
+            </label>
             <input
               name="nombre"
-              className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
+              className=" w-full my-3 border-x-2 border-b-2 rounded-md border-maintxt/60"
               type="text"
               onChange={handleChange}
               minLength="3"
               required
             />
-            <label className="font-bold">Apellido:</label>
+            <label className={`${merriweather.className} antialiased`}>
+              Apellido:
+            </label>
             <input
               name="apellido"
-              className="backdrop-blur-sm w-full my-3 border-x-2 border-b-2 rounded-md border-ferra"
+              className=" w-full my-3 border-x-2 border-b-2 rounded-md border-maintxt/60"
               type="text"
               onChange={handleChange}
               minLength="3"
               required
             />
-            <label className="font-bold">Fecha:</label>
-            <input
+            <label className={`${merriweather.className} antialiased`}>
+              Fecha:
+            </label>
+            <DatePicker
+              id="datePicker"
               name="fecha"
-              className="backdrop-blur-sm my-3 w-full border-x-2 border-b-2 rounded-md border-ferra h-7"
-              type="date"
-              onChange={handleChange}
+              selected={
+                appoinment.fecha ? parseISO(appoinment.fecha) : null
+              }
+              onChange={handleDateChange}
+              filterDate={(fecha) => !isDisabledDate(fecha)}
+              dateFormat="dd/MM/YYYY"
+              className="block  w-full my-3 border-x-2 border-b-2 rounded-md border-maintxt/60"
+              locale="es"
               required
+              autoComplete="off"
             />
-            <label className="font-bold">Tipo de cita:</label>
+            <label className={`${merriweather.className} antialiased`}>
+              Tipo de cita:
+            </label>
             <select
               name="tipoBaq"
-              className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
+              className=" my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               onChange={handleChange}
               required
             >
@@ -130,10 +166,12 @@ const agendaCorpBaq = () => {
               <option value="Publicidad">Publicidad</option>
               <option value="Nutricion">Nutrición</option>
             </select>
-            <label className="font-bold">Hora de la cita:</label>
+            <label className={`${merriweather.className} antialiased`}>
+              Hora de la cita:
+            </label>
             <select
               name="horab"
-              className="backdrop-blur-sm my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-ferra"
+              className=" my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               onChange={handleChange}
               required
             >
@@ -157,15 +195,17 @@ const agendaCorpBaq = () => {
               <option value="18001840">6:00 PM - 6:40 PM</option>
               <option value="18401920">6:40 PM - 7:20 PM</option>
             </select>
-            <label className="font-bold">Teléfono:</label>
+            <label className={`${merriweather.className} antialiased`}>
+              Teléfono:
+            </label>
             <input
               name="telefono"
-              className="backdrop-blur-sm my-3 w-full border-x-2 border-b-2 rounded-md border-ferra"
+              className=" my-3 w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               type="number"
               onChange={handleChange}
               required
             />
-            <button className="border-2 border-ferra bg-ferra text-white p-1 rounded-md w-full hover:bg-mulberry">
+            <button className=" bg-buttons text-white p-1 rounded-md w-full hover:bg-mulberry">
               Agendar Cita
             </button>
             {alerta && <Modal alerta={alerta} />}

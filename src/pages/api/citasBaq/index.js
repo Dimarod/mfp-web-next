@@ -1,4 +1,5 @@
 import { pool } from "../../../../config/db";
+import crypto from "node:crypto"
 
 export default function handler(req, res) {
   switch (req.method) {
@@ -24,6 +25,7 @@ const listarCitas = (req, res) => {
 const agendarCita = (req, res) => {
   try {
     const { fecha, horab, tipoBaq, telefono } = req.body;
+    const _id = crypto.randomUUID();
     const nombreOri = req.body.nombre;
     const nombreTmp = nombreOri.trim();
     const apellidoOri = req.body.apellido
@@ -54,37 +56,15 @@ const agendarCita = (req, res) => {
       unavailable: true,
       message: "No tenemos agenda para el día seleccionado"
      })
-    }else if(dayDate === 19 && req.body.horab > 16001640){
-     return res.status(200).json({
-      unavailable: true,
-      message: "No tenemos agenda para el horario seleccionado"
-     })
-    }else if(dayDate === 8 && req.body.horab < 15201600){
-     if(req.body.tipoBaq != "Post"){
-      return res.status(200).json({
-       unavailable: true,
-       message: "No tenemos agenda para el día seleccionado"
-      })
-     }
-    }else if(dayDate === 8 && req.body.horab > 15201600){
-     return res.status(200).json({
-      unavailable: true,
-      message: "No tenemos agenda para el día seleccionado"
-     })
     }else if(weekday === 7 && req.body.horab > 15201600){
       return res.status(200).json({
         unavailable: true,
         message: "No tenemos agenda para el horario seleccionado",
       });
-    }else if(dayDate === 11){
-      return res.status(200).json({
-        unavailable: true,
-        message: "No tenemos agenda para el día seleccionado"
-      });
     }
     pool.query(
       "INSERT INTO citasBaq SET ?",
-      { nombre, fecha, horab, tipoBaq, telefono },
+      { _id, nombre, fecha, horab, tipoBaq, telefono },
       (err, rows, fields) => {
         if (err) {
           console.log("Hubo un error al tratar de agendar la cita", err);

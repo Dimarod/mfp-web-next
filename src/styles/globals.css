@@ -2,19 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-datepicker/dist/react-datepicker.css"; 
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 body{
-    background-color: #D98BAF;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 60'%3E%3Cg %3E%3Crect fill='%23D98BAF' width='11' height='11'/%3E%3Crect fill='%23d98aae' x='10' width='11' height='11'/%3E%3Crect fill='%23d889ad' y='10' width='11' height='11'/%3E%3Crect fill='%23d888ad' x='20' width='11' height='11'/%3E%3Crect fill='%23d787ac' x='10' y='10' width='11' height='11'/%3E%3Crect fill='%23d787ab' y='20' width='11' height='11'/%3E%3Crect fill='%23d686aa' x='30' width='11' height='11'/%3E%3Crect fill='%23d685a9' x='20' y='10' width='11' height='11'/%3E%3Crect fill='%23d684a8' x='10' y='20' width='11' height='11'/%3E%3Crect fill='%23d583a8' y='30' width='11' height='11'/%3E%3Crect fill='%23d582a7' x='40' width='11' height='11'/%3E%3Crect fill='%23d481a6' x='30' y='10' width='11' height='11'/%3E%3Crect fill='%23d480a5' x='20' y='20' width='11' height='11'/%3E%3Crect fill='%23d37fa4' x='10' y='30' width='11' height='11'/%3E%3Crect fill='%23d37fa3' y='40' width='11' height='11'/%3E%3Crect fill='%23d37ea3' x='50' width='11' height='11'/%3E%3Crect fill='%23d27da2' x='40' y='10' width='11' height='11'/%3E%3Crect fill='%23d27ca1' x='30' y='20' width='11' height='11'/%3E%3Crect fill='%23d17ba0' x='20' y='30' width='11' height='11'/%3E%3Crect fill='%23d17a9f' x='10' y='40' width='11' height='11'/%3E%3Crect fill='%23d0799e' y='50' width='11' height='11'/%3E%3Crect fill='%23d0789e' x='60' width='11' height='11'/%3E%3Crect fill='%23d0779d' x='50' y='10' width='11' height='11'/%3E%3Crect fill='%23cf779c' x='40' y='20' width='11' height='11'/%3E%3Crect fill='%23cf769b' x='30' y='30' width='11' height='11'/%3E%3Crect fill='%23ce759a' x='20' y='40' width='11' height='11'/%3E%3Crect fill='%23ce7499' x='10' y='50' width='11' height='11'/%3E%3Crect fill='%23cd7398' x='70' width='11' height='11'/%3E%3Crect fill='%23cd7298' x='60' y='10' width='11' height='11'/%3E%3Crect fill='%23cd7197' x='50' y='20' width='11' height='11'/%3E%3Crect fill='%23cc7096' x='40' y='30' width='11' height='11'/%3E%3Crect fill='%23cc6f95' x='30' y='40' width='11' height='11'/%3E%3Crect fill='%23cb6f94' x='20' y='50' width='11' height='11'/%3E%3Crect fill='%23cb6e93' x='80' width='11' height='11'/%3E%3Crect fill='%23ca6d93' x='70' y='10' width='11' height='11'/%3E%3Crect fill='%23ca6c92' x='60' y='20' width='11' height='11'/%3E%3Crect fill='%23c96b91' x='50' y='30' width='11' height='11'/%3E%3Crect fill='%23c96a90' x='40' y='40' width='11' height='11'/%3E%3Crect fill='%23c9698f' x='30' y='50' width='11' height='11'/%3E%3Crect fill='%23c8688e' x='90' width='11' height='11'/%3E%3Crect fill='%23c8678d' x='80' y='10' width='11' height='11'/%3E%3Crect fill='%23c7668d' x='70' y='20' width='11' height='11'/%3E%3Crect fill='%23c7668c' x='60' y='30' width='11' height='11'/%3E%3Crect fill='%23c6658b' x='50' y='40' width='11' height='11'/%3E%3Crect fill='%23c6648a' x='40' y='50' width='11' height='11'/%3E%3Crect fill='%23c56389' x='90' y='10' width='11' height='11'/%3E%3Crect fill='%23c56288' x='80' y='20' width='11' height='11'/%3E%3Crect fill='%23c56187' x='70' y='30' width='11' height='11'/%3E%3Crect fill='%23c46087' x='60' y='40' width='11' height='11'/%3E%3Crect fill='%23c45f86' x='50' y='50' width='11' height='11'/%3E%3Crect fill='%23c35e85' x='90' y='20' width='11' height='11'/%3E%3Crect fill='%23c35d84' x='80' y='30' width='11' height='11'/%3E%3Crect fill='%23c25c83' x='70' y='40' width='11' height='11'/%3E%3Crect fill='%23c25c82' x='60' y='50' width='11' height='11'/%3E%3Crect fill='%23c15b81' x='90' y='30' width='11' height='11'/%3E%3Crect fill='%23c15a80' x='80' y='40' width='11' height='11'/%3E%3Crect fill='%23c05980' x='70' y='50' width='11' height='11'/%3E%3Crect fill='%23c0587f' x='90' y='40' width='11' height='11'/%3E%3Crect fill='%23bf577e' x='80' y='50' width='11' height='11'/%3E%3Crect fill='%23BF567D' x='90' y='50' width='11' height='11'/%3E%3C/g%3E%3C/svg%3E");
-background-attachment: fixed;
-background-size: cover;
+    @apply bg-mainbg text-maintxt
 }
 input{
     background-color: transparent;
+}
+.react-datepicker {
+    font-family: 'Merriweather';
+    font-size: 14px;
+    width: 100%;
+    border-radius: 5%;
+    border: 1px solid #424242;
+    background-color: rgb(245, 245, 220);
+}
+.react-datepicker__header {
+    background-color: transparent;
+    border-bottom: none;
+    text-transform: capitalize;
 }
 .card {
     border: 1px solid #734652; /* Borde de la card */

@@ -1,21 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Image from "next/image";
-import baq from "/public/Baq.jpg";
-import sol from "/public/Sol.jpg";
+import { merriweather } from "@/ui/fonts";
 
 const sede = () => {
   return (
     <>
-      <h1 className="text-center text-ferra text-4xl font-bold my-20">
+      <h1 className={`${merriweather.className} antialiased text-center text-2xl my-20`}>
         Elige la sede donde te gustaría ser atendida/o
       </h1>
-      <div className="flex flex-col md:flex-row justify-around w-full items-center">
+      <div className="flex justify-around w-full items-center mt-44">
         <a href="agendaCorpSol">
-          <div className="w-64 h-80 rounded-md flex-col p-2 flex justify-center border-4 border-ferra opacity-50 cursor-pointer">
+          <div className="w-40 h-40 rounded-md flex-col p-2 flex justify-center border-2 border-maintxt opacity-50 cursor-pointer">
             <Image
-              className="object-cover rounded-md"
-              src={sol}
+              className=" w-full h-full object-cover rounded-md"
+              src="/sol.png"
+              width={4032}
+              height={3024}
               alt="Sede Soledad"
               title="Sede Soledad"
             />
@@ -23,10 +24,12 @@ const sede = () => {
           </div>
         </a>
         <a href="agendaCorpBaq">
-          <div className="w-64 h-80 rounded-md flex flex-col p-6 justify-center border-4 border-ferra opacity-50 cursor-pointer">
+          <div className="w-40 h-40 rounded-md flex flex-col p-6 justify-center border-2 border-maintxt opacity-50 cursor-pointer">
             <Image
-              className="object-cover rounded-md"
-              src={baq}
+              className="w-full h-full object-cover rounded-md"
+              src="/baq.png"
+              width={3024}
+              height={4032}
               alt="Sede Barranquilla"
               title="Sede Barranquilla"
             />

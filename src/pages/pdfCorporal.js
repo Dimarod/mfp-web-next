@@ -1,41 +1,31 @@
-/* eslint-disable react/no-deprecated */
-import React, { useState } from "react";
-import FormCorporal from "@/components/formCorporal";
-import Pdf from "@/components/Pdf";
-import Layout from "@/components/Layout";
+import Form from '../components/FormCorporal';
+import { saveAs } from 'file-saver';
 
-// const PdfCorp = dynamic(() =>
-//   import("@/components/Pdfeditor", {
-//     loading: <p>Loading...</p>,
-//     ssr: false,
-//   })
-// );
-
-const PdfCorporal = () => {
-  // const [client, setClient] = useState(false);
-
-  // useEffect(() => {
-  //   setClient(true);
-  // }, []);
-  // return <>{client && <PdfCorp />}</>;
-
-  const [pdfVisible, setPdfVisible] = useState(false);
-  const [formData, setFormData] = useState(null);
-
-  const handlePdfGeneration = (data) => {
-    setFormData(data);
-    setPdfVisible(true);
+export default function Home() {
+  const handleFormSubmit = async (formData) => {
+    
+    const res = await fetch('/api/generatePdfCorporal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+      
+    });
+    
+    console.log(formData);
+    
+    if (res.ok) {
+      const blob = await res.blob();
+      saveAs(blob, `ficha-clinica-corporal-${formData.nombre}.pdf`);
+    } else {
+      console.error('Failed to generate PDF');
+    }
   };
-  return (
-    <>
-      <Layout>
-        <div>
-          <FormCorporal onSubmit={handlePdfGeneration} />
-          {pdfVisible && <Pdf formData={formData} />}
-        </div>
-      </Layout>
-    </>
-  );
-};
 
-export default PdfCorporal;
+  return (
+    <div>
+      <Form onSubmit={handleFormSubmit} />
+    </div>
+  );
+}
