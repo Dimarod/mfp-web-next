@@ -61,6 +61,16 @@ const agendarCita = (req, res) => {
         unavailable: true,
         message: "No tenemos agenda para el horario seleccionado",
       });
+    }else if ((weekday === 2 || weekday === 4 || weekday === 6) && req.body.horab >= 18401920) {
+      return res.status(200).json({
+        unavailable: true,
+        message: 'No tenemos agenda para el horario seleccionado'
+      })
+    }else if ((weekday === 3 || weekday === 5) && (req.body.horab >= 12001240 && req.body.horab <= 13201400)) {
+      return res.status(200).json({
+        unavailable: true,
+        message: 'No tenemos agenda para el horario seleccionado'
+      })
     }
     pool.query(
       "INSERT INTO citasBaq SET ?",
