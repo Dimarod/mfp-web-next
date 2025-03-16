@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import axios from "axios";
 import { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import { isSameDay } from "date-fns";
+import { isSameDay, isSunday } from "date-fns";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale/es";
 registerLocale("es", es);
@@ -14,7 +14,7 @@ const agendaFacBaq = () => {
   const disabledDate = null
 
   const isDisabledDate = (date) => {
-    return isSameDay(date, disabledDate)
+    return isSameDay(date, disabledDate) || isSunday(date)
   }
 
   const [appoinment, setAppoinment] = useState({
