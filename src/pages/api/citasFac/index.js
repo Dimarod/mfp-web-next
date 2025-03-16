@@ -11,7 +11,7 @@ export default function handler(req, res) {
 }
 const listarCitas = (req, res) => {
   pool.query(
-    "SELECT * FROM citasBaq ORDER BY horab",
+    "SELECT * FROM citasFac ORDER BY horaf",
     function (err, rows, fields) {
       if (err) {
         console.log(err);
