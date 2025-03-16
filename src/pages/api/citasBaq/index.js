@@ -44,33 +44,44 @@ const agendarCita = (req, res) => {
         noActual: true,
         message: "No puede agendarse para días anteriores o el día en curso",
       });
-    } else if (weekday === 1 && req.body.horab < 15201600) {
+    } else if (weekday === 1 && (req.body.horab < 12001240 && req.body.horab > 700800)) {
        if(req.body.tipoBaq != "Post"){
         return res.status(200).json({
           weekday: true,
           message: "No se permiten agendas los domingos",
         });
        }
-    }else if(weekday === 1 && req.body.horab > 15201600){
+    }else if(weekday === 1 && (req.body.horab > 11201200 || req.body.horab < 800840)){
      return res.status(200).json({
       unavailable: true,
       message: "No tenemos agenda para el día seleccionado"
      })
-    }else if(weekday === 7 && req.body.horab > 15201600){
+    }else if(weekday === 7 && (req.body.horab < 12001240 && req.body.horab > 700800)){
+      if(req.body.tipoBaq !== "Post"){
+       return res.status(200).json({
+         unavailable: true,
+         message: "No tenemos agenda para el horario seleccionado",
+       });
+      }
+    }else if(weekday === 7 && (req.body.horab > 11201200 || req.body.horab < 800840)){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos agenda para el horario seleccionado"
+     })
+    }else if((weekday === 2 || weekday === 4 || weekday === 6) && (req.body.horab >= 12001240 && req.body.horab <= 13201400)){
+     if(req.body.tipoBaq !== "Post"){
       return res.status(200).json({
-        unavailable: true,
-        message: "No tenemos agenda para el horario seleccionado",
-      });
-    }else if ((weekday === 2 || weekday === 4 || weekday === 6) && req.body.horab >= 18401920) {
-      return res.status(200).json({
-        unavailable: true,
-        message: 'No tenemos agenda para el horario seleccionado'
+       unavailable: true,
+       message: "No tenemos agenda para el horario seleccionado"
       })
+     }
     }else if ((weekday === 3 || weekday === 5) && (req.body.horab >= 12001240 && req.body.horab <= 13201400)) {
+     if(req.body.tipoBaq !== "Post"){
       return res.status(200).json({
         unavailable: true,
         message: 'No tenemos agenda para el horario seleccionado'
       })
+     }
     }
     pool.query(
       "INSERT INTO citasBaq SET ?",
