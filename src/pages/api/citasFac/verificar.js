@@ -7,7 +7,7 @@ export default (req, res) => {
       const { fecha } = req.body;
       const nombre = req.body.nombre + " " + req.body.apellido;
       pool.query(
-        "SELECT * FROM citasBaq WHERE nombre = '" +
+        "SELECT * FROM citasFac WHERE nombre = '" +
           nombre +
           "' AND fecha = '" +
           fecha +

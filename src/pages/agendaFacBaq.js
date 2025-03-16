@@ -10,7 +10,7 @@ registerLocale("es", es);
 import Modal from "@/components/Modal";
 import { merriweather } from "@/ui/fonts";
 
-const agendaCorpBaq = () => {
+const agendaFacBaq = () => {
   const disabledDate = null
 
   const isDisabledDate = (date) => {
@@ -21,8 +21,8 @@ const agendaCorpBaq = () => {
     nombre: "",
     apellido: "",
     fecha: null,
-    horab: "",
-    tipoBaq: "",
+    horaf: "",
+    tipoFac: "",
     telefono: "",
   });
   const [alerta, setAlerta] = useState("");
@@ -52,7 +52,7 @@ const agendaCorpBaq = () => {
         return;
       }
       const resSobrecupo = await axios.post(
-        "/api/citasBaq/sobrecupo",
+        "/api/citasFac/sobrecupo",
         appoinment
       );
 
@@ -62,20 +62,8 @@ const agendaCorpBaq = () => {
         );
         return;
       }
-      const resNutricion = await axios.post(
-        "/api/citasBaq/validarNutricion",
-        appoinment
-      );
 
-      if (resNutricion.data.nutricion) {
-        setAlerta(resNutricion.data.message);
-        return;
-      } else if (resNutricion.data.notNutrition) {
-        setAlerta(resNutricion.data.message);
-        return;
-      }
-
-      const resAgendar = await axios.post("/api/citasBaq/", appoinment);
+      const resAgendar = await axios.post("/api/citasFac/", appoinment);
       if (resAgendar.data.noActual) {
         setAlerta(resAgendar.data.message);
         return;
@@ -204,4 +192,4 @@ const agendaCorpBaq = () => {
   );
 };
 
-export default agendaCorpBaq;
+export default agendaFacBaq;
