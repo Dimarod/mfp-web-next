@@ -63,7 +63,7 @@ const agendarCita = (req, res) => {
         }
     }
     pool.query(
-      "INSERT INTO citasBaq SET ?",
+      "INSERT INTO citasFac SET ?",
       { _id, nombre, fecha, horaf, tipoFac, telefono },
       (err, rows, fields) => {
         if (err) {
