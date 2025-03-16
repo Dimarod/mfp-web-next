@@ -54,7 +54,7 @@ const citasFacBaq = ({ citas }) => {
           />
           <button
             type="submit"
-            className="w-1/4 bg-ferra text-white font-semibold my-2 px-2 py-1 rounded-md"
+            className="w-1/4 bg-mainbg text-white font-semibold my-2 px-2 py-1 rounded-md"
           >
             Buscar
           </button>
