@@ -43,7 +43,7 @@ const agendaCorpBaq = () => {
     e.preventDefault();
     try {
       const resVerificar = await axios.post(
-        "/api/citasBaq/verificar",
+        "/api/citasFac/verificar",
         appoinment
       );
 
@@ -102,7 +102,7 @@ const agendaCorpBaq = () => {
           Asignación de citas
         </h1>
         <p className="text-xs text-center">
-          Complete los campos para apartar su cita corporal en la sede de
+          Complete los campos para apartar su cita facial en la sede de
           Barranquilla
         </p>
         <div className="w-full h-full flex flex-col">
@@ -150,50 +150,38 @@ const agendaCorpBaq = () => {
               Tipo de cita:
             </label>
             <select
-              name="tipoBaq"
+              name="tipoFac"
               className=" my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               onChange={handleChange}
               required
             >
               <option value="default"></option>
               <option value="Valoracion">Valoración</option>
-              <option value="Antiguo">Tratamiento ya iniciado</option>
-              <option value="Post">Postoperatorio Corporal</option>
-              <option value="Suero">Sueroterapia</option>
+              <option value="Depilacion">Depilación Láser</option>
+              <option value="Hydrafacial">Hydrafacial</option>
+              <option value="Plasma">Plasma</option>
               {/* <option value="Gym">Gym</option> */}
               {/* <option value="Love">Plan Love</option> */}
-              <option value="Reina">Reina</option>
-              <option value="Publicidad">Publicidad</option>
-              <option value="Nutricion">Nutrición</option>
+              <option value="Despigmentacion">Despigmentación</option>
+              <option value="Post">Postoperatorio Facial</option>
+              <option value="Armonizacion">Armonización Facial</option>
+              <option value="Antiestrias">Antiestrías</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Hora de la cita:
             </label>
             <select
-              name="horab"
+              name="horaf"
               className=" my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               onChange={handleChange}
               required
             >
               <option value="default"></option>
-              <option value="700800">7:00 AM - 8:00 AM</option>
-              <option value="800840">8:00 AM - 8:40 AM</option>
-              <option value="840920">8:40 AM - 9:20 AM</option>
-              <option value="9201000">9:20 AM - 10:00 AM</option>
-              <option value="10001040">10:00 AM - 10:40 AM</option>
-              <option value="10401120">10:40 AM - 11:20 AM</option>
-              <option value="11201200">11:20 AM - 12:00 PM</option>
-              <option value="12001240">12:00 PM - 12:40 PM</option>
-              <option value="12401320">12:40 PM - 1:20 PM</option>
-              <option value="13201400">1:20 PM - 2:00 PM</option>
-              <option value="14001440">2:00 PM - 2:40 PM</option>
-              <option value="14401520">2:40 PM - 3:20 PM</option>
-              <option value="15201600">3:20 PM - 4:00 PM</option>
-              <option value="16001640">4:00 PM - 4:40 PM</option>
-              <option value="16401720">4:40 PM - 5:20 PM</option>
-              <option value="17201800">5:20 PM - 6:00 PM</option>
-              <option value="18001840">6:00 PM - 6:40 PM</option>
-              <option value="18401920">6:40 PM - 7:20 PM</option>
+              <option value="9001000">9:00 AM - 10:00 AM</option>
+              <option value="10001100">10:00 AM - 11:00 AM</option>
+              <option value="11001200">11:00 AM - 12:00 M</option>
+              <option value="14001500">2:00 PM - 3:00 PM</option>
+              <option value="15001600">3:00 PM - 4:00 PM</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Teléfono:
