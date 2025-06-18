@@ -11,10 +11,10 @@ import Modal from "@/components/Modal";
 import { merriweather } from "@/ui/fonts";
 
 const agendaFacBaq = () => {
-  const disabledDate = null
+  const disabledDate = [new Date(2025, 4, 1), new Date(2025, 3, 17), new Date(2025, 3, 18), new Date(2025, 3, 19), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
 
   const isDisabledDate = (date) => {
-    return isSameDay(date, disabledDate) || isSunday(date)
+    return disabledDate.some(disabledD => isSameDay(date, disabledD)) || isSunday(date) || new Date(date).getDay() === 6
   }
 
   const [appoinment, setAppoinment] = useState({
@@ -148,8 +148,8 @@ const agendaFacBaq = () => {
               <option value="Depilacion">Depilación Láser</option>
               <option value="Hydrafacial">Hydrafacial</option>
               <option value="Plasma">Plasma</option>
-              {/* <option value="Gym">Gym</option> */}
-              {/* <option value="Love">Plan Love</option> */}
+              <option value="Radiofrecuencia">Radiofrecuencia Fraccionada</option>
+              <option value="Correccion">Correccion Post</option>
               <option value="Despigmentacion">Despigmentación</option>
               <option value="Post">Postoperatorio Facial</option>
               <option value="Armonizacion">Armonización Facial</option>

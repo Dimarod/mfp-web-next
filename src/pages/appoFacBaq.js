@@ -39,7 +39,7 @@ const citasFacBaq = ({ citas }) => {
   return (
     <>
       <h2 className="text-center font-extralight text-2xl mt-2">
-        Listado de citas para la sede de Soledad
+        Listado de citas faciales
       </h2>
       <div className="w-full my-6">
         <form
@@ -54,7 +54,7 @@ const citasFacBaq = ({ citas }) => {
           />
           <button
             type="submit"
-            className="w-1/4 bg-mainbg text-white font-semibold my-2 px-2 py-1 rounded-md"
+            className="w-1/4 bg-buttons text-white font-semibold my-2 px-2 py-1 rounded-md"
           >
             Buscar
           </button>

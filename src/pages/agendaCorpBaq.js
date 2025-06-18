@@ -11,10 +11,10 @@ import Modal from "@/components/Modal";
 import { merriweather } from "@/ui/fonts";
 
 const agendaCorpBaq = () => {
-  const disabledDate = null
+  const disabledDate = [new Date(2025, 4, 1), new Date(2025, 3, 18), new Date(2025, 3, 19), new Date(2025, 3, 20), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
 
   const isDisabledDate = (date) => {
-    return isSameDay(date, disabledDate)
+    return disabledDate.some(disableD => isSameDay(date, disableD))
   }
 
   const [appoinment, setAppoinment] = useState({
@@ -155,13 +155,12 @@ const agendaCorpBaq = () => {
               onChange={handleChange}
               required
             >
-              <option value="default"></option>
               <option value="Valoracion">Valoración</option>
               <option value="Antiguo">Tratamiento ya iniciado</option>
               <option value="Post">Postoperatorio Corporal</option>
               <option value="Suero">Sueroterapia</option>
-              {/* <option value="Gym">Gym</option> */}
-              {/* <option value="Love">Plan Love</option> */}
+              <option value="Postmoldeo">Postmoldeo</option>
+              <option value="Correccion">Correccion Post</option>
               <option value="Reina">Reina</option>
               <option value="Publicidad">Publicidad</option>
               <option value="Nutricion">Nutrición</option>

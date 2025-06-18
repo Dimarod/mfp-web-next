@@ -12,7 +12,7 @@ export default (req, res) => {
           horab +
           "' AND tipoBaq != 'Nutricion'",
         (err, rows, fields) => {
-          if (rows.length >= 4) {
+          if (rows.length >= 3) {
             return res.status(200).json({ sobrecupo: true });
           }
           return res.status(200).json({ sobrecupo: false });

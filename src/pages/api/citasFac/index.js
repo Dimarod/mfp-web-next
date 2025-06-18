@@ -61,6 +61,11 @@ const agendarCita = (req, res) => {
                 message: "No tenemos agenda para el horario selecciondao"
             })
         }
+    }else if(dayDate === 5 && req.body.horaf >= 14001500){
+     return res.status(200).json({
+      unavailable: true,
+      message: 'No tenemos atención para el horario seleccionado'
+     })
     }
     pool.query(
       "INSERT INTO citasFac SET ?",
