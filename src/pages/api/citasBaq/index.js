@@ -49,157 +49,111 @@ const agendarCita = (req, res) => {
         unavailable: true,
         message: "No tenemos agenda para el horario seleccionado",
       });
-    }else if (dayDate >= 23 && dayDate <= 27) {
-      if (tipoBaq === "Post") {
-        pool.query(
-          "SELECT * FROM citasBaq WHERE nombre = '" +
-            nombre +
-            "' AND fecha = '" +
-            fecha +
-            "'",
-          (err, rows, fields) => {
-            if (err) {
-              console.log("Hubo un error al verificar", err);
-            } else {
-              if (rows.length === 0) {
-                pool.query(
-                  "SELECT * FROM citasBaq WHERE fecha = '" +
-                    fecha +
-                    "' AND horab = '" +
-                    horab +
-                    "' AND tipoBaq = 'Post'",
-                  (err, rows, fields) => {
-                    if (rows.length >= 1) {
-                      return res.status(200).json({
-                        unavailable: true,
-                        message:
-                          "El horario seleccionado presenta sobrecupo, por favor elija uno distinto",
-                      });
-                    } else {
-                      pool.query(
-                        "INSERT INTO citasBaq SET ?",
-                        { _id, nombre, fecha, horab, tipoBaq, telefono },
-                        (err, rows, fields) => {
-                          if (err) {
-                            console.log(
-                              "Hubo un error al agendar la cita",
-                              err
-                            );
-                          } else {
-                            return res.status(200).json({
-                              agendado: true,
-                              message: "Su cita ha sido agendada exitosamente",
-                            });
-                          }
-                        }
-                      );
-                    }
-                  }
-                );
-              } else {
-                return res.status(200).json({
-                  unavailable: true,
-                  message: "No se permite agendar en el horario seleccionado",
-                });
-              }
-            }
-          }
-        );
-      } else if (tipoBaq === "Postmoldeo") {
-        pool.query(
-          "SELECT * FROM citasBaq WHERE nombre = '" +
-            nombre +
-            "' AND fecha = '" +
-            fecha +
-            "'",
-          (err, rows, fields) => {
-            if (err) {
-              console.log("Hubo un error al verificar", err);
-            } else {
-              if (rows.length === 0) {
-                pool.query(
-                  "SELECT * FROM citasBaq WHERE fecha = '" +
-                    fecha +
-                    "' AND horab = '" +
-                    horab +
-                    "' AND tipoBaq = 'Postmoldeo'",
-                  (err, rows, fields) => {
-                    if (rows.length >= 1) {
-                      return res.status(200).json({
-                        unavailable: true,
-                        message:
-                          "El horario seleccionado presenta sobrecupo, por favor elija uno distinto",
-                      });
-                    } else {
-                      pool.query(
-                        "INSERT INTO citasBaq SET ?",
-                        { _id, nombre, fecha, horab, tipoBaq, telefono },
-                        (err, rows, fields) => {
-                          if (err) {
-                            console.log(
-                              "Hubo un error al agendar la cita",
-                              err
-                            );
-                          } else {
-                            return res.status(200).json({
-                              agendado: true,
-                              message: "Su cita ha sido agendada exitosamente",
-                            });
-                          }
-                        }
-                      );
-                    }
-                  }
-                );
-              } else {
-                return res.status(200).json({
-                  unavailable: true,
-                  message: "No se permite agendar en el horario seleccionado",
-                });
-              }
-            }
-          }
-        );
-      } else {
-        return res.status(200).json({
-          unavailable: true,
-          message: "No se permiten agendas para el horario seleccionado",
-        });
-      }
-      return;
     } else if (req.body.tipoBaq === "Post" && weekday != 7) {
       pool.query(
-        "SELECT * FROM citasBaq WHERE fecha = '" +
+        "SELECT * FROM citasBaq WHERE nombre = '" +
+          nombre +
+          "' AND fecha = '" +
           fecha +
-          "' AND horab = '" +
-          horab +
-          "' AND tipoBaq = 'Post'",
+          "'",
         (err, rows, fields) => {
-          if (rows.length >= 1) {
-            return res.status(200).json({
-              unavailable: true,
-              message: "No tenemos agenda para el horario seleccionado",
-            });
+          if (err) {
+            console.log("Hubo un error", err);
           } else {
-            pool.query(
-              "INSERT INTO citasBaq SET ?",
-              { _id, nombre, fecha, horab, tipoBaq, telefono },
-              (err, rows, fields) => {
-                if (err) {
-                  console.log("Hubo un error al agendar la cita", err);
-                } else {
-                  return res.status(200).json({
-                    agendado: true,
-                    message: "Su cita ha sido agendada exitosamente",
-                  });
+            if (rows.length === 0) {
+              pool.query(
+                "SELECT * FROM citasBaq WHERE fecha = '" +
+                  fecha +
+                  "' AND horab = '" +
+                  horab +
+                  "' AND tipoBaq = 'Post'",
+                (err, rows, fields) => {
+                  if (rows.length >= 1) {
+                    return res.status(200).json({
+                      unavailable: true,
+                      message:
+                        "El horario seleccionado presenta sobrecupo, por favor elija uno distinto",
+                    });
+                  } else {
+                    pool.query(
+                      "INSERT INTO citasBaq SET ?",
+                      { _id, nombre, fecha, horab, tipoBaq, telefono },
+                      (err, rows, fields) => {
+                        if (err) {
+                          console.log("Hubo un error al agendar la cita", err);
+                        } else {
+                          return res.status(200).json({
+                            agendado: true,
+                            message: "Su cita ha sido agendada exitosamente",
+                          });
+                        }
+                      }
+                    );
+                  }
                 }
-              }
-            );
+              );
+            } else {
+              return res.status(200).json({
+                unavailable: true,
+                message: "No se permite agendar en el horario seleccionado",
+              });
+            }
           }
         }
       );
-      return;
-    } else if (
+    } else if (tipoBaq === "Postmoldeo" && weekday !== 7) {
+      pool.query(
+        "SELECT * FROM citasBaq WHERE nombre = '" +
+          nombre +
+          "' AND fecha = '" +
+          fecha +
+          "'",
+        (err, rows, fields) => {
+          if (err) {
+            console.log("Hubo un error al verificar", err);
+          } else {
+            if (rows.length === 0) {
+              pool.query(
+                "SELECT * FROM citasBaq WHERE fecha = '" +
+                  fecha +
+                  "' AND horab = '" +
+                  horab +
+                  "' AND tipoBaq = 'Postmoldeo'",
+                (err, rows, fields) => {
+                  if (rows.length >= 1) {
+                    return res.status(200).json({
+                      unavailable: true,
+                      message:
+                        "El horario seleccionado presenta sobrecupo, por favor elija uno distinto",
+                    });
+                  } else {
+                    pool.query(
+                      "INSERT INTO citasBaq SET ?",
+                      { _id, nombre, fecha, horab, tipoBaq, telefono },
+                      (err, rows, fields) => {
+                        if (err) {
+                          console.log("Hubo un error al agendar la cita", err);
+                        } else {
+                          return res.status(200).json({
+                            agendado: true,
+                            message: "Su cita ha sido agendada exitosamente",
+                          });
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            } else {
+              return res.status(200).json({
+                unavailable: true,
+                message: "No se permite agendar en el horario seleccionado",
+              });
+            }
+          }
+        }
+      );
+    }else if (
       weekday === 1 &&
       req.body.horab < 12001240 &&
       req.body.horab > 700800
@@ -255,7 +209,7 @@ const agendarCita = (req, res) => {
             }
           }
         );
-      }else if(req.body.tipoBaq === "Postmoldeo"){
+      } else if (req.body.tipoBaq === "Postmoldeo") {
         pool.query(
           "SELECT * FROM citasBaq WHERE fecha = '" +
             fecha +
@@ -286,7 +240,7 @@ const agendarCita = (req, res) => {
             }
           }
         );
-      }else{
+      } else {
         return res.status(200).json({
           unavailable: true,
           message: "No tenemos agenda para el horario seleccionado",

@@ -194,6 +194,7 @@ const agendaCorpBaq = () => {
               <option value="17201800">5:20 PM - 6:00 PM</option>
               <option value="18001840">6:00 PM - 6:40 PM</option>
               <option value="18401920">6:40 PM - 7:20 PM</option>
+              <option value="19202000">7:20 PM - 8:00 PM</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Teléfono:
