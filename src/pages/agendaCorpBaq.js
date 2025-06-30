@@ -155,6 +155,7 @@ const agendaCorpBaq = () => {
               onChange={handleChange}
               required
             >
+              <option value="default"> Por favor elija una opción</option>
               <option value="Valoracion">Valoración</option>
               <option value="Antiguo">Tratamiento ya iniciado</option>
               <option value="Post">Postoperatorio Corporal</option>
@@ -174,7 +175,7 @@ const agendaCorpBaq = () => {
               onChange={handleChange}
               required
             >
-              <option value="default"></option>
+              <option value="default">Por favor elija una opción</option>
               <option value="700800">7:00 AM - 8:00 AM</option>
               <option value="800840">8:00 AM - 8:40 AM</option>
               <option value="840920">8:40 AM - 9:20 AM</option>
@@ -200,7 +201,9 @@ const agendaCorpBaq = () => {
             <input
               name="telefono"
               className=" my-3 w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
-              type="number"
+              type="tel"
+              maxlength="10"
+              pattern="\d{10}"
               onChange={handleChange}
               required
             />
