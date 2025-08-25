@@ -7,7 +7,7 @@ const sede = () => {
   return (
     <>
       <h1 className={`${merriweather.className} antialiased text-center text-2xl my-20`}>
-        Elige la sede donde te gustaría ser atendida/o
+        Elige el tratamiento por el cual serás atendido
       </h1>
       <div className="flex justify-around w-full items-center mt-44">
         <a href="agendaCorpSol">

@@ -101,6 +101,7 @@ const agendarCita = (req, res) => {
           }
         }
       );
+      return;
     } else if (tipoBaq === "Postmoldeo" && weekday !== 7) {
       pool.query(
         "SELECT * FROM citasBaq WHERE nombre = '" +
@@ -153,6 +154,12 @@ const agendarCita = (req, res) => {
           }
         }
       );
+      return;
+    }else if(dayDate === 15 && req.body.horab >= 12401320){
+     return res.status(200).json({
+      unavailable: true, 
+      message: "No tenemos agenda disponible para el horario seleccionado"
+     })
     }else if (
       weekday === 1 &&
       req.body.horab < 12001240 &&
@@ -209,7 +216,7 @@ const agendarCita = (req, res) => {
             }
           }
         );
-      } else if (req.body.tipoBaq === "Postmoldeo") {
+      }else if (req.body.tipoBaq === "Postmoldeo") {
         pool.query(
           "SELECT * FROM citasBaq WHERE fecha = '" +
             fecha +
@@ -217,7 +224,7 @@ const agendarCita = (req, res) => {
             horab +
             "' AND tipoBaq = 'Postmoldeo'",
           (err, rows, fields) => {
-            if (rows.length >= 1) {
+            if (rows.length >= 2) {
               return res.status(200).json({
                 unavailable: true,
                 message: "No tenemos agenda para el horario seleccionado",

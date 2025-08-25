@@ -11,10 +11,10 @@ import Modal from "@/components/Modal";
 import { merriweather } from "@/ui/fonts";
 
 const agendaCorpBaq = () => {
-  const disabledDate = [new Date(2025, 4, 1), new Date(2025, 3, 18), new Date(2025, 3, 19), new Date(2025, 3, 20), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
+  const disabledDate = [new Date(2025, 7, 18), new Date(2025, 7, 13), new Date(2025, 3, 19), new Date(2025, 3, 20), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
 
   const isDisabledDate = (date) => {
-    return disabledDate.some(disableD => isSameDay(date, disableD))
+    return disabledDate.some(disableD => isSameDay(date, disableD)) || new Date(date).getDay() === 6
   }
 
   const [appoinment, setAppoinment] = useState({

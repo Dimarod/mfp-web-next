@@ -11,7 +11,7 @@ import Modal from "@/components/Modal";
 import { merriweather } from "@/ui/fonts";
 
 const agendaFacBaq = () => {
-  const disabledDate = [new Date(2025, 5, 24), new Date(2025, 5, 25), new Date(2025, 5, 26), new Date(2025, 5, 27), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 5, 28), new Date(2025, 5, 29), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
+  const disabledDate = [new Date(2025, 7, 18), new Date(2025, 7, 12), new Date(2025, 7, 13), new Date(2025, 5, 27), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 5, 28), new Date(2025, 5, 29), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
 
   const isDisabledDate = (date) => {
     return disabledDate.some(disabledD => isSameDay(date, disabledD)) || isSunday(date) || new Date(date).getDay() === 6

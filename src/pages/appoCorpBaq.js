@@ -109,6 +109,8 @@ const citasCorpBaq = ({ citas }) => {
                   var hora = "6:00 PM"
                 }else if(res.horab === 18401920){
                   var hora = "6:40 PM"
+                }else if(res.horab === 19202000){
+                  var hora = "7:20 PM"
                 }else{
                   var hora = 0
                 }
@@ -182,6 +184,8 @@ const citasCorpBaq = ({ citas }) => {
                   var hora = "5:20 PM"
                 }else if(cita.horab === 18001840){
                   var hora = "6:00 PM"
+                }else if(cita.horab === 19202000){
+                  var hora = "7:20 PM"
                 }else if(cita.horab === 18401920){
                   var hora = "6:40 PM"
                 }else{
