@@ -14,15 +14,15 @@ const agendaCorpBaq = () => {
   const disabledDate = [new Date(2025, 7, 18), new Date(2025, 7, 13), new Date(2025, 3, 19), new Date(2025, 3, 20), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
 
   const isDisabledDate = (date) => {
-    return disabledDate.some(disableD => isSameDay(date, disableD)) || new Date(date).getDay() === 6
+    return disabledDate.some(disableD => isSameDay(date, disableD))
   }
 
   const [appoinment, setAppoinment] = useState({
     nombre: "",
     apellido: "",
     fecha: null,
-    horab: "",
-    tipoBaq: "",
+    horapc: "",
+    tipoPostCorp: "",
     telefono: "",
   });
   const [alerta, setAlerta] = useState("");
@@ -43,7 +43,7 @@ const agendaCorpBaq = () => {
     e.preventDefault();
     try {
       const resVerificar = await axios.post(
-        "/api/citasBaq/verificar",
+        "/api/citasPostBaq/verificar",
         appoinment
       );
 
@@ -52,7 +52,7 @@ const agendaCorpBaq = () => {
         return;
       }
       const resSobrecupo = await axios.post(
-        "/api/citasBaq/sobrecupo",
+        "/api/citasPostBaq/sobrecupo",
         appoinment
       );
 
@@ -62,20 +62,8 @@ const agendaCorpBaq = () => {
         );
         return;
       }
-      const resNutricion = await axios.post(
-        "/api/citasBaq/validarNutricion",
-        appoinment
-      );
 
-      if (resNutricion.data.nutricion) {
-        setAlerta(resNutricion.data.message);
-        return;
-      } else if (resNutricion.data.notNutrition) {
-        setAlerta(resNutricion.data.message);
-        return;
-      }
-
-      const resAgendar = await axios.post("/api/citasBaq/", appoinment);
+      const resAgendar = await axios.post("/api/citasPostBaq/", appoinment);
       if (resAgendar.data.noActual) {
         setAlerta(resAgendar.data.message);
         return;
@@ -89,7 +77,7 @@ const agendaCorpBaq = () => {
         setAlerta(resAgendar.data.message);
         return;
       }
-    } catch (error) {
+    } catch (err) {
       console.log("Hubo un error", err);
     }
   };
@@ -150,48 +138,38 @@ const agendaCorpBaq = () => {
               Tipo de cita:
             </label>
             <select
-              name="tipoBaq"
+              name="tipoPostCorp"
               className=" my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               onChange={handleChange}
               required
             >
               <option value="default"> Por favor elija una opción</option>
               <option value="Valoracion">Valoración</option>
-              <option value="Antiguo">Tratamiento ya iniciado</option>
-              {/* <option value="Tensamax">Tensamax</option> */}
-              <option value="Reina">Reina</option>
-              <option value="Publicidad">Publicidad</option>
-              <option value="Nutricion">Nutrición</option>
+              <option value="Preoperatorio">Preoperatorio</option>
+              <option value="Post">Postoperatorio</option>
+              <option value="Postmoldeo">Postmoldeo</option>
+              <option value="Correccion">Correccion Post</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Hora de la cita:
             </label>
             <select
-              name="horab"
+              name="horapc"
               className=" my-3 bg-transparent w-full border-x-2 border-b-2 rounded-md border-maintxt/60"
               onChange={handleChange}
               required
             >
               <option value="default">Por favor elija una opción</option>
               <option value="700800">7:00 AM - 8:00 AM</option>
-              <option value="800840">8:00 AM - 8:40 AM</option>
-              <option value="840920">8:40 AM - 9:20 AM</option>
-              <option value="9201000">9:20 AM - 10:00 AM</option>
-              <option value="10001040">10:00 AM - 10:40 AM</option>
-              <option value="10401120">10:40 AM - 11:20 AM</option>
-              <option value="11201200">11:20 AM - 12:00 PM</option>
-              <option value="12001240">12:00 PM - 12:40 PM</option>
-              <option value="12401320">12:40 PM - 1:20 PM</option>
-              <option value="13201400">1:20 PM - 2:00 PM</option>
-              <option value="14001440">2:00 PM - 2:40 PM</option>
-              <option value="14401520">2:40 PM - 3:20 PM</option>
-              <option value="15201600">3:20 PM - 4:00 PM</option>
-              <option value="16001640">4:00 PM - 4:40 PM</option>
-              <option value="16401720">4:40 PM - 5:20 PM</option>
-              <option value="17201800">5:20 PM - 6:00 PM</option>
-              <option value="18001840">6:00 PM - 6:40 PM</option>
-              <option value="18401920">6:40 PM - 7:20 PM</option>
-              <option value="19202000">7:20 PM - 8:00 PM</option>
+              <option value="800900">8:00 AM - 9:00 AM</option>
+              <option value="9001000">9:00 AM - 10:00 AM</option>
+              <option value="10001100">10:00 AM - 11:00 AM</option>
+              <option value="11001200">11:00 AM - 12:00 AM</option>
+              <option value="14001500">2:00 PM - 3:00 PM</option>
+              <option value="15001600">3:00 PM - 4:00 PM</option>
+              <option value="16001700">4:00 PM - 5:00 PM</option>
+              <option value="17001800">5:00 PM - 6:00 PM</option>
+              <option value="18001900">6:00 PM - 7:00 PM</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Teléfono:

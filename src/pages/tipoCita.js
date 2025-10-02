@@ -11,20 +11,20 @@ const sede = () => {
       </h1>
       <div className="flex justify-around w-full items-center mt-44">
         <a href="agendaCorpBaq">
-          <div className="w-48 h-48 rounded-md flex-col p-2 flex justify-center border-2 border-maintxt opacity-75 cursor-pointer">
+          <div className="w-48 h-fit rounded-md flex-col p-2 flex justify-center border-2 border-maintxt opacity-75 cursor-pointer">
             <Image
               className=" w-full h-full object-cover rounded-md p-4"
               src="/corporal.jpeg"
-              width={1200}
-              height={1600}
+              width={3024}
+              height={4032}
               alt="Sede Soledad"
               title="Sede Soledad"
             />
-            <p className="text-center text-lg font-bold">Corporal</p>
+            <p className="text-center text-lg font-bold">Tratamiento Cosmoterapéutico</p>
           </div>
         </a>
         <a href="agendaFacBaq">
-          <div className="w-48 h-48 rounded-md flex flex-col p-6 justify-center border-2 border-maintxt opacity-75 cursor-pointer">
+          <div className="w-48 h-fit rounded-md flex flex-col p-6 justify-center border-2 border-maintxt opacity-75 cursor-pointer">
             <Image
               className="w-full h-full object-cover rounded-md p-4"
               src="/facial.png"
@@ -33,7 +33,7 @@ const sede = () => {
               alt="Sede Barranquilla"
               title="Sede Barranquilla"
             />
-            <p className="text-center text-lg font-bold">Dermocosmético</p>
+            <p className="text-center text-lg font-bold">Tratamiento Dermocosmético</p>
           </div>
         </a>
       </div>

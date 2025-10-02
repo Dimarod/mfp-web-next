@@ -97,7 +97,7 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-2">
             <button className="bg-buttons text-white px-5 py-2 rounded-full">
-              <Link href="/tipoCita">¡Agéndate!</Link>
+              <Link href="/sede">¡Agéndate!</Link>
             </button>
             <Image
               onClick={toggleMenu}
