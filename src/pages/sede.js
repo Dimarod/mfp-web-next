@@ -33,7 +33,7 @@ const sede = () => {
               alt="Sede Postoperatorios"
               title="Sede Postoperatorios"
             />
-            <p className="text-center text-lg font-bold">Sede Postoperatorios</p>
+            <p className="text-center text-lg font-bold">Sede Tratamientos Post</p>
           </div>
         </a>
       </div>

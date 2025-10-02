@@ -149,7 +149,6 @@ const agendaFacBaq = () => {
               <option value="Hydrafacial">Hydrafacial</option>
               <option value="Plasma">Plasma</option>
               <option value="Radiofrecuencia">Radiofrecuencia Fraccionada</option>
-              <option value="Correccion">Correccion Post</option>
               <option value="Despigmentacion">Despigmentación</option>
               <option value="Post">Postoperatorio Facial</option>
               <option value="Armonizacion">Armonización Facial</option>

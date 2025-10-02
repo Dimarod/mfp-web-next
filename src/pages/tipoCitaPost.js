@@ -148,7 +148,8 @@ const agendaCorpBaq = () => {
               <option value="Preoperatorio">Preoperatorio</option>
               <option value="Post">Postoperatorio</option>
               <option value="Postmoldeo">Postmoldeo</option>
-              <option value="Correccion">Correccion Post</option>
+              <option value="Postparto">Postparto</option>
+              <option value="Correccion">Corrección Post</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Hora de la cita:

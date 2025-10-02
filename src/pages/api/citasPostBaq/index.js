@@ -326,6 +326,42 @@ const agendarCita = (req, res) => {
           }
         }
       );
+    } else if (tipoPostCorp === "Postparto") {
+      pool.query(
+        "SELECT * FROM citasPostCorp WHERE fecha = '" +
+          fecha +
+          "' AND horapc = '" +
+          horapc +
+          "' AND tipoPostCorp = 'Postparto'",
+        (err, rows, fields) => {
+          if (err) {
+            throw new Error(err);
+          } else {
+            if (rows.length >= 1) {
+              return res.status(200).json({
+                unavailable: true,
+                message:
+                  "El horario seleccionado presenta sobrecupo, por favor elija uno distinto",
+              });
+            } else {
+              pool.query(
+                "INSERT INTO citasPostCorp SET ?",
+                { _id, nombre, fecha, horapc, tipoPostCorp, telefono },
+                (err, rows, fields) => {
+                  if (err) {
+                    console.log("Hubo un error al agendar la cita", err);
+                  } else {
+                    return res.status(200).json({
+                      agendado: true,
+                      message: "Su cita ha sido agendada exitosamente",
+                    });
+                  }
+                }
+              );
+            }
+          }
+        }
+      );
     }
   } catch (error) {
     console.log("Hubo un error", error);
