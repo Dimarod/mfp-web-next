@@ -101,7 +101,7 @@ const citasCorpBaq = ({ citas }) => {
                     <tr className="border-y text-sm md:text-base   border-ferra">
                       <td className="p-3 m-3">{res.nombre}</td>
                       <td>{res.fecha}</td>
-                      <td>{res.tipoBaq}</td>
+                      <td>{res.tipoPostCorp}</td>
                       <td>{hora}</td>
                       <td>{res.telefono}</td>
                       <td>

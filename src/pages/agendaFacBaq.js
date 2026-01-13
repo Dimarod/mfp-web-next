@@ -11,7 +11,7 @@ import Modal from "@/components/Modal";
 import { merriweather } from "@/ui/fonts";
 
 const agendaFacBaq = () => {
-  const disabledDate = [new Date(2025, 7, 18), new Date(2025, 7, 12), new Date(2025, 7, 13), new Date(2025, 5, 27), new Date(2025, 5, 2), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 5, 28), new Date(2025, 5, 29), new Date(2025, 5, 30), new Date(2025, 7, 7), new Date(2025, 7, 18), new Date(2025, 9, 13), new Date(2025, 10, 3), new Date(2025, 10, 17), new Date(2025, 11, 8), new Date(2025, 11, 25)]
+  const disabledDate = [new Date(2025, 11, 12), new Date(2025, 11, 15), new Date(2025, 11, 25), new Date(2025, 11, 27), new Date(2025, 11, 28), new Date(2025, 11, 29), new Date(2025, 11, 30), new Date(2025, 11, 31), new Date(2026, 0, 1), new Date(2026, 0, 2), new Date(2026, 0, 3), new Date(2026, 0, 4), new Date(2026, 0, 5), new Date(2026, 0, 6), new Date(2026, 0, 7), new Date(2025, 11, 8), new Date(2026, 0, 8), new Date(2026, 0, 9), new Date(2026, 0, 10), new Date(2026, 0, 11), new Date(2026, 0, 12)]
 
   const isDisabledDate = (date) => {
     return disabledDate.some(disabledD => isSameDay(date, disabledD)) || isSunday(date) || new Date(date).getDay() === 6
@@ -164,11 +164,11 @@ const agendaFacBaq = () => {
               required
             >
               <option value="default"></option>
-              <option value="9001000">9:00 AM - 10:00 AM</option>
-              <option value="10001100">10:00 AM - 11:00 AM</option>
-              <option value="11001200">11:00 AM - 12:00 M</option>
-              <option value="14001500">2:00 PM - 3:00 PM</option>
-              <option value="15001600">3:00 PM - 4:00 PM</option>
+              <option value="9001000">9:00 AM</option>
+              <option value="10001100">10:00 AM</option>
+              <option value="11001200">11:00 AM</option>
+              <option value="14001500">2:00 PM</option>
+              <option value="15001600">3:00 PM</option>
             </select>
             <label className={`${merriweather.className} antialiased`}>
               Teléfono:

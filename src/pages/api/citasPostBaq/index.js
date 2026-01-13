@@ -44,6 +44,11 @@ const agendarCita = (req, res) => {
         noActual: true,
         message: "No puede agendarse para días anteriores o el día en curso",
       });
+    }else if(dayDate === 24 && horapc > 11001200){
+     return res.status(200).json({
+      unavailable: true,
+      message: "No tenemos atención disponible para el horario seleccionado"
+     })
     } else if (weekday === 1) {
       if (tipoPostCorp !== "Post") {
         return res.status(200).json({
@@ -88,7 +93,6 @@ const agendarCita = (req, res) => {
             }
           );
         } else {
-          console.log("Estamos aquí");
           return res.status(200).json({
             unavailable: true,
             message: "No tenemos atención para el horario seleccionado",
@@ -113,7 +117,7 @@ const agendarCita = (req, res) => {
               if (err) {
                 throw new Error(err);
               } else {
-                if (rows.length >= 1) {
+                if (rows.length >= 4) {
                   return res.status(200).json({
                     unavailable: true,
                     message:
@@ -139,7 +143,6 @@ const agendarCita = (req, res) => {
             }
           );
         } else {
-          console.log("Estamos aquí");
           return res.status(200).json({
             unavailable: true,
             message: "No tenemos atención para el horario seleccionado",
@@ -229,7 +232,7 @@ const agendarCita = (req, res) => {
           if (err) {
             throw new Error(err);
           } else {
-            if (rows.length >= 1) {
+            if (rows.length >= 4) {
               return res.status(200).json({
                 unavailable: true,
                 message:
@@ -265,7 +268,7 @@ const agendarCita = (req, res) => {
           if (err) {
             throw new Error(err);
           } else {
-            if (rows.length >= 1) {
+            if (rows.length >= 4) {
               return res.status(200).json({
                 unavailable: true,
                 message:
@@ -290,7 +293,7 @@ const agendarCita = (req, res) => {
           }
         }
       );
-    } else if (tipoPostCorp === "Coreccion") {
+    } else if (tipoPostCorp === "Correccion") {
       pool.query(
         "SELECT * FROM citasPostCorp WHERE fecha = '" +
           fecha +

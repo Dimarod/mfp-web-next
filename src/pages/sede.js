@@ -23,8 +23,8 @@ const sede = () => {
             <p className="text-center text-lg font-bold">Sede Cosmoterapéutica</p>
           </div>
         </a>
-        <a href="tipoCitaPost">
-          <div className="w-48 h-56 rounded-md flex flex-col p-6 justify-center border-2 border-maintxt opacity-70 cursor-pointer">
+        <a href="tipoCitaPost" disabled>
+          <div className="w-48 h-56 rounded-md flex flex-col p-3 justify-center border-2 border-maintxt opacity-70 cursor-pointer">
             <Image
               className="w-full h-full object-cover rounded-md overflow-hidden"
               src="/post3.JPG"
@@ -33,7 +33,7 @@ const sede = () => {
               alt="Sede Postoperatorios"
               title="Sede Postoperatorios"
             />
-            <p className="text-center text-lg font-bold">Sede Tratamientos Post</p>
+            <p className="text-center text-lg font-bold">Sede Terapias Post</p>
           </div>
         </a>
       </div>
