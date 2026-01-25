@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { pool } from "../../../../config/db";
+import { pool } from "../../../config/db";
 
 export default (req, res) => {
   if (req.method === "POST") {

@@ -15,16 +15,15 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
-        mainbg: "#F5F5DC",
-        maintxt: "#424242",
-        buttons: "#D4AF37",
-        secondtxt: "#E0E0E0"
+        'brand-black': '#000000',
+        'brand-platinum': '#E5E5E5',     // Fondo general sugerido
+        'brand-vanilla': '#DDC1A6',      // Acento principal
+        'brand-vanilla-dark': '#c5aa90', // Para efectos hover
+      },
+      fontFamily:{
+        display: ['var(--font-tenor)', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'sans-serif']
       },
       spacing: {
         '1/5' : '20%',

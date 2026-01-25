@@ -1,0 +1,166 @@
+import { citaModel } from "@/models/citasFacialModel/citaModel";
+import crypto from "node:crypto";
+
+export const CitaService = {
+    listarCitas: async () => {
+        return await citaModel.getAll()
+    },
+
+    agendarCita: async (data) => {
+        const { fecha, horaf, tipoFac, telefono, nombre, apellido } = data;
+
+        //1. Limpieza de datos
+        const nombreCompleto = `${nombre.trim()} ${apellido.trim()}`;
+
+        const citasDelDia = await citaModel.getByDate(fecha);
+        let citaExistente = false;
+
+        for (let i = 0; i < citasDelDia.length; i++) {
+            const cita = citasDelDia[i];
+            if (cita.nombre === nombreCompleto) {
+                citaExistente = true;
+                break;
+            }
+        }
+
+        if (citaExistente) {
+            throw new Error("ALREADY_BOOKED");
+        }
+
+        const overturn = await CitaService.verificarSobrecupo(fecha, horaf);
+
+        if (overturn) {
+            throw new Error("OVERBOOKING");
+        }
+
+        //2. Validaciones de fecha
+        const [year, month, day] = fecha.split("-").map(Number)
+        const citaDate = new Date(year, month - 1, day);
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        //No agendar en fechas pasadas
+        if (citaDate <= today) {
+            throw new Error("DATE_PAST_OR_TODAY");
+        }
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        if (citaDate.getTime() === tomorrow.getTime()) {
+            if (now.getHours() >= 19) {
+                throw new Error("DATE_PAST_OR_TODAY")
+            }
+        }
+
+        const weekday = citaDate.getUTCDay() + 1;
+
+        //Validaciones de horarios
+        let unavailable = false;
+
+        if (weekday === 7 && tipoFac !== "Depilacion") {
+            unavailable = true;
+        } else if (weekday === 7 && tipoFac === "Depilacion") {
+            if (horaf > "11001200") unavailable = true;
+        }
+
+        if (unavailable) {
+            throw new Error("SCHEDULE_UNAVAILABLE");
+        }
+
+        //Preparar y Guardar
+        const nuevaCita = {
+            _id: crypto.randomUUID(),
+            nombre: nombreCompleto,
+            fecha,
+            horaf,
+            tipoFac,
+            telefono
+        }
+
+        return await citaModel.create(nuevaCita)
+    },
+
+    buscarPorFecha: async (fecha) => {
+        if (!fecha) {
+            throw new Error("DATE_NOT_PROVIDED");
+        }
+
+        return await citaModel.getByDate(fecha);
+    },
+    verificarSobrecupo: async (fecha, horaf) => {
+        if (!fecha || !horaf) {
+            throw new Error("MISSING_DATA");
+        }
+
+        //Obtenemos las citas existentes en ese bloque
+        const citasExistentes = await citaModel.getByDateAndSlot(fecha, horaf);
+
+        //Aplicamos la regla ¿Son 4 o más?
+        const esSobrecupo = citasExistentes.length >= 1;
+
+        return esSobrecupo
+    },
+    eliminarCita: async (id) => {
+        if (!id) {
+            throw new Error("ID_NOT_PROVIDED");
+        }
+
+        const result = await citaModel.deleteById(id);
+
+        if (result.affectedRows === 0) {
+            throw new Error("NOT_FOUND");
+        }
+
+        return result;
+    },
+    obtenerDisponibilidad: async (fecha, tipoFac) => {
+        //Diccionario de horas
+        const allHours = [
+            9001000, 10001100, 11001200, 14001500, 15001600
+        ];
+
+        let blockedHours = [];
+
+        console.log("--- DEBUG DISPONIBILIDAD ---");
+        console.log("1. Fecha recibida:", fecha);
+
+        //Analizar la fecha
+        const [year, month, day] = fecha.split('-').map(Number);
+        const dateObj = new Date(year, month - 1, day);
+        const dayOfWeek = dateObj.getDay() //0=Dom 6=Sab
+
+        console.log("2. Día detectado (0=Dom, 6=Sab):", dayOfWeek);
+
+        //Días y horarios fijos
+        if (dayOfWeek === 6) {
+            if (tipoFac !== "Depilacion") {
+                blockedHours.push(...allHours)
+            }else{
+                const sabadoPermitido = [800900, 9001000, 10001100, 11001200];
+                blockedHours = allHours.filter(h => !sabadoPermitido.includes(h));
+            }
+        }
+
+        try {
+            //Obtener de la base de datos lo que ya está ocupado
+            const ocupacion = await citaModel.getOccupiedSlots(fecha)
+            console.log("3. Ocupación DB:", ocupacion); // LOG
+
+            let limite = 1;
+
+            //Recorremos
+            ocupacion.forEach(slot => {
+                if (slot.total >= limite) {
+                    blockedHours.push(slot.horaf)
+                }
+            });
+
+        } catch (error) {
+
+        }
+
+        console.log("4. FINAL BLOCKED:", blockedHours); // LOG
+        return [...new Set(blockedHours)]
+    }
+}

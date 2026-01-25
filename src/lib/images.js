@@ -20,19 +20,9 @@ export const images = [
     alt: "facial",
   },
   {
-    id: 5,
-    src: "/gluteos.jpeg",
-    alt: "gluteos",
-  },
-  {
     id: 6,
     src: "/laser.jpeg",
     alt: "laser",
-  },
-  {
-    id: 7,
-    src: "/masajes.jpeg",
-    alt: "masajes",
   },
   {
     id: 8,
@@ -43,11 +33,6 @@ export const images = [
     id: 9,
     src: "/plasma.jpeg",
     alt: "plasma",
-  },
-  {
-    id: 10,
-    src: "/reductor.jpeg",
-    alt: "reductor",
   },
   {
     id: 11,

@@ -9,9 +9,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-body{
-    @apply bg-mainbg text-maintxt
-}
 input{
     background-color: transparent;
 }
