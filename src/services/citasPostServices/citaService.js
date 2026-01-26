@@ -9,75 +9,52 @@ export const CitaService = {
     agendarCita: async (data) => {
         const { fecha, horapc, tipoPostCorp, telefono, nombre, apellido } = data;
 
-        //1. Limpieza de datos
+        // 1. Limpieza de datos
         const nombreCompleto = `${nombre.trim()} ${apellido.trim()}`;
+        
+        // Convertimos horapc a Número para evitar problemas de comparación
+        const horaNumero = Number(horapc);
 
+        // Validación duplicados
         const citasDelDia = await citaModel.getByDate(fecha);
-        let citaExistente = false;
-
-        for (let i = 0; i < citasDelDia.length; i++) {
-            const cita = citasDelDia[i];
-            if (cita.nombre === nombreCompleto) {
-                citaExistente = true;
-                break;
-            }
-        }
-
+        const citaExistente = citasDelDia.find(c => c.nombre === nombreCompleto);
+        
         if (citaExistente) {
             throw new Error("ALREADY_BOOKED");
         }
 
-        //Verificar sobrecupo especializado
-
-
-
-        //2. Validaciones de fecha
+        // 2. Validaciones de fecha
         const [year, month, day] = fecha.split("-").map(Number)
         const citaDate = new Date(year, month - 1, day);
         const now = new Date();
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        //No agendar en fechas pasadas
-        if (citaDate <= today) {
+        // No agendar en fechas pasadas
+        if (citaDate < today) { // Ajustado a < para permitir agendar hoy si hay hueco
             throw new Error("DATE_PAST_OR_TODAY");
         }
 
+        // Regla: No agendar para mañana después de las 7PM
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
 
         if (citaDate.getTime() === tomorrow.getTime()) {
             if (now.getHours() >= 19) {
-                throw new Error("DATE_PAST_OR_TODAY")
+                throw new Error("DATE_PAST_OR_TODAY");
             }
         }
 
-        const weekday = citaDate.getUTCDay() + 1;
+        // --- VALIDACIONES DE REGLAS (Centralizadas) ---
+        // Eliminé el bloque "if (weekday === 1)" antiguo que tenía errores de strings.
+        // Ahora todo pasa por la función experta:
+        await CitaService.validarReglasSobrecupo(citaDate, horaNumero, tipoPostCorp, fecha);
 
-        //Validaciones de horarios
-        let unavailable = false;
-
-        if (weekday === 1) {
-            if (tipoPostCorp !== "Post") {
-                unavailable = true;
-            } else {
-                if (horapc >= "9001000" && horapc <= "12001300") {
-
-                }
-            }
-        }
-
-        if (unavailable) {
-            throw new Error("SCHEDULE_UNAVAILABLE");
-        }
-
-        await CitaService.validarReglasSobrecupo(citaDate, horapc, tipoPostCorp, fecha);
-
-        //Preparar y Guardar
+        // Preparar y Guardar
         const nuevaCita = {
             _id: crypto.randomUUID(),
             nombre: nombreCompleto,
             fecha,
-            horapc,
+            horapc: horaNumero, // Guardamos como número
             tipoPostCorp,
             telefono
         }
@@ -86,62 +63,47 @@ export const CitaService = {
     },
 
     buscarPorFecha: async (fecha) => {
-        if (!fecha) {
-            throw new Error("DATE_NOT_PROVIDED");
-        }
-
+        if (!fecha) throw new Error("DATE_NOT_PROVIDED");
         return await citaModel.getByDate(fecha);
     },
+
     verificarSobrecupo: async (fecha, horapc) => {
-        if (!fecha || !horapc) {
-            throw new Error("MISSING_DATA");
-        }
-
-        //Obtenemos las citas existentes en ese bloque
+        if (!fecha || !horapc) throw new Error("MISSING_DATA");
+        // Nota: Esta función verifica el límite genérico de 4. 
+        // Para reglas específicas usamos validarReglasSobrecupo.
         const citasExistentes = await citaModel.getByDateAndSlot(fecha, horapc);
-
-        //Aplicamos la regla ¿Son 4 o más?
-        const esSobrecupo = citasExistentes.length >= 4;
-
-        return esSobrecupo
+        return citasExistentes.length >= 4;
     },
+
     eliminarCita: async (id) => {
-        if (!id) {
-            throw new Error("ID_NOT_PROVIDED");
-        }
-
+        if (!id) throw new Error("ID_NOT_PROVIDED");
         const result = await citaModel.deleteById(id);
-
-        if (result.affectedRows === 0) {
-            throw new Error("NOT_FOUND");
-        }
-
+        if (result.affectedRows === 0) throw new Error("NOT_FOUND");
         return result;
     },
+
+    // --- EL CEREBRO DE LAS VALIDACIONES (Backend) ---
     validarReglasSobrecupo: async (citaDate, horapc, tipoPostCorp, fechaString) => {
-        const diaDeSemana = citaDate.getDay();
-        console.log(diaDeSemana);
-        console.log(horapc);
-
-
+        const diaDeSemana = citaDate.getDay(); // 0=Dom, 6=Sab
+        
         let limiteCupo = 1;
         let horarioValido = false;
 
-        if (diaDeSemana === 0) {
-            if (tipoPostCorp === "Post") throw new Error("SCHEDULE_UNAVAILABLE");
+        // 1. Validar Horarios y Tipos permitidos por día
+        if (diaDeSemana === 0) { // DOMINGO
+            if (tipoPostCorp !== "Post") throw new Error("SCHEDULE_UNAVAILABLE");
             if (horapc >= 9001000 && horapc <= 12001300) horarioValido = true;
-
-            limiteCupo = 1;
-        } else if (diaDeSemana === 6) {
-            if (tipoPostCorp !== "Post") throw new Error('SCHEDULE_UNAVAILABLE');
+            limiteCupo = 1; // Solo 1 Post los domingos (o ajusta si son más)
+            
+        } else if (diaDeSemana === 6) { // SÁBADO
+            if (tipoPostCorp !== "Post" && tipoPostCorp !== "Postmoldeo") throw new Error('SCHEDULE_UNAVAILABLE');
             if (horapc >= 800900 && horapc <= 11001200) horarioValido = true;
+            
+            // REGLA SÁBADO: Máximo 2 de cada tipo
+            limiteCupo = 2; 
 
-            limiteCupo = 4;
-
-
-        } else {
+        } else { // LUNES A VIERNES
             horarioValido = true;
-
             if (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo") {
                 limiteCupo = 4;
             } else {
@@ -149,54 +111,69 @@ export const CitaService = {
             }
         }
 
-        if (!horarioValido) {
-            throw new Error("SCHEDULE_UNAVAILABLE");
-        }
+        if (!horarioValido) throw new Error("SCHEDULE_UNAVAILABLE");
 
-        const cantidadCitas = await citaModel.countByType(fechaString, horapc, tipoPostCorp);
-
-        if (cantidadCitas >= limiteCupo) {
+        // 2. Verificar disponibilidad en Base de Datos
+        
+        // A) Verificamos el límite específico (Ej: que no haya más de 2 Posts el sábado)
+        const cantidadDeMiTipo = await citaModel.countByType(fechaString, horapc, tipoPostCorp);
+        if (cantidadDeMiTipo >= limiteCupo) {
             throw new Error("OVERBOOKING");
         }
+
+        // B) SEGURIDAD EXTRA PARA SÁBADOS: 
+        // Verificar que el TOTAL general no pase de 4 (Ej: 2 Post + 2 Postmoldeo = 4. No cabe nadie más)
+        if (diaDeSemana === 6) {
+             // Usamos una función que cuente todo en esa hora, o reutilizamos getOccupiedSlots
+             // Para ser rápidos, podemos usar getByDateAndSlot que ya tienes
+             const totalEnHora = await citaModel.getByDateAndSlot(fechaString, horapc);
+             if (totalEnHora.length >= 4) {
+                 throw new Error("OVERBOOKING");
+             }
+        }
     },
+
+    // --- EL CEREBRO DEL BLOQUEO VISUAL (Frontend) ---
     obtenerDisponibilidad: async (fecha, tipoPostCorp) => {
-        //Diccionario de horas
         const allHours = [
             800900, 9001000, 10001100, 11001200, 14001500, 15001600, 16001700,
             17001800, 18001900
         ];
 
         let blockedHours = [];
-
-        console.log("--- DEBUG DISPONIBILIDAD ---");
-        console.log("1. Fecha recibida:", fecha);
-
-        //Analizar la fecha
+        
+        // Analizar fecha
         const [year, month, day] = fecha.split('-').map(Number);
         const dateObj = new Date(year, month - 1, day);
-        const dayOfWeek = dateObj.getDay() //0=Dom 6=Sab
+        const dayOfWeek = dateObj.getDay(); 
 
-        console.log("2. Día detectado (0=Dom, 6=Sab):", dayOfWeek);
-
-        //Días y horarios fijos
-        if (dayOfWeek === 0) {
+        // 1. Bloqueos Fijos por Día
+        if (dayOfWeek === 0) { // Domingo
             if (tipoPostCorp !== "Post") {
-                blockedHours.push(...allHours);
+                return allHours; // Todo bloqueado si no es Post
             } else {
-                const noPermitidos = [14001500, 15001600, 16001700, 17001800, 18001900];
-                blockedHours = allHours.filter(h => !noPermitidos.includes(h));
+                const noPermitidos = [14001500, 15001600, 16001700, 17001800, 18001900]; // Tarde bloqueada
+                blockedHours.push(...noPermitidos);
             }
-        } else if ([1, 3, 5].includes(dayOfWeek)) {
-            console.log("-> Entró en Lunes/Miercoles/Viernes"); // LOG
-            blockedHours.push(14001440, 14401520)
+        } else if (dayOfWeek === 6) { // Sábado
+            if (tipoPostCorp !== "Post" && tipoPostCorp !== "Postmoldeo") {
+                return allHours; // Todo bloqueado si no es Post/Postmoldeo
+            } else {
+                // Bloqueamos la tarde
+                const horasTarde = [14001500, 15001600, 16001700, 17001800, 18001900];
+                blockedHours.push(...horasTarde);
+            }
+        } else if ([1, 3, 5].includes(dayOfWeek)) { // L-M-V
+            blockedHours.push(14001440, 14401520); // Horas específicas bloqueadas
         } else {
-            blockedHours.push(12001240);
+            blockedHours.push(12001240); // Martes/Jueves mediodía bloqueado
         }
 
+        // 2. Bloqueos Dinámicos (Base de Datos)
         try {
-            //Obtener de la base de datos lo que ya está ocupado
-            const ocupacion = await citaModel.getOccupiedSlots(fecha)
-
+            const ocupacion = await citaModel.getOccupiedSlots(fecha);
+            
+            // Transformamos DB a Mapa: { "800900": { total: 3, Post: 2, Postmoldeo: 1 } }
             const mapaHoras = {};
 
             ocupacion.forEach(fila => {
@@ -204,47 +181,51 @@ export const CitaService = {
                 const tipo = fila.tipoPostCorp;
                 const cantidad = fila.total;
 
-                if (!mapaHoras[hora]) {
-                    mapaHoras[hora] = { totalGeneral: 0 }
-                }
-
-                //Sumamos el total de las horas
+                if (!mapaHoras[hora]) mapaHoras[hora] = { totalGeneral: 0 };
+                
                 mapaHoras[hora].totalGeneral += cantidad;
-                //Guardamos cuantos hay de un tipo específico
                 mapaHoras[hora][tipo] = cantidad;
             });
 
-            //Evaluamos cada hora posible según la regla
+            // Revisamos cada hora
             allHours.forEach(hora => {
-                const datosHora = mapaHoras[hora] || { totalGeneral: 0 }
+                const datosHora = mapaHoras[hora] || { totalGeneral: 0 };
 
-
-                //Regla 1: Están llenos los 4 cupos
+                // REGLA GLOBAL: Si ya hay 4 personas, nadie entra.
                 if (datosHora.totalGeneral >= 4) {
-                    blockedHours.push(hora)
+                    blockedHours.push(hora);
                     return;
                 }
 
-                //Regla 2: Lógica específica según lo que el usuario quiere agendar
-                const esTipoMasivo = (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo");
-
-                if (esTipoMasivo) {
-
-                } else {
-                    const cantidadDeMiTipo = datosHora[tipoPostCorp] || 0;
-
-                    if (cantidadDeMiTipo >= 1) {
-                        blockedHours.push(hora)
+                // LÓGICA DE SÁBADO (Tu lógica personalizada)
+                if (dayOfWeek === 6) {
+                    if (tipoPostCorp === "Post") {
+                        // CORRECCIÓN: Usamos datosHora, no 'datos'
+                        const cuantosPost = datosHora["Post"] || 0;
+                        // Si ya hay 2 Post, no caben más Post (aunque haya espacio general)
+                        if (cuantosPost >= 2) blockedHours.push(hora);
+                    }
+                    else if (tipoPostCorp === "Postmoldeo") {
+                        const cuantosPostmoldeo = datosHora["Postmoldeo"] || 0;
+                        // Si ya hay 2 Postmoldeo, no caben más
+                        if (cuantosPostmoldeo >= 2) blockedHours.push(hora);
+                    }
+                } 
+                // LÓGICA DE SEMANA (L-V)
+                else {
+                    const esTipoMasivo = (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo");
+                    if (!esTipoMasivo) {
+                        // Si es tipo restringido (Valoración), solo 1 por hora
+                        const cantidadDeMiTipo = datosHora[tipoPostCorp] || 0;
+                        if (cantidadDeMiTipo >= 1) blockedHours.push(hora);
                     }
                 }
-
-            })
+            });
 
         } catch (error) {
-
+            console.error("Error calculando disponibilidad:", error);
         }
 
-        console.log("4. FINAL BLOCKED:", blockedHours); // LOG
-        return [...new Set(blockedHours)]
+        return [...new Set(blockedHours)];
     }
 }
