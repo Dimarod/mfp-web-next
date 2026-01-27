@@ -18,8 +18,8 @@ const Modal = ({alerta}) => {
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
       <div className="flex flex-col bg-white p-5 rounded-lg justify-center items-center gap-5">
         <Image src={info} alt="info" title="icono de información" className="w-24 text-gray-200"/>
-        <h3 className="text-center text-ferra text-xl font-semibold">{alerta}</h3>
-        <button className="border px-4 py-2 border-ferra rounded-md" onClick={handleClose}>Cerrar</button>
+        <h3 className="text-center whitespace-pre-line text-ferra text-sm font-semibold">{alerta}</h3>
+        <button className="border px-4 py-2 border-ferra rounded-md" onClick={handleClose}>Perfecto, lo tengo claro</button>
       </div>
     </div>
   )}

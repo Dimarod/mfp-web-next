@@ -23,7 +23,7 @@ export const citaController = {
   agendar: async (req, res) => {
     try {
       await CitaService.agendarCita(req.body);
-      res.status(201).json({ agendado: true, message: "Cita agendada con éxito" })
+      res.status(201).json({ agendado: true, message: "Recuerde llegar 15 minutos antes del horario de tu cita.\nTu cita ha sido agendada exitosamente.\nPara respetar el horario del centro, si llegas 15 minutos después de la hora asignada, la cita será reprogramda a otra fecga según disponibilidad." })
     } catch (error) {
       switch (error.message) {
         case "ALREADY_BOOKED":

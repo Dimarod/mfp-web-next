@@ -102,7 +102,7 @@ const agendaCorpBaq = () => {
     try {
       const res = await axios.post("/api/citasBaq/", appoinment)
       if (res.data.agendado) {
-        setAlerta("Cita agendada con éxito");
+        setAlerta(res.data.message);
       }
     } catch (error) {
       if (error.response) {
