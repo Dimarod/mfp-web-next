@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://TU-DOMINIO-REAL.com', // <--- IMPORTANTE: Pon aquí tu dominio real (ej: https://myfootprint.com.co)
+  siteUrl: 'https://myfootprintsas.com', // <--- IMPORTANTE: Pon aquí tu dominio real (ej: https://myfootprint.com.co)
   generateRobotsTxt: true, // Esto generará el archivo robots.txt automáticamente
   
   // Opcional: Si quieres que el sitemap se regenere más rápido en entornos grandes

@@ -3,18 +3,22 @@ import { CitaService } from "@/services/citasBaqServices/citaService";
 export const citaController = {
   listar: async (req, res) => {
     try {
-      const { fecha } = req.query;
-      if (fecha && fecha !== undefined && fecha !== "") {
-        console.log("Buscando por fecha", fecha);
+      let { fecha } = req.query;
+      if (!fecha || fecha === undefined || fecha === "") {
+        const now = new Date();
 
-        const citas = await CitaService.buscarPorFecha(fecha);
-        return res.status(200).json({ rows: citas });
+        fecha = now.toLocaleDateString('en-CA', {timeZone: 'America/Bogota'});
+
+        console.log("Buscando por defecto", fecha)
       } else {
-        console.log("Listado sin filtro");
-
-        const citas = await CitaService.listarCitas();
-        return res.status(200).json(citas)
+        console.log("Buscando día específico");
+        
       }
+
+      const citas = await CitaService.buscarPorFecha(fecha);
+      return res.status(200).json({ rows: citas });
+
+      
     } catch (error) {
       res.status(500).json({ message: "Error al listar las citas", error: error.message });
     }

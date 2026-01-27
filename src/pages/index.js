@@ -80,7 +80,7 @@ const Hero = () => {
                 {/* Contenedor de la imagen principal con forma interesante */}
                 <div className="relative w-full h-[500px] md:h-[600px] rounded-t-full rounded-b-[200px] overflow-hidden shadow-2xl border-4 border-white">
                   <Image
-                    src="/main2.jpeg" // NECESITAS BUSCAR ESTA IMAGEN
+                    src="/main.jpeg" // NECESITAS BUSCAR ESTA IMAGEN
                     alt="Paciente relajada en terapia"
                     fill
                     className="object-cover"

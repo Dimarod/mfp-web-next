@@ -82,9 +82,6 @@ export const CitaService = {
     },
 
     buscarPorFecha: async (fecha) => {
-        if (!fecha) {
-            throw new Error("DATE_NOT_PROVIDED");
-        }
 
         return await citaModel.getByDate(fecha);
     },
