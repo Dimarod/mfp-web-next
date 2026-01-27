@@ -22,7 +22,7 @@ const HORARIOS = {
   "16401720": "4:40 PM",
   "17201800": "5:20 PM",
   "18001840": "6:00 PM",
-  "184019200": "6:40 PM"
+  "18401920": "6:40 PM"
 }
 
 const citasCorpBaq = ({ citas: citasIniciales }) => {

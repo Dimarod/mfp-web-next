@@ -142,7 +142,7 @@ const agendaFacBaq = () => {
                     <label className="text-xs text-brand-vanilla font-bold uppercase tracking-wider mb-2 block">Nombre</label>
                     <input
                       name="nombre"
-                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-brand-vanilla focus:bg-white/20 transition-all outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-500 placeholder-gray-400 focus:border-brand-vanilla focus:bg-white/20 transition-all outline-none"
                       type="text"
                       onChange={handleChange}
                       minLength="3"
@@ -154,7 +154,7 @@ const agendaFacBaq = () => {
                     <label className="text-xs text-brand-vanilla font-bold uppercase tracking-wider mb-2 block">Apellido</label>
                     <input
                       name="apellido"
-                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-brand-vanilla focus:bg-white/20 transition-all outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-500 placeholder-gray-400 focus:border-brand-vanilla focus:bg-white/20 transition-all outline-none"
                       type="text"
                       onChange={handleChange}
                       minLength="3"
@@ -166,7 +166,7 @@ const agendaFacBaq = () => {
                     <label className="text-xs text-brand-vanilla font-bold uppercase tracking-wider mb-2 block">Teléfono</label>
                     <input
                       name="telefono"
-                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-brand-vanilla focus:bg-white/20 transition-all outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-500 placeholder-gray-400 focus:border-brand-vanilla focus:bg-white/20 transition-all outline-none"
                       type="number" // Mantengo type="number" como tenías
                       onChange={handleChange}
                       required

@@ -17,7 +17,7 @@ export const citaModel = {
     },
 
     getByDate: async (fecha) => {
-        const query = "SELECT * FROM citasPostCorp WHERE fecha = ?";
+        const query = "SELECT * FROM citasPostCorp WHERE fecha = ? ORDER BY horapc";
 
         console.log("--> Ejecutando Query getByDate:", query, "Con fecha:", fecha);
 

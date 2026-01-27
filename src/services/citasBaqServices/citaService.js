@@ -36,8 +36,10 @@ export const CitaService = {
         //2. Validaciones de fecha
         const [year, month, day] = fecha.split("-").map(Number)
         const citaDate = new Date(year, month - 1, day);
+
         const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const colombiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
 
         //No agendar en fechas pasadas
         if (citaDate <= today) {
@@ -48,7 +50,7 @@ export const CitaService = {
         tomorrow.setDate(tomorrow.getDate() + 1);
 
         if (citaDate.getTime() === tomorrow.getTime()) {
-            if (now.getHours() >= 19) {
+            if (colombiaTime.getHours() >= 19) {
                 throw new Error("DATE_PAST_OR_TODAY")
             }
         }
