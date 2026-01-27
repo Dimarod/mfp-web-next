@@ -45,7 +45,7 @@ const Hero = () => {
                 </p>
                 {/* Botones de Acción */}
                 <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-                  <Link href="/agendar">
+                  <Link href="/sede">
                     <button className="bg-brand-vanilla text-white px-8 py-4 rounded-full font-sans font-medium tracking-wide hover:bg-brand-vanilla-dark transition-all shadow-lg hover:shadow-xl w-full sm:w-auto">
                       Agendar Cita
                     </button>
