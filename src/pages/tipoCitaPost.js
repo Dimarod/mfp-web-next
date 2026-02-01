@@ -123,6 +123,7 @@ const AgendaPostBaq = () => {
         <div className="min-h-screen bg-transparent py-12 px-4 flex justify-center items-center mt-12 mb-6">
 
           {/* Contenedor Principal */}
+         <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
           <div className="bg-brand-vanilla/5 w-full max-w-5xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row">
 
             {/* COLUMNA IZQUIERDA: Datos Personales (Estilo Recovery/Warm) */}
@@ -187,8 +188,6 @@ const AgendaPostBaq = () => {
 
             {/* COLUMNA DERECHA: Detalles de la Cita */}
             <div className="w-full md:w-3/5 p-8 md:p-12 bg-white">
-              <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
-
                 <div className="space-y-8">
                   {/* 1. TIPO DE CITA */}
                   <div>
@@ -292,10 +291,9 @@ const AgendaPostBaq = () => {
                     Agendar Cita
                   </button>
                 </div>
-
-              </form>
             </div>
           </div>
+         </form>
 
           {/* MODAL (Z-Index Corregido) */}
           <div className="relative z-[9999]">

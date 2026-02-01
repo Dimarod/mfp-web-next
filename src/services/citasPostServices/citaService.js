@@ -102,7 +102,9 @@ export const CitaService = {
             // REGLA SÁBADO: Máximo 2 de cada tipo
             limiteCupo = 2; 
 
-        } else { // LUNES A VIERNES
+        } else if(diaDeSemana === 5 && horapc >= 11001200){
+          throw new Error('SCHEDULE_UNAVAILABLE')
+        }else { // LUNES A VIERNES
             horarioValido = true;
             if (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo") {
                 limiteCupo = 4;
@@ -163,10 +165,8 @@ export const CitaService = {
                 const horasTarde = [14001500, 15001600, 16001700, 17001800, 18001900];
                 blockedHours.push(...horasTarde);
             }
-        } else if ([1, 3, 5].includes(dayOfWeek)) { // L-M-V
-            blockedHours.push(14001440, 14401520); // Horas específicas bloqueadas
-        } else {
-            blockedHours.push(12001240); // Martes/Jueves mediodía bloqueado
+        }else if(dayOfWeek === 5){
+          blockedHours.push(14001500, 15001600, 16001700, 17001800, 18001900);
         }
 
         // 2. Bloqueos Dinámicos (Base de Datos)

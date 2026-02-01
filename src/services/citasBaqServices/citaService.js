@@ -62,10 +62,12 @@ export const CitaService = {
 
         if (weekday === 2 || weekday === 4 || weekday === 6) {
             if (horab > 12001240 && horab <= 14401520) unavailable = true;
-        } else if (weekday === 3 || weekday === 5) {
+        } else if (weekday === 3) {
             if (horab === 12001240) unavailable = true;
         } else if (weekday === 7) {
             if (horab >= 12001240) unavailable = true;
+        }else if(weekday === 5){
+         if(horab >= 12001240) unavailable = true
         }
 
         if (unavailable) {
@@ -140,10 +142,12 @@ export const CitaService = {
             console.log("-> Entró en lógica de Sábado"); // LOG
             const sabadoPermitido = [800840, 840920, 9201000, 10001040, 10401120, 11201200];
             blockedHours = allHours.filter(h => !sabadoPermitido.includes(h));
-        } else if ([1, 3, 5].includes(dayOfWeek)) {
+        } else if ([1, 3].includes(dayOfWeek)) {
             console.log("-> Entró en Lunes/Miercoles/Viernes"); // LOG
             blockedHours.push(14001440, 14401520)
-        } else {
+        } else if(dayOfWeek === 5){
+         blockedHours.push(12001240, 14001440, 14401520, 15201600, 16001640, 16401720, 17201800, 18001840, 18401920)
+        }else{
             blockedHours.push(12001240);
         }
 

@@ -116,7 +116,7 @@ const agendaFacBaq = () => {
     </Head>
       <Layout>
         <div className="min-h-screen bg-transparent py-12 px-4 flex justify-center items-center mt-12 mb-6">
-
+         <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
           {/* Contenedor Principal Estilizado */}
           <div className="bg-brand-vanilla/5 w-full max-w-5xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row">
 
@@ -179,8 +179,6 @@ const agendaFacBaq = () => {
 
             {/* COLUMNA DERECHA: Detalles de la Cita */}
             <div className="w-full md:w-3/5 p-8 md:p-12 bg-white">
-              <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
-
                 <div className="space-y-8">
                   {/* 1. TIPO DE CITA (Select Estilizado) */}
                   <div>
@@ -288,11 +286,9 @@ const agendaFacBaq = () => {
                     Confirmar Cita
                   </button>
                 </div>
-
-              </form>
             </div>
           </div>
-
+         </form>
           {/* MODAL CORREGIDO (z-index alto) */}
           <div className="relative z-[9999]">
             {alerta && <Modal alerta={alerta} setAlerta={setAlerta} />}
