@@ -32,7 +32,7 @@ export const citaModel = {
         AND tipoPostCorp != 'Nutricion'
         `;
 
-        const [rows] = await pool.query(query, [fecha, horab]);
+        const [rows] = await pool.query(query, [fecha, horapc]);
         return rows;
     },
     deleteById: async (id) => {

@@ -15,56 +15,56 @@ const teamMembers = [
     specialty: "Terapias Dermocosmética"
   },
   {
-    id: 6,
+    id: 2,
     name: "Jorjito Maestre",
     role: "Psicólogo", // Ajusta el rol real
-    image: "/jorjito.jpg",
+    image: "/jorjito.jpeg",
     specialty: "Terapias Post Quirúrgicas"
   },
   {
-    id: 7,
+    id: 3,
     name: "Michelle Orozco",
     role: "Terapeuta Corporal",
     image: "/Cosmeatra3.PNG",
     specialty: "Jefa de Personal"
   },
   {
-    id: 8,
+    id: 4,
     name: "Zharick Mejía",
     role: "Cosmetóloga - Cosmeatra",
     image: "/Cosmeatra1.PNG",
     specialty: "Terapias Faciales y Corporales"
   },
   {
-    id: 9,
+    id: 5,
     name: "Merian Orozco",
     role: "Cosmetóloga - Cosmeatra",
     image: "/Cosmeatra2.PNG",
     specialty: "Terapias Faciales y Corporales"
   },
   {
-    id: 3,
+    id: 6,
     name: "Sergio Ortega",
     role: "Deportólogo",
     image: "/Sergio.jpeg",
     specialty: "Coach Personalizado"
   },
   {
-    id: 2,
+    id: 7,
     name: "Viviana Ferrer",
     role: "Psicóloga",
     image: "/psicologa.jpeg",
     specialty: "Recursos Humanos"
   },
   {
-    id: 4,
+    id: 8,
     name: "Juan José Maestre",
     role: "Administrador de Empresas",
     image: "/Juan.PNG",
     specialty: "Gestión y Administración"
   },
   {
-    id: 5,
+    id: 9,
     name: "Mercedes Fontalvo",
     role: "Mercaderista - Asesora de Ventas",
     image: "/Mercedes.jpeg",
@@ -83,6 +83,13 @@ const teamMembers = [
     role: "Abogada",
     image: "/abogada.jpeg",
     specialty: "Departamento Jurídico"
+  },
+  {
+    id: 12,
+    name: "Andrés Beleño",
+    role: "Enfermero",
+    image: "/Andres.jpeg",
+    specialty: "Procedimiento Clínico"
   },
 ];
 
