@@ -128,6 +128,14 @@ export const CitaService = {
         const dateObj = new Date(year, month - 1, day);
         const dayOfWeek = dateObj.getDay() //0=Dom 6=Sab
 
+        const now = new Date();
+        const colombiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
+
+        if(dateObj.getTime() <= today.getTime()){
+            return allHours;
+        }
+
         console.log("2. Día detectado (0=Dom, 6=Sab):", dayOfWeek);
 
         //Días y horarios fijos

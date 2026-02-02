@@ -31,7 +31,7 @@ export const CitaService = {
         const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
 
         // No agendar en fechas pasadas
-        if (citaDate < today) { // Ajustado a < para permitir agendar hoy si hay hueco
+        if (citaDate <= today) { // Ajustado a < para permitir agendar hoy si hay hueco
             throw new Error("DATE_PAST_OR_TODAY");
         }
 
@@ -148,6 +148,14 @@ export const CitaService = {
         const [year, month, day] = fecha.split('-').map(Number);
         const dateObj = new Date(year, month - 1, day);
         const dayOfWeek = dateObj.getDay(); 
+
+        const now = new Date();
+        const colombiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
+
+        if(dateObj.getTime() <= today.getTime()){
+            return allHours;
+        }
 
         // 1. Bloqueos Fijos por Día
         if (dayOfWeek === 0) { // Domingo
