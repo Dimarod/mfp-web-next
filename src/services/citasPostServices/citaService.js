@@ -31,7 +31,7 @@ export const CitaService = {
         const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
 
         // No agendar en fechas pasadas
-        if (citaDate <= today) { // Ajustado a < para permitir agendar hoy si hay hueco
+        if (citaDate <= today) { 
             throw new Error("DATE_PAST_OR_TODAY");
         }
 
@@ -46,8 +46,6 @@ export const CitaService = {
         }
 
         // --- VALIDACIONES DE REGLAS (Centralizadas) ---
-        // Eliminé el bloque "if (weekday === 1)" antiguo que tenía errores de strings.
-        // Ahora todo pasa por la función experta:
         await CitaService.validarReglasSobrecupo(citaDate, horaNumero, tipoPostCorp, fecha);
 
         // Preparar y Guardar
@@ -69,8 +67,6 @@ export const CitaService = {
 
     verificarSobrecupo: async (fecha, horapc) => {
         if (!fecha || !horapc) throw new Error("MISSING_DATA");
-        // Nota: Esta función verifica el límite genérico de 4. 
-        // Para reglas específicas usamos validarReglasSobrecupo.
         const citasExistentes = await citaModel.getByDateAndSlot(fecha, horapc);
         return citasExistentes.length >= 4;
     },
@@ -93,13 +89,13 @@ export const CitaService = {
         if (diaDeSemana === 0) { // DOMINGO
             if (tipoPostCorp !== "Post") throw new Error("SCHEDULE_UNAVAILABLE");
             if (horapc >= 9001000 && horapc <= 12001300) horarioValido = true;
-            limiteCupo = 1; // Solo 1 Post los domingos (o ajusta si son más)
+            limiteCupo = 1; 
             
         } else if (diaDeSemana === 6) { // SÁBADO
             if (tipoPostCorp !== "Post" && tipoPostCorp !== "Postmoldeo") throw new Error('SCHEDULE_UNAVAILABLE');
             if (horapc >= 800900 && horapc <= 11001200) horarioValido = true;
             
-            // REGLA SÁBADO: Máximo 2 de cada tipo
+            // REGLA SÁBADO: Máximo 2 de cada tipo específico
             limiteCupo = 2; 
 
         } else if(diaDeSemana === 5 && horapc >= 11001200){
@@ -117,21 +113,21 @@ export const CitaService = {
 
         // 2. Verificar disponibilidad en Base de Datos
         
-        // A) Verificamos el límite específico (Ej: que no haya más de 2 Posts el sábado)
+        // A) LÍMITE POR TIPO (Check Individual)
+        // "Ya hay 2 Posts? Entonces no caben más Posts el sábado"
         const cantidadDeMiTipo = await citaModel.countByType(fechaString, horapc, tipoPostCorp);
         if (cantidadDeMiTipo >= limiteCupo) {
             throw new Error("OVERBOOKING");
         }
 
-        // B) SEGURIDAD EXTRA PARA SÁBADOS: 
-        // Verificar que el TOTAL general no pase de 4 (Ej: 2 Post + 2 Postmoldeo = 4. No cabe nadie más)
-        if (diaDeSemana === 6) {
-             // Usamos una función que cuente todo en esa hora, o reutilizamos getOccupiedSlots
-             // Para ser rápidos, podemos usar getByDateAndSlot que ya tienes
-             const totalEnHora = await citaModel.getByDateAndSlot(fechaString, horapc);
-             if (totalEnHora.length >= 4) {
-                 throw new Error("OVERBOOKING");
-             }
+        // B) LÍMITE GLOBAL DEL HORARIO (Check Universal)
+        // ESTA ES LA CORRECCIÓN:
+        // Sacamos esto del "if (sábado)". Ahora aplica SIEMPRE.
+        // Cuenta cuantas cabezas hay en total en esa hora, sin importar el tratamiento.
+        // Si hay 4 personas (Ej: 2 Post + 2 Postmoldeo), SE BLOQUEA para todos.
+        const totalEnHora = await citaModel.getByDateAndSlot(fechaString, horapc);
+        if (totalEnHora.length >= 4) {
+             throw new Error("OVERBOOKING");
         }
     },
 
@@ -160,16 +156,15 @@ export const CitaService = {
         // 1. Bloqueos Fijos por Día
         if (dayOfWeek === 0) { // Domingo
             if (tipoPostCorp !== "Post") {
-                return allHours; // Todo bloqueado si no es Post
+                return allHours; 
             } else {
-                const noPermitidos = [14001500, 15001600, 16001700, 17001800, 18001900]; // Tarde bloqueada
+                const noPermitidos = [14001500, 15001600, 16001700, 17001800, 18001900]; 
                 blockedHours.push(...noPermitidos);
             }
         } else if (dayOfWeek === 6) { // Sábado
             if (tipoPostCorp !== "Post" && tipoPostCorp !== "Postmoldeo") {
-                return allHours; // Todo bloqueado si no es Post/Postmoldeo
+                return allHours; 
             } else {
-                // Bloqueamos la tarde
                 const horasTarde = [14001500, 15001600, 16001700, 17001800, 18001900];
                 blockedHours.push(...horasTarde);
             }
@@ -181,7 +176,6 @@ export const CitaService = {
         try {
             const ocupacion = await citaModel.getOccupiedSlots(fecha);
             
-            // Transformamos DB a Mapa: { "800900": { total: 3, Post: 2, Postmoldeo: 1 } }
             const mapaHoras = {};
 
             ocupacion.forEach(fila => {
@@ -205,17 +199,14 @@ export const CitaService = {
                     return;
                 }
 
-                // LÓGICA DE SÁBADO (Tu lógica personalizada)
+                // LÓGICA DE SÁBADO
                 if (dayOfWeek === 6) {
                     if (tipoPostCorp === "Post") {
-                        // CORRECCIÓN: Usamos datosHora, no 'datos'
                         const cuantosPost = datosHora["Post"] || 0;
-                        // Si ya hay 2 Post, no caben más Post (aunque haya espacio general)
                         if (cuantosPost >= 2) blockedHours.push(hora);
                     }
                     else if (tipoPostCorp === "Postmoldeo") {
                         const cuantosPostmoldeo = datosHora["Postmoldeo"] || 0;
-                        // Si ya hay 2 Postmoldeo, no caben más
                         if (cuantosPostmoldeo >= 2) blockedHours.push(hora);
                     }
                 } 
@@ -223,7 +214,6 @@ export const CitaService = {
                 else {
                     const esTipoMasivo = (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo");
                     if (!esTipoMasivo) {
-                        // Si es tipo restringido (Valoración), solo 1 por hora
                         const cantidadDeMiTipo = datosHora[tipoPostCorp] || 0;
                         if (cantidadDeMiTipo >= 1) blockedHours.push(hora);
                     }
