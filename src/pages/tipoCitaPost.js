@@ -206,6 +206,7 @@ const AgendaPostBaq = () => {
                         <option value="Postmoldeo">Postmoldeo</option>
                         <option value="Postparto">Postparto</option>
                         <option value="Correccion">Corrección Post</option>
+                        <option value="Drenajes">Solo drenajes</option>
                       </select>
                       {/* Flecha Icono */}
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">

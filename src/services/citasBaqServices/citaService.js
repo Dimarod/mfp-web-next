@@ -27,6 +27,7 @@ export const CitaService = {
             throw new Error("ALREADY_BOOKED");
         }
 
+        // Validamos el sobrecupo (Ahora con lógica dinámica de sábado)
         const overturn = await CitaService.verificarSobrecupo(fecha, horab);
 
         if (overturn) {
@@ -88,22 +89,33 @@ export const CitaService = {
     },
 
     buscarPorFecha: async (fecha) => {
-        
         return await citaModel.getByDate(fecha);
     },
+
     verificarSobrecupo: async (fecha, horab) => {
         if (!fecha || !horab) {
             throw new Error("MISSING_DATA");
         }
 
-        //Obtenemos las citas existentes en ese bloque
+        // Obtenemos las citas existentes en ese bloque
         const citasExistentes = await citaModel.getByDateAndSlot(fecha, horab);
 
-        //Aplicamos la regla ¿Son 4 o más?
-        const esSobrecupo = citasExistentes.length >= 4;
+        // --- CORRECCIÓN AQUÍ: Detectar día para cambiar el límite ---
+        const [year, month, day] = fecha.split("-").map(Number);
+        const dateObj = new Date(year, month - 1, day);
+        const dayOfWeek = dateObj.getDay(); // 6 es Sábado
 
-        return esSobrecupo
+        let limite = 4; // Límite normal
+        if (dayOfWeek === 6) {
+            limite = 2; // Límite sábados
+        }
+
+        // Aplicamos la regla dinámica
+        const esSobrecupo = citasExistentes.length >= limite;
+
+        return esSobrecupo;
     },
+
     eliminarCita: async (id) => {
         if (!id) {
             throw new Error("ID_NOT_PROVIDED");
@@ -117,6 +129,7 @@ export const CitaService = {
 
         return result;
     },
+
     obtenerDisponibilidad: async (fecha, tipoBaq) => {
         //Diccionario de horas
         const allHours = [
@@ -153,8 +166,6 @@ export const CitaService = {
         } else if ([1, 3].includes(dayOfWeek)) {
             console.log("-> Entró en Lunes/Miercoles/Viernes"); // LOG
             blockedHours.push(14001440, 14401520)
-        } else if(dayOfWeek === 5){
-         blockedHours.push(12001240, 14001440, 14401520, 15201600, 16001640, 16401720, 17201800, 18001840, 18401920)
         }else{
             blockedHours.push(12001240);
         }
@@ -164,7 +175,11 @@ export const CitaService = {
             const ocupacion = await citaModel.getOccupiedSlots(fecha)
             console.log("3. Ocupación DB:", ocupacion); // LOG
 
+            // --- CORRECCIÓN AQUÍ: Límite visual dinámico ---
             let limite = 4;
+            if (dayOfWeek === 6) {
+                limite = 2; // Si es sábado, bloqueamos visualmente al llegar a 2
+            }
 
             //Recorremos
             ocupacion.forEach(slot => {
@@ -174,7 +189,7 @@ export const CitaService = {
             });
 
         } catch (error) {
-
+            
         }
 
         console.log("4. FINAL BLOCKED:", blockedHours); // LOG
