@@ -140,8 +140,8 @@ export const CitaService = {
     // --- EL CEREBRO DEL BLOQUEO VISUAL (Frontend) ---
     obtenerDisponibilidad: async (fecha, tipoPostCorp) => {
         const allHours = [
-            800900, 9001000, 10001100, 11001200, 14001500, 15001600, 16001700,
-            17001800, 18001900
+            700800, 800900, 9001000, 10001100, 11001200, 14001500, 15001600, 16001700,
+            17001800, 18001900, 19002000
         ];
 
         let blockedHours = [];
@@ -167,12 +167,12 @@ export const CitaService = {
             }
 
             if (dayOfWeek === 6) { //Sábado
-                const horaTarde = [14001500, 15001600, 16001700,
-                    17001800, 18001900]
+                const horaTarde = [700800, 14001500, 15001600, 16001700,
+                    17001800, 18001900, 19002000]
                 blockedHours.push(...horaTarde)
             } else { //Domingo
-                const horaDomingo = [800900, 14001500, 15001600, 16001700,
-                    17001800, 18001900]
+                const horaDomingo = [700800, 800900, 14001500, 15001600, 16001700,
+                    17001800, 18001900, 19002000]
                 blockedHours.push(...horaDomingo)
             }
         }else{

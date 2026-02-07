@@ -12,6 +12,7 @@ import Head from "next/head";
 
 // Mapeo de Horarios para Postoperatorios (Según tus valores)
 const timeSlots = [
+  {label: "7:00 AM", value: "700800"},
   { label: "8:00 AM", value: "800900" },
   { label: "9:00 AM", value: "9001000" },
   { label: "10:00 AM", value: "10001100" },
@@ -21,6 +22,7 @@ const timeSlots = [
   { label: "4:00 PM", value: "16001700" },
   { label: "5:00 PM", value: "17001800" },
   { label: "6:00 PM", value: "18001900" },
+  {label: "7:00 PM", value: "19002000"}
 ];
 
 const AgendaPostBaq = () => {
