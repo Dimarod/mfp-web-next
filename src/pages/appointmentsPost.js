@@ -5,6 +5,7 @@ import React, { Fragment, useState } from "react";
 import Layout from "@/components/Layout";
 
 const HORARIOS = {
+  "700800": "7:00 AM",
   "800900": "8:00 AM",
   "9001000": "9:00 AM",
   "10001100": "10:00 AM",
@@ -14,6 +15,7 @@ const HORARIOS = {
   "16001700": "4:00 PM",
   "17001800": "5:00 PM",
   "18001900": "6:00 PM",
+  "19002000": "7:00 PM"
 }
 
 const citasPostBaq = ({ citas: citasIniciales }) => {
