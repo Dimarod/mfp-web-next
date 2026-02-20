@@ -43,6 +43,20 @@ const teamMembers = [
     specialty: "Terapias Faciales y Corporales"
   },
   {
+    id: 13,
+    name: "Hilalry Fernández",
+    role: "Cosmetóloga - Cosmeatra",
+    image: "/Cosmeatra5.PNG",
+    specialty: "Terapias Faciales y Corporales"
+  },
+  {
+    id: 14,
+    name: "Margareth León",
+    role: "Enfermero",
+    image: "/Cosmeatra4.PNG",
+    specialty: "Terapias Faciales y Corporales"
+  },
+  {
     id: 6,
     name: "Sergio Ortega",
     role: "Deportólogo",
