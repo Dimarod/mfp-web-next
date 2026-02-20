@@ -61,14 +61,8 @@ export const CitaService = {
         //Validaciones de horarios
         let unavailable = false;
 
-        if (weekday === 2 || weekday === 4 || weekday === 6) {
-            if (horab > 12001240 && horab <= 14401520) unavailable = true;
-        } else if (weekday === 3) {
-            if (horab === 12001240) unavailable = true;
-        } else if (weekday === 7) {
+        if (weekday === 7) {
             if (horab >= 12001240) unavailable = true;
-        }else if(weekday === 5){
-         if(horab >= 12001240) unavailable = true
         }
 
         if (unavailable) {
@@ -105,7 +99,7 @@ export const CitaService = {
         const dateObj = new Date(year, month - 1, day);
         const dayOfWeek = dateObj.getDay(); // 6 es Sábado
 
-        let limite = 4; // Límite normal
+        let limite = 2; // Límite normal
         if (dayOfWeek === 6) {
             limite = 2; // Límite sábados
         }
@@ -176,7 +170,7 @@ export const CitaService = {
             console.log("3. Ocupación DB:", ocupacion); // LOG
 
             // --- CORRECCIÓN AQUÍ: Límite visual dinámico ---
-            let limite = 4;
+            let limite = 2;
             if (dayOfWeek === 6) {
                 limite = 2; // Si es sábado, bloqueamos visualmente al llegar a 2
             }

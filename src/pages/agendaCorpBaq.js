@@ -19,7 +19,6 @@ const timeSlots = [
   { label: "10:00 AM", value: "10001040" },
   { label: "10:40 AM", value: "10401120" },
   { label: "11:20 AM", value: "11201200" },
-  { label: "12:00 PM", value: "12001240" },
   { label: "2:00 PM", value: "14001440" },
   { label: "2:40 PM", value: "14401520" },
   { label: "3:20 PM", value: "15201600" },
