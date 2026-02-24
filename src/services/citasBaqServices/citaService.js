@@ -63,6 +63,8 @@ export const CitaService = {
 
         if (weekday === 7) {
             unavailable = true;
+        }else if(weekday === 4 && horab >= 16401720){
+         unavailable = true;
         }
 
         if (unavailable) {
@@ -157,11 +159,10 @@ export const CitaService = {
             console.log("-> Entró en lógica de Sábado"); // LOG
             return allHours
             blockedHours = allHours.filter(h => !sabadoPermitido.includes(h));
-        } else if ([1, 3].includes(dayOfWeek)) {
+        } else if (dayOfWeek === 3) {
             console.log("-> Entró en Lunes/Miercoles/Viernes"); // LOG
-            blockedHours.push(14001440, 14401520)
-        }else{
-            blockedHours.push(12001240);
+            const horaMiercoles = [16401720, 17201800, 18001840, 18401920]
+            blockedHours.push(...horaMiercoles)
         }
 
         try {

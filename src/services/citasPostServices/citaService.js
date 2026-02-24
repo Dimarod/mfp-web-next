@@ -95,7 +95,7 @@ export const CitaService = {
             //Regla 2: Horarios permitidos
             if (diaDeSemana === 6) {
                 if (horapc >= 800900 && horapc <= 11001200) horarioValido = true
-            } else {
+            }else {
                 if (horapc >= 9001000 && horapc <= 11001200) horarioValido = true
             }
 
@@ -106,7 +106,7 @@ export const CitaService = {
                 limiteCupo = 1
             }
 
-        } else { // LUNES A VIERNES
+        }else { // LUNES A VIERNES
             //Regla 1: Drenajes no permitidos entre semana
             if (tipoPostCorp === "Drenajes") {
                 throw new Error("SCHEDULE_UNAVAILABLE")
@@ -160,7 +160,7 @@ export const CitaService = {
         }
 
         // 1. Bloqueos Fijos por Día
-        if (dayOfWeek === 6 || dayOfWeek === 0) { // Sábado y Domingo
+        if (dayOfWeek === 6 || dayOfWeek === 0 || dayOfWeek === 3) { // Sábado y Domingo
             //Si no es Drenaje o Preoperatorio bloquear todo el día
             if (tipoPostCorp !== "Drenajes" && tipoPostCorp !== "Preoperatorio") {
                 return allHours;
@@ -170,7 +170,10 @@ export const CitaService = {
                 const horaTarde = [700800, 14001500, 15001600, 16001700,
                     17001800, 18001900, 19002000]
                 blockedHours.push(...horaTarde)
-            } else { //Domingo
+            }else if(dayOfWeek === 3){
+             const horaMiercoles = [17001800, 18001900, 19002000]
+             blockedHours.push(...horaMiercoles)
+            }else { //Domingo
                 const horaDomingo = [700800, 800900, 14001500, 15001600, 16001700,
                     17001800, 18001900, 19002000]
                 blockedHours.push(...horaDomingo)
