@@ -111,6 +111,12 @@ export const CitaService = {
             if (tipoPostCorp === "Drenajes") {
                 throw new Error("SCHEDULE_UNAVAILABLE")
             }
+
+            if ((horapc === 700800 || horapc === 19002000) && tipoPostCorp === "Post") {
+                throw new Error("SCHEDULE_UNAVAILABLE");
+            }
+
+
             horarioValido = true;
             if (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo") {
                 limiteCupo = 4;
@@ -130,9 +136,11 @@ export const CitaService = {
             throw new Error("OVERBOOKING");
         }
 
-        // B) Límite Global (Max 4 personas por hora SIEMPRE)
+        // B) Límite Global (Max 4 personas por hora excepto 7AM o 7PM)
         const totalEnHora = await citaModel.getByDateAndSlot(fechaString, horapc);
-        if (totalEnHora.length >= 4) {
+        const limiteGlobal =  (horapc === 700800 || horapc === 19002000) ? 2 : 4;
+
+        if (totalEnHora.length >= limiteGlobal) {
             throw new Error("OVERBOOKING");
         }
     },
@@ -180,9 +188,8 @@ export const CitaService = {
                 return allHours;
             }
 
-            if (dayOfWeek === 3) {
-                const horaMiercoles = [17001800, 18001900, 19002000]
-                blockedHours.push(...horaMiercoles)
+            if (tipoPostCorp === "Post") {
+                blockedHours.push(700800, 19002000);
             }
         }
 

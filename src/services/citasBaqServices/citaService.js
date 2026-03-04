@@ -63,8 +63,6 @@ export const CitaService = {
 
         if (weekday === 7) {
             unavailable = true;
-        }else if(weekday === 4 && horab >= 16401720){
-         unavailable = true;
         }
 
         if (unavailable) {
@@ -158,11 +156,6 @@ export const CitaService = {
         if (dayOfWeek === 6) {
             console.log("-> Entró en lógica de Sábado"); // LOG
             return allHours
-            blockedHours = allHours.filter(h => !sabadoPermitido.includes(h));
-        } else if (dayOfWeek === 3) {
-            console.log("-> Entró en Lunes/Miercoles/Viernes"); // LOG
-            const horaMiercoles = [16401720, 17201800, 18001840, 18401920]
-            blockedHours.push(...horaMiercoles)
         }
 
         try {
