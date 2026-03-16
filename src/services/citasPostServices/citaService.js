@@ -112,10 +112,10 @@ export const CitaService = {
                 throw new Error("SCHEDULE_UNAVAILABLE")
             }
 
+            // REGLA NUEVA: 7 AM y 7 PM NO admiten "Postoperatorio" (Post)
             if ((horapc === 700800 || horapc === 19002000) && tipoPostCorp === "Post") {
                 throw new Error("SCHEDULE_UNAVAILABLE");
             }
-
 
             horarioValido = true;
             if (tipoPostCorp === "Post" || tipoPostCorp === "Postmoldeo") {
@@ -130,16 +130,15 @@ export const CitaService = {
         // 2. Verificar disponibilidad en Base de Datos
 
         // A) LÍMITE POR TIPO (Check Individual)
-        // Max 3 Drenajes, Max 1 Preoperatorio
         const cantidadDeMiTipo = await citaModel.countByType(fechaString, horapc, tipoPostCorp);
         if (cantidadDeMiTipo >= limiteCupo) {
             throw new Error("OVERBOOKING");
         }
 
-        // B) Límite Global (Max 4 personas por hora excepto 7AM o 7PM)
+        // B) Límite Global (Max 4 personas por hora SIEMPRE, excepto 7AM y 7PM que son max 2)
         const totalEnHora = await citaModel.getByDateAndSlot(fechaString, horapc);
-        const limiteGlobal =  (horapc === 700800 || horapc === 19002000) ? 2 : 4;
-
+        const limiteGlobal = (horapc === 700800 || horapc === 19002000) ? 2 : 4;
+        
         if (totalEnHora.length >= limiteGlobal) {
             throw new Error("OVERBOOKING");
         }
@@ -188,6 +187,12 @@ export const CitaService = {
                 return allHours;
             }
 
+            if (dayOfWeek === 3) {
+                const horaMiercoles = [17001800, 18001900, 19002000]
+                blockedHours.push(...horaMiercoles)
+            }
+
+            // REGLA NUEVA VISUAL: Postoperatorio no habilitado a las 7AM ni 7PM
             if (tipoPostCorp === "Post") {
                 blockedHours.push(700800, 19002000);
             }
@@ -200,27 +205,35 @@ export const CitaService = {
             const mapaHoras = {};
 
             ocupacion.forEach(fila => {
-                const hora = fila.horapc;
+                // Forzamos a que sea Número para evitar errores de tipo texto
+                const hora = Number(fila.horapc);
                 const tipo = fila.tipoPostCorp;
-                const cantidad = fila.total;
+                
+                // LA MAGIA AQUÍ: Si getOccupiedSlots no devuelve "total", asumimos que es 1 sola fila.
+                // Así evitamos que la suma dé "NaN" y rompa el bloqueo visual.
+                const cantidad = fila.total ? Number(fila.total) : 1;
 
                 if (!mapaHoras[hora]) mapaHoras[hora] = { totalGeneral: 0 };
 
                 mapaHoras[hora].totalGeneral += cantidad;
-                mapaHoras[hora][tipo] = cantidad;
+                
+                if (!mapaHoras[hora][tipo]) mapaHoras[hora][tipo] = 0;
+                mapaHoras[hora][tipo] += cantidad;
             });
 
             // Revisamos cada hora
             allHours.forEach(hora => {
                 const datosHora = mapaHoras[hora] || { totalGeneral: 0 };
 
-                // REGLA GLOBAL: Si ya hay 4 personas, nadie entra.
-                if (datosHora.totalGeneral >= 4) {
+                // REGLA GLOBAL CON AJUSTE: Si es 7AM o 7PM el límite general baja a 2. Para las demás es 4.
+                const limiteGlobal = (hora === 700800 || hora === 19002000) ? 2 : 4;
+
+                if (datosHora.totalGeneral >= limiteGlobal) {
                     blockedHours.push(hora);
                     return;
                 }
 
-                // LÓGICA DE SÁBADO
+                // LÓGICA DE SÁBADO Y DOMINGO
                 if (dayOfWeek === 6 || dayOfWeek === 0) {
                     if (tipoPostCorp === "Drenajes") {
                         const cant = datosHora["Drenajes"] || 0;
@@ -228,7 +241,7 @@ export const CitaService = {
                     }
                     else if (tipoPostCorp === "Preoperatorio") {
                         const cant = datosHora["Preoperatorio"] || 0;
-                        if (cant >= 2) blockedHours.push(hora);
+                        if (cant >= 1) blockedHours.push(hora);
                     }
                 }
                 // LÓGICA DE SEMANA (L-V)
