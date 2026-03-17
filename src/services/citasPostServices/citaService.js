@@ -187,11 +187,6 @@ export const CitaService = {
                 return allHours;
             }
 
-            if (dayOfWeek === 3) {
-                const horaMiercoles = [17001800, 18001900, 19002000]
-                blockedHours.push(...horaMiercoles)
-            }
-
             // REGLA NUEVA VISUAL: Postoperatorio no habilitado a las 7AM ni 7PM
             if (tipoPostCorp === "Post") {
                 blockedHours.push(700800, 19002000);
