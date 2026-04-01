@@ -21,7 +21,7 @@ const timeSlots = [
 
 const agendaFacBaq = () => {
   // --- LÓGICA DE FECHAS (INTACTA) ---
-  const disabledDate = [new Date(2025, 11, 12), new Date(2025, 11, 15), new Date(2025, 11, 25), new Date(2025, 11, 27), new Date(2025, 11, 28), new Date(2025, 11, 29), new Date(2025, 11, 30), new Date(2025, 11, 31), new Date(2026, 0, 1), new Date(2026, 0, 2), new Date(2026, 0, 3), new Date(2026, 0, 4), new Date(2026, 0, 5), new Date(2026, 0, 6), new Date(2026, 0, 7), new Date(2025, 11, 8), new Date(2026, 0, 8), new Date(2026, 0, 9), new Date(2026, 0, 10), new Date(2026, 0, 11), new Date(2026, 0, 12)];
+  const disabledDate = [new Date(2026, 3, 2), new Date(2026, 3, 3), new Date(2026, 3, 4), new Date(2026, 3, 5), new Date(2026, 4, 1), new Date(2026, 4, 18), new Date(2026, 5, 8), new Date(2026, 5, 15), new Date(2026, 5, 29), new Date(2026, 6, 20), new Date(2026, 7, 7), new Date(2026, 7, 17), new Date(2026, 9, 12), new Date(2026, 10, 2), new Date(2026, 10, 16), new Date(2026, 11, 8), new Date(2026, 11, 25), new Date(2027, 0, 1)]
 
   const isDisabledDate = (date) => {
     return disabledDate.some(disabledD => isSameDay(date, disabledD)) || isSunday(date) || new Date(date).getDay() === 6
