@@ -182,7 +182,7 @@ export const CitaService = {
                     17001800, 18001900, 19002000]
                 blockedHours.push(...horaDomingo)
             }
-        } else {
+        }else {
             if (tipoPostCorp === "Drenajes") {
                 return allHours;
             }

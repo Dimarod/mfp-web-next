@@ -157,7 +157,6 @@ export const CitaService = {
             console.log("-> Entró en lógica de Sábado"); // LOG
             return allHours
         }
-
         try {
             //Obtener de la base de datos lo que ya está ocupado
             const ocupacion = await citaModel.getOccupiedSlots(fecha)

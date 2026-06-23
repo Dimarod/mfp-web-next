@@ -15,13 +15,13 @@ const timeSlots = [
   { label: "9:00 AM", value: "9001000" },
   { label: "10:00 AM", value: "10001100" },
   { label: "11:00 AM", value: "11001200" },
-  { label: "2:00 PM", value: "14001500" },
-  { label: "3:00 PM", value: "15001600" },
+  { label: "4:00 PM", value: "16001700" },
+  { label: "5:00 PM", value: "17001800" },
 ];
 
 const agendaFacBaq = () => {
   // --- LÓGICA DE FECHAS (INTACTA) ---
-  const disabledDate = [new Date(2026, 3, 2), new Date(2026, 3, 3), new Date(2026, 3, 4), new Date(2026, 3, 5), new Date(2026, 4, 1), new Date(2026, 4, 18), new Date(2026, 5, 8), new Date(2026, 5, 15), new Date(2026, 5, 29), new Date(2026, 6, 20), new Date(2026, 7, 7), new Date(2026, 7, 17), new Date(2026, 9, 12), new Date(2026, 10, 2), new Date(2026, 10, 16), new Date(2026, 11, 8), new Date(2026, 11, 25), new Date(2027, 0, 1)]
+  const disabledDate = [new Date(2026, 5, 5), new Date(2026, 3, 2), new Date(2026, 3, 3), new Date(2026, 3, 4), new Date(2026, 3, 5), new Date(2026, 4, 1), new Date(2026, 4, 18), new Date(2026, 5, 8), new Date(2026, 5, 15), new Date(2026, 5, 29), new Date(2026, 6, 20), new Date(2026, 7, 7), new Date(2026, 7, 17), new Date(2026, 9, 12), new Date(2026, 10, 2), new Date(2026, 10, 16), new Date(2026, 11, 8), new Date(2026, 11, 25), new Date(2027, 0, 1)]
 
   const isDisabledDate = (date) => {
     return disabledDate.some(disabledD => isSameDay(date, disabledD)) || isSunday(date) || new Date(date).getDay() === 6

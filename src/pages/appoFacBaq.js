@@ -10,6 +10,8 @@ const HORARIOS = {
   "11001200": "11:00 AM",
   "14001500": "2:00 PM",
   "15001600": "3:00 PM",
+  "16001700": "4:00 PM",
+  "17001800": "5:00 PM",
 }
 
 const citasFacBaq = ({ citas: citasIniciales }) => {
