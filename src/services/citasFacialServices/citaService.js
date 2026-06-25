@@ -27,6 +27,7 @@ export const CitaService = {
             throw new Error("ALREADY_BOOKED");
         }
 
+        // Pasa el tipoFac aquí para que no de error al guardar
         const overturn = await CitaService.verificarSobrecupo(fecha, horaf, tipoFac);
 
         if (overturn) {
@@ -37,7 +38,7 @@ export const CitaService = {
         const [year, month, day] = fecha.split("-").map(Number)
         const citaDate = new Date(year, month - 1, day);
         const now = new Date();
-        const colombiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        const colombiaTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Bogota" }));
         const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
 
         //No agendar en fechas pasadas
@@ -86,7 +87,7 @@ export const CitaService = {
 
         return await citaModel.getByDate(fecha);
     },
-    verificarSobrecupo: async (fecha, horaf, tipoFac) => {
+    verificarSobrecupo: async (fecha, horaf, tipoFac) => { // <-- Agregamos tipoFac
         if (!fecha || !horaf || !tipoFac) {
             throw new Error("MISSING_DATA");
         }
@@ -94,23 +95,27 @@ export const CitaService = {
         //Obtenemos las citas existentes en ese bloque
         const citasExistentes = await citaModel.getByDateAndSlot(fecha, horaf);
 
-        let tieneNormal = false
-        let tienePeptidos = false
+        let tieneNormal = false;
+        let tienePeptidos = false;
 
         citasExistentes.forEach(cita => {
-          if(cita.tipoFac === "Peptidos"){
-            tienePeptidos = true
-          }else{
-            tieneNormal = true
-          }
-        })
+            if (cita.tipoFac === "Peptidos") {
+                tienePeptidos = true;
+            } else {
+                tieneNormal = true;
+            }
+        });
 
-        //Aplicamos la regla ¿Son más de uno?
-        if(tipoFac === "Peptidos"){
-         return tienePeptidos
+        // Si ya hay 2 citas, está llenísimo (sobrecupo total)
+        if (tieneNormal && tienePeptidos) return true;
+
+        // Si quiero agendar Péptidos, hay sobrecupo solo si ya hay Péptidos
+        if (tipoFac === "Peptidos") {
+            return tienePeptidos;
         }
 
-       return tieneNormal
+        // Si quiero agendar un tratamiento Normal, hay sobrecupo solo si ya hay Normal
+        return tieneNormal;
     },
     eliminarCita: async (id) => {
         if (!id) {
@@ -126,87 +131,84 @@ export const CitaService = {
         return result;
     },
     obtenerDisponibilidad: async (fecha, tipoFac) => {
-        //Diccionario de horas
+        //Diccionario de horas CORREGIDO para que coincida con el Frontend
         const allHours = [
-            9001000, 10001100, 11001200, 14001500, 15001600
+            9001000, 10001100, 11001200, 16001700, 17001800
         ];
-
-        const validarPeptidos = await citaModel.get
 
         let blockedHours = [];
 
         console.log("--- DEBUG DISPONIBILIDAD ---");
-        console.log("1. Fecha recibida:", fecha);
+        console.log("1. Fecha recibida:", fecha, "Tipo de Facial:", tipoFac);
 
-        //Analizar la fecha
         const [year, month, day] = fecha.split('-').map(Number);
         const dateObj = new Date(year, month - 1, day);
-        const dayOfWeek = dateObj.getDay() //0=Dom 6=Sab
+        const dayOfWeek = dateObj.getDay();
 
         const now = new Date();
-        const colombiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"}));
+        const colombiaTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Bogota" }));
         const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
 
-        if(dateObj.getTime() <= today.getTime()){
+        if (dateObj.getTime() <= today.getTime()) {
             return allHours;
         }
 
         console.log("2. Día detectado (0=Dom, 6=Sab):", dayOfWeek);
 
-        //Días y horarios fijos
         if (dayOfWeek === 6) {
             if (tipoFac !== "Depilacion") {
                 blockedHours.push(...allHours)
-            }else{
+            } else {
                 const sabadoPermitido = [800900, 9001000, 10001100, 11001200];
                 blockedHours = allHours.filter(h => !sabadoPermitido.includes(h));
             }
         }
 
         try {
-            //Obtener de la base de datos lo que ya está ocupado
-            const citasDelDia = await citaModel.getByDate(fecha)
-            
-            const ocupacionPorHora = {}
+            // Evaluamos detalladamente qué citas hay con getByDate
+            const citasDelDia = await citaModel.getByDate(fecha);
+            const ocupacionPorHora = {};
 
             citasDelDia.forEach(cita => {
-             if(!ocupacionPorHora[cita.horaf]){
-               ocupacionPorHora[cita.horaf] = {normal: 0, peptidos: 0}
-             }
-             if(cita.tipoFac === "Peptidos"){
-               ocupacionPorHora[cita.horaf].peptidos +=1
-             }else{
-              ocupacionPorHora[cita.horaf].bormal +=1
-             }
-            })
+                if (!ocupacionPorHora[cita.horaf]) {
+                    ocupacionPorHora[cita.horaf] = { normal: 0, peptidos: 0 };
+                }
+                if (cita.tipoFac === "Peptidos") {
+                    ocupacionPorHora[cita.horaf].peptidos += 1;
+                } else {
+                    ocupacionPorHora[cita.horaf].normal += 1;
+                }
+            });
 
-            //Recorremos
+            // Analizamos cada bloque
             allHours.forEach(hora => {
-              const ocupacion = ocupacionPorHora[hora]
+                const ocupacion = ocupacionPorHora[hora];
 
-              if(ocupacion){
+                if (ocupacion) {
+                    // Si ya hay ambos, bloquear
+                    if (ocupacion.peptidos >= 1 && ocupacion.normal >= 1) {
+                        blockedHours.push(hora);
+                        return;
+                    }
 
-                if(ocupacion.peptidos >= 1 && ocupacion.normal >=1){
-                  blockedHours.push(hora)
-                  return
+                    // Bloqueos dependiendo del tipo en el Select
+                    if (tipoFac === "Peptidos") {
+                        if (ocupacion.peptidos >= 1) {
+                            blockedHours.push(hora);
+                        }
+                    } else if (tipoFac && tipoFac !== "") {
+                        if (ocupacion.normal >= 1) {
+                            blockedHours.push(hora);
+                        }
+                    }
                 }
-                if(tipoFac === "Peptidos"){
-                  if(ocupacion.peptidos >= 1){
-                    blockedHours.push(hora)
-                  }
-                }else if(tipoFac && tipoFac !== ""){
-                 if(ocupacion.normal >= 1){
-                  blockedHours.push(hora)
-                 }
-                }
-              }
-            })
+            });
 
         } catch (error) {
-
+            console.error("Error al calcular disponibilidad:", error);
         }
 
-        console.log("4. FINAL BLOCKED:", blockedHours); // LOG
-        return [...new Set(blockedHours)]
+        console.log("4. FINAL BLOCKED:", blockedHours);
+        return [...new Set(blockedHours)];
     }
 }
