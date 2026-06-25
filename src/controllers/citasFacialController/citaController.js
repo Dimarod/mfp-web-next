@@ -63,11 +63,11 @@ export const citaController = {
 
   consultarSobrecupo: async (req, res) => {
     try {
-      const { fecha, horaf } = req.body;
+      const { fecha, horaf, tipoFac } = req.body;
 
-      const haySobrecupo = await CitaService.verificarSobrecupo(fecha, horaf);
+      const haySobrecupo = await CitaService.verificarSobrecupo(fecha, horaf, tipoFac);
 
-      return res.status(200).json({ sobrecupo: true });
+      return res.status(200).json({ sobrecupo: haySobrecupo });
     } catch (error) {
       if (error.message === "MISSING_DATA") {
         return res.status(400).json({ error: "Fecha y hora base son obligatorios para verificar sobrecupo" });

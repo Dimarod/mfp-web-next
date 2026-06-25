@@ -27,7 +27,7 @@ export const CitaService = {
             throw new Error("ALREADY_BOOKED");
         }
 
-        const overturn = await CitaService.verificarSobrecupo(fecha, horaf);
+        const overturn = await CitaService.verificarSobrecupo(fecha, horaf, tipoFac);
 
         if (overturn) {
             throw new Error("OVERBOOKING");
@@ -86,18 +86,31 @@ export const CitaService = {
 
         return await citaModel.getByDate(fecha);
     },
-    verificarSobrecupo: async (fecha, horaf) => {
-        if (!fecha || !horaf) {
+    verificarSobrecupo: async (fecha, horaf, tipoFac) => {
+        if (!fecha || !horaf || !tipoFac) {
             throw new Error("MISSING_DATA");
         }
 
         //Obtenemos las citas existentes en ese bloque
         const citasExistentes = await citaModel.getByDateAndSlot(fecha, horaf);
 
-        //Aplicamos la regla ¿Son 4 o más?
-        const esSobrecupo = citasExistentes.length >= 1;
+        let tieneNormal = false
+        let tienePeptidos = false
 
-        return esSobrecupo
+        citasExistentes.forEach(cita => {
+          if(cita.tipoFac === "Peptidos"){
+            tienePeptidos = true
+          }else{
+            tieneNormal = true
+          }
+        })
+
+        //Aplicamos la regla ¿Son más de uno?
+        if(tipoFac === "Peptidos"){
+         return tienePeptidos
+        }
+
+       return tieneNormal
     },
     eliminarCita: async (id) => {
         if (!id) {
@@ -117,6 +130,8 @@ export const CitaService = {
         const allHours = [
             9001000, 10001100, 11001200, 14001500, 15001600
         ];
+
+        const validarPeptidos = await citaModel.get
 
         let blockedHours = [];
 
@@ -150,17 +165,42 @@ export const CitaService = {
 
         try {
             //Obtener de la base de datos lo que ya está ocupado
-            const ocupacion = await citaModel.getOccupiedSlots(fecha)
-            console.log("3. Ocupación DB:", ocupacion); // LOG
+            const citasDelDia = await citaModel.getByDate(fecha)
+            
+            const ocupacionPorHora = {}
 
-            let limite = 1;
+            citasDelDia.forEach(cita => {
+             if(!ocupacionPorHora[cita.horaf]){
+               ocupacionPorHora[cita.horaf] = {normal: 0, peptidos: 0}
+             }
+             if(cita.tipoFac === "Peptidos"){
+               ocupacionPorHora[cita.horaf].peptidos +=1
+             }else{
+              ocupacionPorHora[cita.horaf].bormal +=1
+             }
+            })
 
             //Recorremos
-            ocupacion.forEach(slot => {
-                if (slot.total >= limite) {
-                    blockedHours.push(slot.horaf)
+            allHours.forEach(hora => {
+              const ocupacion = ocupacionPorHora[hora]
+
+              if(ocupacion){
+
+                if(ocupacion.peptidos >= 1 && ocupacion.normal >=1){
+                  blockedHours.push(hora)
+                  return
                 }
-            });
+                if(tipoFac === "Peptidos"){
+                  if(ocupacion.peptidos >= 1){
+                    blockedHours.push(hora)
+                  }
+                }else if(tipoFac && tipoFac !== ""){
+                 if(ocupacion.normal >= 1){
+                  blockedHours.push(hora)
+                 }
+                }
+              }
+            })
 
         } catch (error) {
 
