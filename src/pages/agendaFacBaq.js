@@ -195,7 +195,7 @@ const agendaFacBaq = () => {
                         <option value="Depilacion">Depilación Láser</option>
                         <option value="Hydrafacial">Hydrafacial</option>
                         <option value="Plasma">Plasma</option>
-                        <option value="Peptido">Péptidos</option>
+                        <option value="Peptidos">Péptidos</option>
                         <option value="Radiofrecuencia">Radiofrecuencia Fraccionada</option>
                         <option value="Despigmentacion">Despigmentación</option>
                         <option value="Post">Postoperatorio Facial</option>
