@@ -27,7 +27,7 @@ export const CitaService = {
             throw new Error("ALREADY_BOOKED");
         }
 
-        // Validamos el sobrecupo (Ahora con lógica dinámica de sábado)
+        // Validamos el sobrecupo (Ahora con lógica dinámica de sábado y horas de la tarde)
         const overturn = await CitaService.verificarSobrecupo(fecha, horab);
 
         if (overturn) {
@@ -104,6 +104,11 @@ export const CitaService = {
             limite = 2; // Límite sábados
         }
 
+        // NUEVA REGLA: Si la hora es 5:20 PM (17201800) o superior, el límite es 3
+        if (Number(horab) >= 17201800) {
+            limite = 3;
+        }
+
         // Aplicamos la regla dinámica
         const esSobrecupo = citasExistentes.length >= limite;
 
@@ -145,7 +150,8 @@ export const CitaService = {
         const now = new Date();
         const colombiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"}));
         const today = new Date(colombiaTime.getFullYear(), colombiaTime.getMonth(), colombiaTime.getDate());
-
+        console.log("fecha obj", dateObj)
+        console.log(new Date(dateObj).getTime() === new Date(2026,7,10).getTime())
         if(dateObj.getTime() <= today.getTime()){
             return allHours;
         }
@@ -157,19 +163,28 @@ export const CitaService = {
             console.log("-> Entró en lógica de Sábado"); // LOG
             return allHours
         }
+        if(dateObj.getTime() === new Date(2026,7,10).getTime()){
+         return allHours
+        }
         try {
             //Obtener de la base de datos lo que ya está ocupado
             const ocupacion = await citaModel.getOccupiedSlots(fecha)
             console.log("3. Ocupación DB:", ocupacion); // LOG
 
             // --- CORRECCIÓN AQUÍ: Límite visual dinámico ---
-            let limite = 2;
-            if (dayOfWeek === 6) {
-                limite = 2; // Si es sábado, bloqueamos visualmente al llegar a 2
-            }
-
             //Recorremos
             ocupacion.forEach(slot => {
+                let limite = 2; // Límite base por defecto
+                
+                if (dayOfWeek === 6) {
+                    limite = 2; // Si es sábado
+                }
+
+                // NUEVA REGLA: Si la hora es 5:20 PM (17201800) o superior, el límite es 3
+                if (Number(slot.horab) >= 17201800) {
+                    limite = 3;
+                }
+
                 if (slot.total >= limite) {
                     blockedHours.push(slot.horab)
                 }

@@ -12,10 +12,8 @@ import Head from "next/head";
 
 // Definimos los horarios visuales mapeados a los valores que espera tu Backend
 const timeSlots = [
-  { label: "9:00 AM", value: "9001000" },
+  { label: "9:20 AM", value: "9001000" },
   { label: "10:00 AM", value: "10001100" },
-  { label: "11:00 AM", value: "11001200" },
-  { label: "4:00 PM", value: "16001700" },
   { label: "5:00 PM", value: "17001800" },
 ];
 

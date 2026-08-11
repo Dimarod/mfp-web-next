@@ -193,6 +193,10 @@ export const CitaService = {
             }
         }
 
+        if(dateObj.getTime() === new Date(2026,7,10).getTime()){
+         blockedHours.push(...allHours)
+        }
+
         // 2. Bloqueos Dinámicos (Base de Datos)
         try {
             const ocupacion = await citaModel.getOccupiedSlots(fecha);
