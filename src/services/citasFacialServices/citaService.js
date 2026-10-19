@@ -163,10 +163,9 @@ export const CitaService = {
                 blockedHours = allHours.filter(h => !sabadoPermitido.includes(h));
             }
         }
-        if(dateObj.getTime() === new Date(2026,7,10).getTime()){
-         blockedHours.push(...allHours)
+        if(dayOfWeek === 5){
+          blockedHours.push(...allHours)
         }
-
         try {
             // Evaluamos detalladamente qué citas hay con getByDate
             const citasDelDia = await citaModel.getByDate(fecha);

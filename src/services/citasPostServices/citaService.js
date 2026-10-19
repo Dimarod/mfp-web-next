@@ -186,7 +186,6 @@ export const CitaService = {
             if (tipoPostCorp === "Drenajes") {
                 return allHours;
             }
-
             // REGLA NUEVA VISUAL: Postoperatorio no habilitado a las 7AM ni 7PM
             if (tipoPostCorp === "Post") {
                 blockedHours.push(700800, 19002000);
